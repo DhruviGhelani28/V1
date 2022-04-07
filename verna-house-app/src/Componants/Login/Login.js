@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -25,7 +25,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import FormHelperText from '@mui/material/FormHelperText';
-
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginData } from "../../Store/Register/RegisterAction";
+import { useForm } from "react-hook-form";
 const Rolls = [
     {
         value: 'Supplier',
@@ -119,6 +121,33 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 const Login = props => {
+   
+
+    const dispatch = useDispatch();
+    const navigateHome = useNavigate();
+
+    const [values, setValues] = useState({
+        username: "",
+        roll: "",
+        password: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    };
+
+    const onSubmit = ( data) => {
+        // e.preventDefault();
+        console.log(JSON.stringify(data, null, 2));
+
+        dispatch(getLoginData({ data: data }));
+        navigateHome("/Home");
+    };
+  
     const classes1 = useStyles();
     const navigate = useNavigate()
     const navigate1 = useNavigate();
@@ -129,11 +158,7 @@ const Login = props => {
         navigate("/ChangePassword")
     }
 
-    const [roll, setRoll] = React.useState(null);
-    const rollChangeHandler = (event) => {
-        setRoll(event.target.value);
-    };
-
+    const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
         <div>
@@ -167,6 +192,7 @@ const Login = props => {
                         }}
                         noValidate
                         autoComplete="off"
+                    // onSubmit={submitLoginForm}
                     >
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
@@ -181,10 +207,14 @@ const Login = props => {
                                         },
                                     }}
                                     required
-                                    id="outlined-textarea"
+                                    onChange={handleChange}
+                                    id="email"
                                     label="Enter Your Email Address"
                                     placeholder="xyz@abc.com"
+                                    {...register('email', { required: true })}
+                                    error={errors.email ? true : false}
                                 />
+
                             </Grid>
                             <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
@@ -193,10 +223,13 @@ const Login = props => {
                                     <Select
                                         sx={{ textAlign: 'left' }}
                                         labelId="demo-simple-select-label"
-                                        id="select-roll"
+                                        id="roll"
                                         label="Roll"
-                                        value={roll}
-                                        onChange={rollChangeHandler}
+                                        // value={roll}
+                                        onChange={handleChange}
+                                        defaultValue=""
+                                        {...register('roll', { required: true })}
+                                        error={errors.roll ? true : false}
                                     >
                                         {Rolls.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
@@ -204,7 +237,7 @@ const Login = props => {
                                             </MenuItem>
                                         ))}
                                     </Select>
-                                    {/* <FormHelperText>Please select your roll in system.</FormHelperText> */}
+                                    <FormHelperText>Please select your roll in system.</FormHelperText>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} >
@@ -212,18 +245,29 @@ const Login = props => {
                                 <TextField
                                     className={classes1.root2}
                                     required
-                                    id="outlined-password-input"
+                                    id="password"
                                     label="Enter Password"
                                     type="password"
                                     placeholder="*******"
                                     autoComplete="current-password"
+                                    onChange={handleChange}
+                                    {...register('password', {
+                                        required: true,
+                                        // validate: {
+                                        //     positive: v => parseInt(v) > 0 || 'Should be greater than 0',
+                                        //     lessThanTen: v => parseInt(v) >= 6 || 'Should be lower than 10',
+                                            
+                                        // }
+                                    })}
+                                    error={errors.password ? true : false}
                                 />
+
                             </Grid>
                             <Grid item xs={12} className={classes.button}>
                                 <Button
                                     className={classes1.root4}
                                     variant="contained"
-                                    onClick={props.onClick}
+                                    onClick={handleSubmit(onSubmit)}
                                     sx={{
                                         marginTop: 0.5,
                                         marginRight: -38.5,
@@ -254,3 +298,22 @@ const Login = props => {
 
 };
 export default Login;
+
+/*
+<input
+  {...register("test", {
+    validate: value => value === '1' || 'error message'  // JS only: <p>error message</p> TS only support string
+  })}
+/>
+// object of callback functions
+<input
+  {...register("test1", {
+    validate: {
+      positive: v => parseInt(v) > 0 || 'should be greater than 0',
+      lessThanTen: v => parseInt(v) < 10 || 'should be lower than 10',
+      // you can do asynchronous validation as well
+      checkUrl: async () => await fetch() || 'error message',  // JS only: <p>error message</p> TS only support string
+      messages: v => !v && ['test', 'test2']
+    }
+  })}
+/>*/

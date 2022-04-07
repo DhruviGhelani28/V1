@@ -1,9 +1,10 @@
+from urllib import request
 from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 # Create your views here.
 
@@ -296,3 +297,41 @@ def getWorkerBill(request, pk, pk1):
 #     serializer = TaskSerializer(tasks, many=True)
 #     return Response(serializer.data)
    
+
+class UserRegistrationViewSet(viewsets.ModelViewSet):
+    serializer_class = UserRegistrationSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    # authentication_class = (TokenAuthentication)
+    queryset = User.objects.all()
+
+    
+# class LoginView(viewsets.ModelViewSet):
+#     serializer_class = UserSerializer
+#     data = request.data
+#     username = data.get['username']
+#     roll = data.get['roll']
+#     password = data.get['password']
+
+#     if username == 
+
+# class LoginUserView(LoginView):
+#     serializer_class = LoginSerializer
+#     permission_classes = [AllowAny]
+
+#     def post(self,request,*args,**kwargs):
+#         serializer = AuthTokenSerializer(data = request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data['user']
+
+#         _, token = AuthToken.objects.create(user)
+#         return Response({
+#             'user_Info':{
+#                     'id':user.id,
+#                     'username':user.username,
+#                     'email':user.email,
+#                     'first_name':user.first_name,
+#                     'last_name':user.last_name,
+#                     'is_superuser':user.is_superuser,
+#             },
+#             'token':token
+#         })

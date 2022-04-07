@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-
+import { useDispatch, useSelector } from "react-redux";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -27,8 +27,8 @@ import { formatMuiErrorMessage } from '@mui/utils';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Fullscreen } from '@mui/icons-material';
-import { isClickableInput } from '@testing-library/user-event/dist/utils';
+
+import { getRegisterData } from '../../Store/Register/RegisterAction';
 
 // const theme = createTheme({
 //     components: {
@@ -108,7 +108,8 @@ const Rolls = [
 
 const Registration = props => {
     const navigate = useNavigate()
-
+    const dispatch = useDispatch();
+    const navigateLogin = useNavigate();
     const validationSchema = Yup.object().shape({
         fullname: Yup.string().required('Fullname is required'),
         username: Yup.string()
@@ -125,8 +126,8 @@ const Registration = props => {
         confirmPassword: Yup.string()
             .required('Confirm Password is required')
             .oneOf([Yup.ref('password'), null], 'Confirm Password does not match'),
-        // roll: Yup.string()
-        //     .required('Roll is required')
+        roll: Yup.string()
+            .required('Roll is required')
         // .value(isClickableInput)
         // acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
     });
@@ -135,7 +136,10 @@ const Registration = props => {
     });
 
     const onSubmit = data => {
-        console.log(JSON.stringify(data,null, 2));
+        console.log(JSON.stringify(data, null, 2));
+        dispatch(getRegisterData(data));
+        navigateLogin("/Login");
+
     };
     const goBackHandler = () => {
         navigate("/Login")
@@ -149,19 +153,17 @@ const Registration = props => {
         password: '',
         confirm: '',
         roll: '',
-        // weight: '',
-        // weightRange: '',
         showPassword: false,
     });
-    const [isPassValid, setIsPassValid] = useState(false)
+    // const [isPassValid, setIsPassValid] = useState(false)
     const handleChange = (prop) => (event) => {
 
         setValues({ ...values, [prop]: event.target.value });
-        if ([prop] === 'confirm') {
-            if (values.password === event.target.value) {
-                setIsPassValid(true)
-            }
-        }
+        // if ([prop] === 'confirm') {
+        //     if (values.password === event.target.value) {
+        //         setIsPassValid(true)
+        //     }
+        // }
     };
 
     const handleClickShowPassword = () => {
@@ -171,19 +173,11 @@ const Registration = props => {
         });
     };
 
-    // const onRegisterHandler = (e) => {
-    //     e.preventDefault()
-
-
-    //     // dispatch({LoggedInReducer})
-    // }
-
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
     const [roll, setRoll] = React.useState(null);
-
     const rollChangeHandler = (event, props) => {
         setRoll(event.target.value);
     };
@@ -234,6 +228,7 @@ const Registration = props => {
                             id="fullname"
                             label="Enter Your Name"
                             placeholder="xyz abc"
+                            inputprops={{ tabIndex: "1" }}
                             {...register('fullname')}
                             error={errors.fullname ? true : false}
                         />
@@ -247,6 +242,7 @@ const Registration = props => {
                             id="email"
                             label="Enter Your Email Address"
                             placeholder="xyz@abc.com"
+                            inputprops={{ tabIndex: "2" }}
                             {...register('email')}
                             error={errors.email ? true : false}
                         />
@@ -260,10 +256,12 @@ const Registration = props => {
                             id="username"
                             label="Enter Your UserName"
                             placeholder="xyz_abc123"
+                            inputprops={{ tabIndex: "3" }}
                             {...register('username')}
                             error={errors.username ? true : false}
                         />
                         <TextField
+                            inputprops={{ tabIndex: "4" }}
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
                             required
@@ -292,6 +290,7 @@ const Registration = props => {
                             error={errors.password ? true : false}
                         />
                         <TextField
+                            
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
                             required
@@ -316,6 +315,7 @@ const Registration = props => {
                                     </InputAdornment>
                                 )
                             }}
+                            inputprops={{ tabIndex: "5" }}
                             {...register('confirmPassword')}
                             error={errors.confirmPassword ? true : false}
                         />
@@ -323,18 +323,22 @@ const Registration = props => {
                         <FormControl
                             required sx={{ marginTop: 1, width: '40ch' }}
                             className={classes1.allfield}
-                            {...register('roll')}
-                            error={errors.roll ? true : false}
+                            inputprops={{ tabIndex: "6" }}
                         >
+                            {/* {
+                                console.log("vvvv", getFieldState("roll"))
+                            } */}
                             <InputLabel id="roll-id">Roll</InputLabel>
                             <Select
+
                                 sx={{ textAlign: 'left' }}
                                 labelId="demo-simple-select-label"
                                 id="select-roll"
                                 label="Roll"
-                                value={roll}
-                                onChange={rollChangeHandler}
-
+                                {...register('roll')}
+                                error={errors.roll ? true : false}
+                                defaultValue=""
+                                
                             >
                                 {Rolls.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>

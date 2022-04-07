@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-$z7+f2(_&ot(3tf#_bx9(mx5ug*!i59h!ey&zy9j!-v++(^90i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication'
     )
@@ -109,10 +109,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'vernaDjango.urls'
-CORS_ORIGIN_ALLOW_ALL=True #set false for whitelist
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
-)
+# CORS_ORIGIN_ALLOW_ALL=True #set false for whitelist
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:8000',
+# )
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 TEMPLATES = [

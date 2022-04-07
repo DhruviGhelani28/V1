@@ -43,10 +43,5 @@ urlpatterns = [
     path('Users/Customers/<str:pk>/Bills/<str:pk1>/', getCustomerBill),
     path('Users/Workers/<str:pk>/Bills/<str:pk1>/', getWorkerBill),
 
-
-
-    
-
-
-
+    path('register/',UserRegistrationViewSet),
 ]
