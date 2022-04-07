@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "django": "^1.0.0"
+  },
+  "devDependencies": {
+    "favicons-webpack-plugin": "^5.0.2",
+    "webpack-pwa-manifest": "^4.3.0"
+  }
+}
