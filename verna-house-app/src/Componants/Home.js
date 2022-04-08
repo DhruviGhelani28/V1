@@ -1,15 +1,15 @@
 import React from "react";
 import AppBarHeader from "./AppBar/AppBarHeader";
 import Drawer from "./Drawer/Drawer";
-import DrawerHeader from "./Drawer/DrawerHeader";
+// import DrawerHeader from "./Drawer/DrawerHeader";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import { styled, useTheme } from '@mui/material/styles';
 import Registration from "./Login/Registration";
 // import Login from "./Login/Login";
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Suppliers from "./Suppliers/Suppliers";
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 // import Typography from '@mui/material/Typography';
 import Agencies from "./Agencies/Agencies";
 import LoginRegistration from './Login/LoginRegistration';
@@ -30,7 +30,7 @@ import WorkerForm from "./Workers/WorkerForm";
 import AgencyForm from "./Agencies/AgencyForm";
 import TaskForm from "./Tasks/TaskForm";
 import Account from "./Account/Account";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, ##FFE3E3 25%, #F3C5C5 80%)',
@@ -78,34 +78,35 @@ const Home = props => {
                 <CssBaseline />
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} />
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
-                <Main >
-                     {/* <DrawerHeader />  */}
-                     {/* <Button className={classes.root}>Hello</Button> */}
+                <Main style={{ "margin-top": "4rem" }} >
+                    {/* <DrawerHeader /> */}
+                    {/* <Button className={classes.root}>Hello</Button> */}
                     <Routes>
+                        <Route path="/" element={<Workers />} ></Route>
                         <Route path="/About" element={<About />} exact />
 
-                        <Route path="/Login" element={<LoginRegistration />} />
-                        <Route path="/Registration" element={<Registration />} />
+                        <Route path="/Login" element={<LoginRegistration />} exact />
+                        <Route path="/Registration" element={<Registration />} exact />
 
-                        <Route path="/Account" element={<Account />} />
+                        <Route path="/Account" element={<Account />} exact />
 
                         <Route path="/Departments" element={<Departments />} exact />
                         <Route path="/Suppliers" element={<Suppliers />} exact />
                         <Route path="/Customers" element={<Customers />} exact />
                         <Route path="/Workers" element={<Workers />} exact />
-                        <Route path="/Agencies" element={<Agencies drawerwidth={drawerWidth} open={open} />} exact />
+                        <Route path="/Agencies" element={<Agencies />} exact />
                         <Route path="/Items" element={<Items />} exact />
-                        <Route path="/PhotosPosters" element={<PhotosPosters />} />
+                        <Route path="/PhotosPosters" element={<PhotosPosters />} exact />
                         <Route path="/Models" element={<Models />} exact />
                         <Route path="/Messages" element={<Messages />} exact />
                         <Route path="/Notifications" element={<Notifications />} exact />
                         <Route path="/Settings" element={<Settings />} exact />
                         <Route path="/ChangePassword" element={<ChangePassword />} exact />
-                        <Route path="/SupplierForm" element={<SupplierForm />} />
-                        <Route path="/CustomerForm" element={<CustomerForm />} />
-                        <Route path="/AgencyForm" element={<AgencyForm />} />
-                        <Route path="/WorkerForm" element={<WorkerForm />} />
-                        <Route path="/TaskForm" element={<TaskForm />}></Route>
+                        <Route path="/SupplierForm" element={<SupplierForm />} exact />
+                        <Route path="/CustomerForm" element={<CustomerForm />} exact />
+                        <Route path="/AgencyForm" element={<AgencyForm />} exact />
+                        <Route path="/WorkerForm" element={<WorkerForm />} exact />
+                        <Route path="/TaskForm" element={<TaskForm />} exact />
                     </Routes>
                 </Main>
             </Box>

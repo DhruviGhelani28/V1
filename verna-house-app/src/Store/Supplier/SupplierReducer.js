@@ -8,7 +8,9 @@ const SupplierReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SUPPLIER_DATA:
             return { getSuppliers: action.suppliers }
+
+        default: return state;
     }
-    return state;
+
 };
 export default SupplierReducer;

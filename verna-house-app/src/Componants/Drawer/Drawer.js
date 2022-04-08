@@ -11,7 +11,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import Divider from '@mui/material/Divider';
 import List from '../List/List';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 
 
 const openedMixin = (theme, drawerwidth) => ({

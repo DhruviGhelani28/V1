@@ -50,17 +50,17 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
-    'rest_framework_simplejwt',
-    # 'rest_framework.authtoken',
+    
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     )
 }
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
@@ -94,6 +94,9 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+
+
+
 MIDDLEWARE = [
 
     'corsheaders.middleware.CorsMiddleware',
@@ -109,7 +112,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'vernaDjango.urls'
-# CORS_ORIGIN_ALLOW_ALL=True #set false for whitelist
+CORS_ORIGIN_ALLOW_ALL=True #set false for whitelist
 # CORS_ORIGIN_WHITELIST = (
 #     'http://localhost:8000',
 # )

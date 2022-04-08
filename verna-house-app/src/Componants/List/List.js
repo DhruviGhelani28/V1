@@ -3,7 +3,7 @@ import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+// import dispatch from ""
 import PeopleIcon from '@mui/icons-material/People';
 import GroupIcon from '@mui/icons-material/Group';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
@@ -16,7 +16,7 @@ import WcIcon from '@mui/icons-material/Wc';
 import { Link } from 'react-router-dom';
 import Garments from "../../static/images/Garments.png"
 import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
@@ -31,9 +31,16 @@ const useStyles = makeStyles({
 });
 
 
+
+
 const List = props => {
     const classes = useStyles();
-    // const funHandler = [supplierHandler]
+    
+    // const getDataHandler=()=>{
+    //     data = dispatch(getSuppliers())
+    // }
+
+
     const iconlist = [<SegmentIcon />, <GroupsIcon />, <PeopleIcon />, <GroupIcon />, <PeopleAltIcon />, <img width="25" src={Garments} alt="Garments"></img>, <ConstructionIcon />, <PhotoAlbumIcon />, <WcIcon />, <SettingsIcon />]
     const list1 = ['Departments', 'Suppliers', 'Customers', 'Workers', 'Agencies', 'Garments', 'Gadgets', 'Photos/Posters', 'Models', 'Settings']
     const list = list1.map((value, index) => {

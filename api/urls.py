@@ -13,10 +13,10 @@ urlpatterns = [
     path('Users/', getUsers),
     path('Users/<str:pk>/', getUser),
 
-    path('Users/Suppliers/', getSuppliers),
-    path('Users/Customers/', getCustomers),
-    path('Users/Agencies/', getAgencies),
-    path('Users/Workers/', getWorkers),
+    path('Suppliers/', getSuppliers),
+    path('Customers/', getCustomers),
+    path('Agencies/', getAgencies),
+    path('Workers/', getWorkers),
 
     path('Users/Suppliers/<str:pk>', getSupplier),
     path('Users/Agencies/<str:pk>', getAgency),
@@ -44,4 +44,5 @@ urlpatterns = [
     path('Users/Workers/<str:pk>/Bills/<str:pk1>/', getWorkerBill),
 
     path('register/',UserRegistrationViewSet),
+    path('login/',UserLoginViewSet),
 ]

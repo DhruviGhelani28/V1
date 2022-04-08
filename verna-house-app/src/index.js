@@ -6,16 +6,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import RootReducers from './Store/RootReducer';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from "redux-thunk";
 import { Provider } from 'react-redux';
 
 
-const store = createStore(RootReducers)
-
+const store = createStore(RootReducers, applyMiddleware(thunk))
+console.log(store.getState())
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App/>
+      <App />
     </Provider>
 
   </React.StrictMode>,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -11,7 +11,9 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
-// import { Container } from "@mui/material";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -23,9 +25,9 @@ import key from "../../static/images/key.png";
 import classes from '../Login.module.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import FormHelperText from '@mui/material/FormHelperText';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getLoginData } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
 const Rolls = [
@@ -121,7 +123,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 const Login = props => {
-   
+
 
     const dispatch = useDispatch();
     const navigateHome = useNavigate();
@@ -140,14 +142,17 @@ const Login = props => {
         });
     };
 
-    const onSubmit = ( data) => {
-        // e.preventDefault();
-        console.log(JSON.stringify(data, null, 2));
+    const onSubmit = (data) => {
 
+        console.log(JSON.stringify(data, null, 2));
         dispatch(getLoginData({ data: data }));
+        // if (data.roll == 'Supplier') {
+        //     
+        // }
         navigateHome("/Home");
+
     };
-  
+
     const classes1 = useStyles();
     const navigate = useNavigate()
     const navigate1 = useNavigate();
@@ -157,6 +162,18 @@ const Login = props => {
     const changePasswordHandler = () => {
         navigate("/ChangePassword")
     }
+
+    const handleClickShowPassword = () => {
+        setValues({
+            ...values,
+            showPassword: !values.showPassword,
+        });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
@@ -192,12 +209,12 @@ const Login = props => {
                         }}
                         noValidate
                         autoComplete="off"
-                    // onSubmit={submitLoginForm}
+                        onSubmit={handleSubmit(onSubmit)}
                     >
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
                                 <AccountCircle sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
-                                <TextField
+                                {/* <TextField
                                     className={classes1.root5}
                                     sx={{
                                         color: 'action.home',
@@ -211,12 +228,33 @@ const Login = props => {
                                     id="email"
                                     label="Enter Your Email Address"
                                     placeholder="xyz@abc.com"
-                                    {...register('email', { required: true })}
-                                    error={errors.email ? true : false}
+                                    // {...register('email', {
+                                    //     required: true, pattern: {
+                                    //         value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i,
+                                    //         message: "Invalid Email Address",
+                                    //     },
+                                    // })}
+                                    error={!!errors?.email}
+                                    helpertext={errors?.email ? errors.email.message : null}
+                                /> */}
+                                <TextField
+                                    sx={{ marginTop: 1 }}
+                                    className={classes1.allfield}
+                                    required
+                                    multiline
+                                    size='medium'
+                                    id="username"
+                                    label="Enter Your UserName"
+                                    placeholder="xyz_abc123"
+                                    onChange={handleChange}
+                                    inputprops={{ tabIndex: "3" }}
+                                    {...register('username', { required: true, maxLength: 20, minLength: 4 })}
+                                    error={!!errors?.username}
+                                    helpertext={errors?.username ? errors.username.message : null}
                                 />
 
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 <FormControl required sx={{ m: 1, width: '40ch' }} >
                                     <InputLabel id="roll-id">Roll</InputLabel>
@@ -225,11 +263,11 @@ const Login = props => {
                                         labelId="demo-simple-select-label"
                                         id="roll"
                                         label="Roll"
-                                        // value={roll}
-                                        onChange={handleChange}
                                         defaultValue=""
+                                        onChange={handleChange}
                                         {...register('roll', { required: true })}
-                                        error={errors.roll ? true : false}
+                                        error={!!errors?.roll}
+                                        helpertext={errors?.roll ? errors.roll.message : null}
                                     >
                                         {Rolls.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
@@ -239,27 +277,43 @@ const Login = props => {
                                     </Select>
                                     <FormHelperText>Please select your roll in system.</FormHelperText>
                                 </FormControl>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} >
                                 <img width="23" src={key} className={classes.marginTop} alt="key"></img>
                                 <TextField
-                                    className={classes1.root2}
                                     required
-                                    id="password"
+                                    sx={{ marginTop: 1 }}
+                                    className={classes1.root2}
                                     label="Enter Password"
-                                    type="password"
-                                    placeholder="*******"
-                                    autoComplete="current-password"
+                                    placeholder='*******'
+                                    id="password"
+                                    type={values.showPassword ? 'text' : 'password'}
                                     onChange={handleChange}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    className={classes1.root1}
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
                                     {...register('password', {
                                         required: true,
-                                        // validate: {
-                                        //     positive: v => parseInt(v) > 0 || 'Should be greater than 0',
-                                        //     lessThanTen: v => parseInt(v) >= 6 || 'Should be lower than 10',
-                                            
-                                        // }
-                                    })}
-                                    error={errors.password ? true : false}
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
+                                            message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                        }
+                                    }
+                                    )}
+                                    error={!!errors?.password}
+                                    helpertext={errors?.password ? errors.password.message : null}
                                 />
 
                             </Grid>
@@ -267,7 +321,8 @@ const Login = props => {
                                 <Button
                                     className={classes1.root4}
                                     variant="contained"
-                                    onClick={handleSubmit(onSubmit)}
+                                    type="submit"
+                                    // onClick={onSubmit}
                                     sx={{
                                         marginTop: 0.5,
                                         marginRight: -38.5,
@@ -275,6 +330,7 @@ const Login = props => {
                                     }}>
                                     Sign In</Button>
                             </Grid>
+
                             <Grid item xs={12} className={classes.register}>
                                 <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -9, color: 'black', }}>
                                     Don't You Have An Account?

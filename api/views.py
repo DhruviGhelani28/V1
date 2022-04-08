@@ -1,3 +1,5 @@
+import email
+import profile
 from urllib import request
 from django.shortcuts import render
 from .models import *
@@ -6,6 +8,9 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import status, viewsets
 from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -50,7 +55,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many = True)
@@ -59,16 +64,16 @@ def getUsers(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def getUser(request, pk):
-    user = User.objects.all(id=pk)
+    user = User.objects.get(id=pk)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated, IsAdminUser])
 def getSuppliers(request):
-    user = request.user
-    if user.roll != 'Supplier':
-        suppliers = Supplier.objects.all()
+    user = request.user.profile
+    if user.role != 'Supplier':
+        suppliers = Profile.objects.filter(role="Supplier")
         serializer = SupplierProfileSerializer(suppliers, many=True)
         return Response(serializer.data)
     else:
@@ -77,10 +82,10 @@ def getSuppliers(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAgencies(request):
-    user = request.user
+    user = request.user.profile
     if user.roll != 'Agency':
-        suppliers = Agency.objects.all()
-        serializer = AgencyProfileSerializer(suppliers, many=True)
+        agencies = Profile.objects.filter(role="Agency")
+        serializer = AgencyProfileSerializer(agencies, many=True)
         return Response(serializer.data)
     else:
         return Response({'message' : 'Sorry, You can\'t view Agencies List because you are not owner nor permitted user'})
@@ -89,10 +94,10 @@ def getAgencies(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getCustomers(request):
-    user = request.user
+    user = request.user.profile
     if user.roll != 'Customer':
-        suppliers = Customer.objects.all()
-        serializer = CustomerProfileSerializer(suppliers, many=True)
+        customers = Profile.objects.filter(role="Customer")
+        serializer = CustomerProfileSerializer(customers, many=True)
         return Response(serializer.data)
     else:
         return Response({'message' : 'Sorry, You can\'t view Customers List because you are not owner nor permitted user'})
@@ -100,9 +105,9 @@ def getCustomers(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getWorkers(request):
-    user = request.user
-    suppliers = Worker.objects.all()
-    serializer = WorkerProfileSerializer(suppliers, many=True)
+    user = request.user.profile
+    workers = Profile.objects.filter(role="Worker")
+    serializer = WorkerProfileSerializer(workers, many=True)
     return Response(serializer.data)
     
 
@@ -297,12 +302,59 @@ def getWorkerBill(request, pk, pk1):
 #     serializer = TaskSerializer(tasks, many=True)
 #     return Response(serializer.data)
    
+@api_view(['POST'])
 
-class UserRegistrationViewSet(viewsets.ModelViewSet):
-    serializer_class = UserRegistrationSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    # authentication_class = (TokenAuthentication)
-    queryset = User.objects.all()
+# @permission_classes([IsAuthenticated])
+def UserRegistrationViewSet(request):
+    print("\n\nRegister")
+    data = request.data['data']
+    print("\n\n\n", data)
+    # users = User.objects.all()
+    user = User.objects.create(
+        username = data['username'],
+        email = data['email']
+
+    )
+    user.set_password(data['password'])
+    user.save()
+    print("User", user)
+    profile = Profile.objects.create(
+        user= user,
+        username = user.username,
+        email = user.email,
+        role = data['roll']
+    )
+    print("Profile", profile)
+    profile.save()
+    serializer = UserSerializer(user, many = False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@csrf_exempt
+def UserLoginViewSet(request):
+    user = request.user
+    print("\n\nLogin")
+    data = request.data
+    
+    print("\n\n\n", data)
+    username = data['username'],
+    password = data['password']
+    print(user.username)
+    print(user.password)
+
+    if username == user.username and password == user.password: 
+        {
+            print("login succesfully")
+        }
+
+
+
+# class UserRegistrationViewSet(viewsets.ModelViewSet, request):
+#     data = request.data
+#     serializer_class = UserRegistrationSerializer
+#     # permission_classes = [IsAuthenticated, IsAdminUser]
+#     # authentication_class = (TokenAuthentication)
+#     queryset = User.objects.all()
 
     
 # class LoginView(viewsets.ModelViewSet):
@@ -335,3 +387,4 @@ class UserRegistrationViewSet(viewsets.ModelViewSet):
 #             },
 #             'token':token
 #         })
+#

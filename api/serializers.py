@@ -13,7 +13,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True,help_text="Enter your Username.")
     email = serializers.CharField(required=True, help_text="Enter Your Email.")
     first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
-    last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
+    # last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
     roll = serializers.CharField(required=True, help_text="Enter Your Roll.")
     password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Password.")
     confPassword = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Confirm Password.")

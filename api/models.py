@@ -3,6 +3,23 @@ import uuid
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+class Profile(models.Model):
+    ROLE_TYPE=(
+        ('Supplier','Supplier'),
+        ('Worker','Worker'),
+        ('Customer','Customer'),
+        ('Agency','Agency'),
+        ('Model','Model'),
+        ('Admin', 'Admin'),
+    )
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    username = models.CharField(max_length=200, null=True, blank= True)
+    email = models.EmailField(
+        verbose_name='Email Address',
+        max_length=255,
+        unique=True,
+    )
+    role = models.CharField(max_length=50, choices=ROLE_TYPE)
 
 class Roll(models.Model):
     ROLL_TYPE=(
@@ -67,7 +84,7 @@ class Registration(models.Model):
     roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
 
 class Task(models.Model):
-    owner = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=False )
+    owner = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, blank=False )
     roll = models.ForeignKey(Roll,on_delete=models.CASCADE, null=True, blank=False)
     date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
@@ -80,7 +97,7 @@ class Task(models.Model):
 
 
 class Agency(models.Model):
-    agency = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False)
+    agency = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=False)
     name = models.CharField(max_length=100,null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
@@ -113,7 +130,7 @@ class Premise(models.Model):
         return str(self.ItemName)
 
 class Customer(models.Model):
-    customer = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    customer = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -130,7 +147,7 @@ class Customer(models.Model):
         return str(self.customer.first_name)
 
 class Supplier(models.Model):
-    supplier = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    supplier = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -164,7 +181,7 @@ class Garment(models.Model):
         return str(self.GarmentName)
 
 class Worker(models.Model):
-    worker = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    worker = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(null=True, blank=False, max_length=50)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -181,11 +198,11 @@ class Worker(models.Model):
     
 
 # class User(AbstractBaseUser):
-#     email = models.EmailField(
-#         verbose_name='Email Address',
-#         max_length=255,
-#         unique=True,
-#     )
+    # email = models.EmailField(
+    #     verbose_name='Email Address',
+    #     max_length=255,
+    #     unique=True,
+    # )
     
 #     is_active = models.BooleanField(default=True)
 #     is_staff = models.BooleanField(default=False) # a admin user; non super-user
@@ -195,3 +212,4 @@ class Worker(models.Model):
 
 #     USERNAME_FIELD = 'email'
 #     REQUIRED_FIELDS = [] # Email & Password are required by default.
+

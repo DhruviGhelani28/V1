@@ -29,6 +29,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { getRegisterData } from '../../Store/Register/RegisterAction';
+import { Pattern } from '@mui/icons-material';
 
 // const theme = createTheme({
 //     components: {
@@ -104,41 +105,59 @@ const Rolls = [
         value: 'Worker',
         label: 'Worker',
     },
+    {
+        value: 'Admin',
+        label: 'Admin',
+    },
 ];
 
 const Registration = props => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const navigateLogin = useNavigate();
-    const validationSchema = Yup.object().shape({
-        fullname: Yup.string().required('Fullname is required'),
-        username: Yup.string()
-            .required('Username is required')
-            .min(6, 'Username must be at least 6 characters')
-            .max(20, 'Username must not exceed 20 characters'),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .required('Password is required')
-            .min(6, 'Password must be at least 6 characters')
-            .max(40, 'Password must not exceed 40 characters'),
-        confirmPassword: Yup.string()
-            .required('Confirm Password is required')
-            .oneOf([Yup.ref('password'), null], 'Confirm Password does not match'),
-        roll: Yup.string()
-            .required('Roll is required')
-        // .value(isClickableInput)
-        // acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
-    });
-    const { register, control, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(validationSchema)
-    });
+    const navigateForm = useNavigate();
+    // const validationSchema = Yup.object().shape({
+    //     fullname: Yup.string().required('Fullname is required'),
+    //     username: Yup.string()
+    //         .required('Username is required')
+    //         .min(6, 'Username must be at least 6 characters')
+    //         .max(20, 'Username must not exceed 20 characters'),
+    //     email: Yup.string()
+    //         .required('Email is required')
+    //         .email('Email is invalid'),
+    //     password: Yup.string()
+    //         .required('Password is required')
+    //         .min(6, 'Password must be at least 6 characters')
+    //         .max(40, 'Password must not exceed 40 characters'),  
+    //     confirmPassword: Yup.string()
+    //         .required('Confirm Password is required')
+    //         .oneOf([Yup.ref('password'), null], 'Confirm Password does not match'),
+    //     roll: Yup.string()
+    //         .required('Roll is required'),
+
+    // });
+    const { register, handleSubmit, formState: { errors } } = useForm(
+        // {resolver: yupResolver(validationSchema)}
+    );
 
     const onSubmit = data => {
         console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData(data));
-        navigateLogin("/Login");
+
+        dispatch(getRegisterData({ data: data }));
+        if (data.roll === 'Supplier') {
+            navigateForm("/SupplierForm");
+        }
+        else if (data.roll === 'Customer') {
+            navigateForm("/CustomerForm");
+        }
+        else if (data.roll === 'Worker') {
+            navigateForm("/WorkerForm");
+        }
+        else if (data.roll === 'Agency') {
+            navigateForm("/AgencyForm");
+        }
+        else {
+            navigateForm("/Department");
+        }
 
     };
     const goBackHandler = () => {
@@ -147,7 +166,7 @@ const Registration = props => {
 
     const classes1 = useStyles();
     const [values, setValues] = React.useState({
-        name: '',
+        fullname: '',
         email: '',
         username: '',
         password: '',
@@ -176,12 +195,16 @@ const Registration = props => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-
-    const [roll, setRoll] = React.useState(null);
-    const rollChangeHandler = (event, props) => {
-        setRoll(event.target.value);
+    const handleClickShowPass = () => {
+        setValues({
+            ...values,
+            showPassword: !values.showPassword,
+        });
     };
 
+    const handleMouseDownPass = (event) => {
+        event.preventDefault();
+    };
 
     return (
         <Container align="center">
@@ -199,6 +222,7 @@ const Registration = props => {
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
                 component="form"
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
@@ -229,8 +253,10 @@ const Registration = props => {
                             label="Enter Your Name"
                             placeholder="xyz abc"
                             inputprops={{ tabIndex: "1" }}
-                            {...register('fullname')}
-                            error={errors.fullname ? true : false}
+                            onChange={handleChange('fullname')}
+                            {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
+                            error={!!errors?.fullname}
+                            helpertext={errors?.fullname ? errors.fullname.message : null}
                         />
 
                         <TextField
@@ -242,9 +268,16 @@ const Registration = props => {
                             id="email"
                             label="Enter Your Email Address"
                             placeholder="xyz@abc.com"
+                            onChange={handleChange('email')}
                             inputprops={{ tabIndex: "2" }}
-                            {...register('email')}
-                            error={errors.email ? true : false}
+                            {...register('email', {
+                                required: true, pattern: {
+                                    value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i,
+                                    message: "Invalid Email Address",
+                                },
+                            })}
+                            error={!!errors?.email}
+                            helpertext={errors?.email ? errors.email.message : null}
                         />
 
                         <TextField
@@ -256,9 +289,11 @@ const Registration = props => {
                             id="username"
                             label="Enter Your UserName"
                             placeholder="xyz_abc123"
+                            onChange={handleChange('username')}
                             inputprops={{ tabIndex: "3" }}
-                            {...register('username')}
-                            error={errors.username ? true : false}
+                            {...register('username', { required: true, maxLength: 20, minLength: 4 })}
+                            error={!!errors?.username}
+                            helpertext={errors?.username ? errors.username.message : null}
                         />
                         <TextField
                             inputprops={{ tabIndex: "4" }}
@@ -286,11 +321,19 @@ const Registration = props => {
                                     </InputAdornment>
                                 )
                             }}
-                            {...register('password')}
-                            error={errors.password ? true : false}
+                            {...register('password', {
+                                required: true,
+                                pattern: {
+                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
+                                    message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                }
+                            }
+                            )}
+                            error={!!errors?.password}
+                            helpertext={errors?.password ? errors.password.message : null}
                         />
                         <TextField
-                            
+
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
                             required
@@ -305,9 +348,9 @@ const Registration = props => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             className={classes1.root1}
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
+                                            aria-label="toggle visibility"
+                                            onClick={handleClickShowPass}
+                                            onMouseDown={handleMouseDownPass}
                                             edge="end"
                                         >
                                             {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
@@ -316,8 +359,16 @@ const Registration = props => {
                                 )
                             }}
                             inputprops={{ tabIndex: "5" }}
-                            {...register('confirmPassword')}
-                            error={errors.confirmPassword ? true : false}
+                            {...register('confirmpassword', {
+                                required: true,
+                                pattern: {
+                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
+                                    message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                }
+                            }
+                            )}
+                            error={!!errors?.confirmpassword}
+                            helpertext={errors?.confirmpassword ? errors.confirmpassword.message : null}
                         />
 
                         <FormControl
@@ -330,15 +381,16 @@ const Registration = props => {
                             } */}
                             <InputLabel id="roll-id">Roll</InputLabel>
                             <Select
-
+                                onChange={handleChange('roll')}
                                 sx={{ textAlign: 'left' }}
                                 labelId="demo-simple-select-label"
                                 id="select-roll"
                                 label="Roll"
-                                {...register('roll')}
-                                error={errors.roll ? true : false}
+                                {...register('roll', { required: true })}
+                                error={!!errors?.roll}
+                                helpertext={errors?.roll ? errors.roll.message : null}
                                 defaultValue=""
-                                
+
                             >
                                 {Rolls.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>

@@ -22,7 +22,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import MainMenu from '../HeaderMenu/MainMenu';
 import RenderMenu from '../HeaderMenu/RenderMenu';
 import MobileMenu from '../HeaderMenu/MobileMenu';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // const pages = ['Home', 'About', 'Login']
 
 const useStyles = makeStyles({
@@ -127,25 +127,21 @@ const mobileMenuId = 'primary-search-account-menu-mobile';
 // const drawerwidth = 240;
 const AppBarHeader = props => {
     const classes = useStyles();
-    const navigate1 = useNavigate()
-    const navigate2 = useNavigate()
-    const navigate3 = useNavigate()
-    const navigate4 = useNavigate()
-    const navigate5 = useNavigate()
+    const navigate = useNavigate()
     const homeHandler = () => {
-        navigate1("/")
+        navigate("/")
     }
     const aboutHandler = () => {
-        navigate2("/About")
+        navigate("/About")
     }
     const loginHandler = () => {
-        navigate3("/Login")
+        navigate("/Login")
     }
     const messHandler = () => {
-        navigate4("/Messages")
+        navigate("/Messages")
     }
     const notificationHandler = () => {
-        navigate5("/Notifications")
+        navigate("/Notifications")
     }
     const [anchorEl, setAnchorEl] = useState(null)
     const [mainMenuEl, setMainMenuEl] = useState(null)
