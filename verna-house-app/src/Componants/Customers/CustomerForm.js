@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import classes from '../Login.module.css';
@@ -14,54 +14,93 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
+import { useLocation  } from "react-router-dom";
 import InputAdornment from '@mui/material/InputAdornment';
-
-// import FormControl from '@mui/material/FormControl';
-// import { Select } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from "@material-ui/core/styles";
+import { getRegisterData } from '../../Store/Register/RegisterAction';
+// import { getCustomers } from '../../Store/Supplier/SupplierAction';
+import { useForm } from 'react-hook-form';
 import UploadButton from '../UploadButton';
 // import PhotoCamera from '@mui/icons-material/PhotoCamera';
 // import userEvent from '@testing-library/user-event';
-
+const useStyles = makeStyles({
+    root1: {
+        color: '#121212',
+        '&:hover': {
+            color: '#EC255A',
+        }
+    },
+    root4:
+    {
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        color: 'action.home',
+    },
+    root5:
+    {
+        marginTop: 30,
+    },
+    allfield:
+    {
+        width: '40ch',
+        marginTop: '10ch',
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        color: 'action.home',
+    }
+});
 
 const CustomerForm = props => {
+    const state = useLocation().state
+    const dispatch = useDispatch()
+    // console.log(state)
+
+    const classes1 = useStyles();
     const navigate = useNavigate()
 
     const goBackHandler = () => {
-        navigate("/Home")
+        navigate("/Registration")
     }
-    // let { registration } = useParams();
+    // const a = [state.fullname, state.username, state.email]
 
-    // const [values, setValues] = React.useState({
+    const [values, setValues] = React.useState({
+        'mobileNo': "",
+        "companyName": '',
+        "companyAddress": '',
+        "profileImageCustomer": '',
+        "locationCustomer": '',
+        "scocialWebsite": "",
+    });
 
-    // });
-
-    // const handleChange = (prop) => (event) => {
-    //     setValues({ ...values, [prop]: event.target.value });
-    // };
-
-    // const handleClickShowPassword = () => {
-    //     setValues({
-    //         ...values,
-
-    //     });
-    // };
-
-    // const handleMouseDownPassword = (event) => {
-    //     event.preventDefault();
-    // };
-
-    // const [roll, setRoll] = React.useState(null);
-
-    // const rollChangeHandler = (event) => {
-    //     setRoll(event.target.value);
-    // };
-
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        // const data1 = a.push(data)
+        console.log(JSON.stringify(data, null, 2));
+        dispatch(getRegisterData({ data: state }));
+        // dispatch(getCustomers({ data: data1 }));
+    }
 
     return (
         <Container align="center">
-            <Card variant="outlined" sx={{ maxWidth: 500, maxHeight: 8000, borderRadius: 5, borderColor: 'primary.main', paddingTop: 1, m: 1 }} margin="10px">
+            <Card
+                variant="outlined"
+                sx={{
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
+                    borderColor: '#EC255A',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    color: 'action.home',
+                    paddingTop: 1,
+                    m: 1,
+                    marginTop: 10,
+                    transition: "all 0.5s ease",
+                    "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+                }}
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
                         <ChevronLeftIcon />
@@ -69,82 +108,61 @@ const CustomerForm = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Customer Profile</Typography>
-                    <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            marginLeft: 0,
-                            '& .MuiTextField-root': { m: 1, width: '40ch', size: 'small' },
-                            // '& .MuiButton-root': { marginRight:10 },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <div>
-                            <TextField
-                                disabled
-                                id="customer-one-to-one"
-                                label="Customer"
-                                // defaultValue={username}
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="first-name"
-                                label="Name"
-                                placeholder="xyz abc"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="email-id"
-                                label="Email Address"
-                                placeholder="xyz@abc.com"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="username"
-                                label="UserName"
-                                placeholder="xyz_abc123"
-                            />
-                            <TextField
-                                disabled
-                                multiline
-                                size='medium'
-                                id="roll-id-customer"
-                                label="Roll"
-                                defaultValue="Customer"
-                            />
-                            <TextField
-                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                required
-                                multiline
-                                size='medium'
-                                id="mobile-no-customer"
-                                label="Mobile No."
-                                placeholder="1234567892"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="company-name"
-                                label="Company Name"
-                                placeholder="xyz abc"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="company-address"
-                                label="Company Address"
-                                placeholder="xyz abc"
-                            />
-                            {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
+
+                    <div className={classes1.root5}>
+                       
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            multiline
+                            size='medium'
+                            id="role"
+                            label="Role"
+                            // defaultValue={state.role}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            required
+                            multiline
+                            size='medium'
+                            id="mobileNoCustomer"
+                            label="Mobile No."
+                            placeholder="1234567892"
+                            {...register('mobileNoCustomer', { required: true, maxLength: 10 })}
+                            error={!!errors?.mobileNoCustomer}
+                            helpertext={errors?.mobileNoCustomer ? errors.mobileNoCustomer.message : null}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="companyName"
+                            label="Company Name"
+                            placeholder="xyz abc"
+                            onChange={handleChange}
+                            {...register('companyName', { required: true, maxLength: 20 })}
+                            error={!!errors?.companyName}
+                            helpertext={errors?.companyName ? errors.companyName.message : null}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="companyAddress"
+                            label="Company Address"
+                            placeholder="xyz abc"
+                            {...register('companyAddress', { required: true, maxLength: 100 })}
+                            error={!!errors?.companyAddress}
+                            helpertext={errors?.companyAddress ? errors.companyAddress.message : null}
+                        />
+                        {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
                                 <InputLabel htmlFor="outlined-adornment-password" >Profile Image</InputLabel>
                                 <OutlinedInput
                                     id="profile-image-agency"
@@ -158,51 +176,102 @@ const CustomerForm = props => {
                                 </OutlinedInput>
                             </FormControl> */}
 
-                            <TextField
-                                id="profile-image-customer"
-                                label="Profile Image"
-                                placeholder='Upload File'
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <UploadButton />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                variant="outlined">
-                            </TextField>
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="location-customer"
-                                label="Location"
-                                placeholder="xyz"
-                            />
-                            <TextField
-                                multiline
-                                required
-                                size='medium'
-                                id="social-website"
-                                label="Social Website"
-                                placeholder="http://xyz.com"
-                            />
-                            <div className={classes.button}>
-                                <Button
-                                    variant="contained"
-                                    onClick={props.onClick}
-                                    sx={{
-                                        marginTop: 0.5,
-                                        marginRight: -34,
-                                    }}>
-                                    Submit</Button>
-                            </div>
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            id="profileImageCustomer"
+                            label="Profile Image Customer"
+                            placeholder='Upload File'
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <UploadButton className={classes1.root1} />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="outlined"
+                            onChange={handleChange}
+                            {...register('profileImageCustomer', { required: true })}
+                            error={!!errors?.profileImageCustomer}
+                            helpertext={errors?.profileImageCustomer ? errors.profileImageCustomer.message : null}>
+                        </TextField>
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="locationCustomer"
+                            label="Location"
+                            placeholder="xyz"
+                            onChange={handleChange}
+                            {...register('locationCustomer', { required: true, maxLength: 100 })}
+                            error={!!errors?.locationCustomer}
+                            helpertext={errors?.locationCustomer ? errors.locationCustomer.message : null}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            multiline
+                            required
+                            size='medium'
+                            id="socialWebsite"
+                            label="Social Website"
+                            placeholder="http://xyz.com"
+                            onChange={handleChange}
+                            {...register('socialWebsite', { required: false })}
+                            error={!!errors?.socialWebsite}
+                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+                        />
+                        <div className={classes.button}>
+                            <Button
+                                variant="contained"
+                                className={classes1.root4}
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{
+                                    marginTop: 0.5,
+                                    marginRight: -34,
+                                    color: 'black',
+                                }}>
+                                Submit</Button>
                         </div>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Container>
+                    </div>
+               
+            </CardContent>
+        </Card>
+        </Container >
     );
 
 };
 export default CustomerForm;
+
+//  <TextField
+//                             disabled
+//                             id="customer-one-to-one"
+//                             label="Customer"
+//                         // defaultValue={username}
+//                         />
+//                         <TextField
+//                             required
+//                             multiline
+//                             size='medium'
+//                             id="first-name"
+//                             label="Name"
+//                             placeholder="xyz abc"
+//                         />
+//                         <TextField
+//                             required
+//                             multiline
+//                             size='medium'
+//                             id="email-id"
+//                             label="Email Address"
+//                             placeholder="xyz@abc.com"
+//                         />
+//                         <TextField
+//                             required
+//                             multiline
+//                             size='medium'
+//                             id="username"
+//                             label="UserName"
+//                             placeholder="xyz_abc123"
+//                         />

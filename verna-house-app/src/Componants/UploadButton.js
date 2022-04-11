@@ -8,13 +8,13 @@ const Input = styled('input')({
     display: 'none',
 });
 
-export default function UploadButton() {
+export default function UploadButton(props) {
     return (
 
         <label htmlFor="icon-button-file">
             <Input accept="image/*" id="icon-button-file" type="file" />
             <IconButton color="primary" aria-label="upload picture" component="span">
-                <PhotoCamera />
+                <PhotoCamera className={props.className}/>
             </IconButton>
         </label>
 

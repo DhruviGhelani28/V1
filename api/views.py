@@ -1,4 +1,5 @@
 import email
+from pickle import TRUE
 import profile
 from urllib import request
 from django.shortcuts import render
@@ -69,7 +70,7 @@ def getUser(request, pk):
     return Response(serializer.data)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getSuppliers(request):
     user = request.user.profile
     if user.role != 'Supplier':
@@ -324,6 +325,12 @@ def UserRegistrationViewSet(request):
         email = user.email,
         role = data['roll']
     )
+    supplier = Supplier.objects.create(
+        user= user,
+        username = user.username,
+        email = user.email,
+        role = data['roll']
+    )
     print("Profile", profile)
     profile.save()
     serializer = UserSerializer(user, many = False)
@@ -331,21 +338,22 @@ def UserRegistrationViewSet(request):
 
 @api_view(['POST'])
 @csrf_exempt
+@permission_classes([IsAuthenticated])
 def UserLoginViewSet(request):
-    user = request.user
-    print("\n\nLogin")
+    # user = request.user
+    # print("\n\nLogin")
     data = request.data
     
     print("\n\n\n", data)
-    username = data['username'],
+    username = data['username']
     password = data['password']
-    print(user.username)
-    print(user.password)
+    
+    # print(user.username)
+    # print(user.password)
+    user = User.objects.get(username=username)
 
-    if username == user.username and password == user.password: 
-        {
-            print("login succesfully")
-        }
+    if user.check_password(password):
+        return Response({'mess': "You are logined succesfully"})
 
 
 

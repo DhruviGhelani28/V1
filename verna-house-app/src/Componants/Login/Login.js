@@ -5,11 +5,7 @@ import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import PeopleIcon from '@mui/icons-material/People';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 import Grid from '@mui/material/Grid';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -26,28 +22,11 @@ import classes from '../Login.module.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-import FormHelperText from '@mui/material/FormHelperText';
+
 import { useDispatch } from "react-redux";
 import { getLoginData } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
-const Rolls = [
-    {
-        value: 'Supplier',
-        label: 'Supplier',
-    },
-    {
-        value: 'Customer',
-        label: 'Customer',
-    },
-    {
-        value: 'Agency',
-        label: 'Agency',
-    },
-    {
-        value: 'Worker',
-        label: 'Worker',
-    },
-];
+
 
 const useStyles = makeStyles({
     root: {
@@ -124,9 +103,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Login = props => {
 
-
     const dispatch = useDispatch();
     const navigateHome = useNavigate();
+    const classes1 = useStyles();
+    const navigate = useNavigate()
+    const navigate1 = useNavigate();
 
     const [values, setValues] = useState({
         username: "",
@@ -145,7 +126,8 @@ const Login = props => {
     const onSubmit = (data) => {
 
         console.log(JSON.stringify(data, null, 2));
-        dispatch(getLoginData({ data: data }));
+        console.log("sss", data);
+        dispatch(getLoginData(data));
         // if (data.roll == 'Supplier') {
         //     
         // }
@@ -153,9 +135,7 @@ const Login = props => {
 
     };
 
-    const classes1 = useStyles();
-    const navigate = useNavigate()
-    const navigate1 = useNavigate();
+
     const goBackHandler = () => {
         navigate1("/Home")
     }
@@ -195,7 +175,7 @@ const Login = props => {
                         <Avatar
                             alt="Remy Sharp"
                             src="/src/static/images/avatar/female.png.jpg"
-                            sx={{ width: 56, height: 56, borderColor: 'action.home' }}
+                            sx={{ width: 56, height: 56, borderWidth: 5, borderColor: "#121212" }}
                             position='sticky'
                         /></StyledBadge>
 

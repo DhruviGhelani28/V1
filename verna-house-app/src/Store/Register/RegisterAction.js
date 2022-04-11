@@ -35,29 +35,31 @@ export const getRegisterData = (values) => async (dispatch) => {
 
 export const getLoginData = (values) => async (dispatch) => {
     console.log("Login dispatch")
+    // localStorage.removeItem("userInfo");
     try {
-        // dispatch({
-        //     type: UserActionType.USER_LOGIN_REQUEST,
-        // });
-        
+
+        console.log("axs", values);
         const { data } = await axios.post(
-            "http://127.0.0.1:8000/api/users/token/", values['data']);
-        
+            "http://127.0.0.1:8000/api/users/token/", values);
+        console.log("assas", data)
+
         const token = data['access']
         const config = {
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Token : ${token}`,
+                "Authorization": `Bearer ${token}`,
             },
         };
-        const { login } = await axios.post("http://127.0.0.1:8000/api/login/", values['data'], config)
+
+
+        const login = await axios.post("http://127.0.0.1:8000/api/login/", values, config)
         dispatch({
-            type: UserActionType.USER_LOGIN_SUCCESS, payload: data,
+            type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
         });
-        
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        console.log("login call", login)
+        localStorage.setItem("userInfo", JSON.stringify(token));
     } catch (error) {
-        const login_error = error.response.data.non_field_errors[1];
+        const login_error = error.response.data.non_field_errors[0];
         dispatch({
             type: UserActionType.USER_LOGIN_FAIL, payload: { login_error },
         });

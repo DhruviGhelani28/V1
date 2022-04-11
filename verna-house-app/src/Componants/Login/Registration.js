@@ -22,9 +22,9 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MenuItem from '@mui/material/MenuItem';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { formatMuiErrorMessage } from '@mui/utils';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
@@ -142,22 +142,23 @@ const Registration = props => {
     const onSubmit = data => {
         console.log(JSON.stringify(data, null, 2));
 
-        dispatch(getRegisterData({ data: data }));
-        if (data.roll === 'Supplier') {
-            navigateForm("/SupplierForm");
+        // dispatch(getRegisterData({ data: data }));
+        if (data.role === 'Supplier') {
+            navigateForm("/SupplierForm", { state: data });
         }
-        else if (data.roll === 'Customer') {
-            navigateForm("/CustomerForm");
+        else if (data.role === 'Customer') {
+            navigateForm("/CustomerForm", { state: data });
         }
-        else if (data.roll === 'Worker') {
-            navigateForm("/WorkerForm");
-        }
-        else if (data.roll === 'Agency') {
-            navigateForm("/AgencyForm");
+        else if (data.role === 'Worker') {
+            navigateForm("/WorkerForm", { state: data });
         }
         else {
-            navigateForm("/Department");
+
+            navigateForm("/AgencyForm", { state: data });
         }
+        // else {
+        //     navigateForm("/Department");
+        // }
 
     };
     const goBackHandler = () => {
@@ -171,7 +172,7 @@ const Registration = props => {
         username: '',
         password: '',
         confirm: '',
-        roll: '',
+        role: '',
         showPassword: false,
     });
     // const [isPassValid, setIsPassValid] = useState(false)
@@ -379,16 +380,16 @@ const Registration = props => {
                             {/* {
                                 console.log("vvvv", getFieldState("roll"))
                             } */}
-                            <InputLabel id="roll-id">Roll</InputLabel>
+                            <InputLabel id="role-id">Role</InputLabel>
                             <Select
-                                onChange={handleChange('roll')}
+                                onChange={handleChange('role')}
                                 sx={{ textAlign: 'left' }}
                                 labelId="demo-simple-select-label"
-                                id="select-roll"
-                                label="Roll"
-                                {...register('roll', { required: true })}
-                                error={!!errors?.roll}
-                                helpertext={errors?.roll ? errors.roll.message : null}
+                                id="select-role"
+                                label="Role"
+                                {...register('role', { required: true })}
+                                error={!!errors?.role}
+                                helpertext={errors?.role ? errors.role.message : null}
                                 defaultValue=""
 
                             >
@@ -399,7 +400,7 @@ const Registration = props => {
                                 ))}
                             </Select>
 
-                            <FormHelperText>Please select your roll in system.</FormHelperText>
+                            <FormHelperText>Please select your role in system.</FormHelperText>
                         </FormControl>
 
                         <div className={classes.button}>
@@ -412,7 +413,7 @@ const Registration = props => {
                                     marginRight: -34,
                                     color: 'black',
                                 }}>
-                                Sign Up</Button>
+                                Next</Button>
                         </div>
                         <div className={classes.register}>
                             <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -13.5, color: 'black' }}>
