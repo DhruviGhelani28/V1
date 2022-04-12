@@ -1,4 +1,4 @@
-import { GET_SUPPLIER_DATA, GET_SUPPLIER_FAIL } from "./SupplierAction";
+import { GET_SUPPLIERS_DATA, GET_SUPPLIERS_FAIL } from "./SupplierAction";
 
 const initialState = {
     getSuppliers: [],
@@ -6,9 +6,9 @@ const initialState = {
 
 const SupplierReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_SUPPLIER_DATA:
+        case GET_SUPPLIERS_DATA:
             return { getSuppliers: action.suppliers }
-        case GET_SUPPLIER_FAIL:
+        case GET_SUPPLIERS_FAIL:
             return { getSuppliers: action.suppliers }
         default: return state;
     }

@@ -45,4 +45,5 @@ urlpatterns = [
 
     path('register/',UserRegistrationViewSet),
     path('login/',UserLoginViewSet),
+    path('MyTasks/',getTasks),
 ]

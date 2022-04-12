@@ -16,9 +16,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { useForm } from 'react-hook-form';
+
 import MenuItem from '@mui/material/MenuItem';
 import { Select } from '@mui/material';
 
@@ -39,26 +38,44 @@ const Rolls = [
         value: 'Worker',
         label: 'Worker',
     },
+    {
+        value: 'Admin',
+        label: 'Admin',
+    },
+
 ];
 
 
 const TaskForm = props => {
     const navigate = useNavigate()
-
+    
     const goBackHandler = () => {
+        // setOpen(false)
         navigate("/Account")
     }
-    const [roll, setRoll] = React.useState(null);
+  
+    const [values, setValues] = React.useState({
+        'mobileNo': "",
+        "agencyName": '',
+        "agencyAddress": '',
+        "profileImageAgency": '',
+        "locationAgency": '',
+        "scocialWebsite": "",
+    });
 
-    const rollChangeHandler = (event) => {
-        setRoll(event.target.value);
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
     };
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = data => {
 
-    // const [date, setDate] = React.useState('Controlled');
+        // const data1 = a.push(data)
 
-    // const dateChange = (event) => {
-    //     setValue(event.target.value);
-    // };
+        console.log(JSON.stringify(data, null, 2));
+       
+    }
+
+   
 
     const [value, setValue] = React.useState(null);
     return (
@@ -94,7 +111,7 @@ const TaskForm = props => {
                                 size='medium'
                                 id="role"
                                 label="Role"
-                                // defaultValue="Agency"
+                            // defaultValue="Agency"
                             />
                             <TextField
                                 required
@@ -127,7 +144,7 @@ const TaskForm = props => {
                                 variant="outlined">
                             </TextField> */}
                             <TextField
-                                disableFuture
+                                disablefuture='true'
                                 variant="outlined"
                                 color="primary"
                                 inputProps={{
@@ -157,7 +174,7 @@ const TaskForm = props => {
                                     labelId="demo-simple-select-label"
                                     id="select-roll"
                                     label="Roll"
-                                    value={roll}
+                                    // value={'fghg'}
                                     onChange={rollChangeHandler}
                                 >
                                     {Rolls.map((option) => (

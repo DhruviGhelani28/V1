@@ -7,11 +7,11 @@ import DatePicker from '@mui/lab/DatePicker';
 export default DatePicker = props => {
 
     const [value, setValue] = React.useState(null);
-    
+
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-                disableFuture
+                disablefuture
                 label="Date"
                 openTo="year"
                 views={['year', 'month', 'day']}

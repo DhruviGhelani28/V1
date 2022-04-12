@@ -18,7 +18,7 @@ import Departments from './Pending/Departments/Departments';
 import Customers from './Customers/Customers';
 import Workers from './Workers/Workers';
 import Items from './Pending/Items/Items';
-import PhotosPosters from './Pending/Photos_Posters/PhotosPosters';
+import PhotosPosters from './Photos_Posters/PhotosPosters';
 import Models from './Pending/Models/Models';
 import Messages from './Pending/Messages/Messages';
 import Notifications from './Pending/Notifications/Notifications';

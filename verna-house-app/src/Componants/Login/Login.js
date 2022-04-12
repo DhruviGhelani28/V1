@@ -26,6 +26,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { getLoginData } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
+import { Divider } from "@mui/material";
 
 
 const useStyles = makeStyles({
@@ -74,6 +75,7 @@ const useStyles = makeStyles({
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
         backgroundColor: '#44b700',
+        
         color: '#44b700',
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
         '&::after': {
@@ -234,6 +236,8 @@ const Login = props => {
                                 />
 
                             </Grid>
+                           
+                            
                             {/* <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 <FormControl required sx={{ m: 1, width: '40ch' }} >

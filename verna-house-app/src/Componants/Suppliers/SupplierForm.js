@@ -50,15 +50,16 @@ const useStyles = makeStyles({
 
 const SupplierForm = props => {
     const navigate = useNavigate()
+
     const state = useLocation().state
     const dispatch = useDispatch()
-    // console.log(state)
+    console.log(state)
     const classes1 = useStyles();
     const goBackHandler = () => {
         navigate("/Registration")
     }
 
-    // const a = [state.fullname, state.username, state.email]
+    const a = [state.fullname, state.username, state.email]
     const [values, setValues] = React.useState({
         'mobileNo': "",
         "organizationName": '',
@@ -74,11 +75,12 @@ const SupplierForm = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
 
-        // const data1 = a.push(data)
+        const data1 = a.push(data)
 
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
-        // dispatch(getAgencies({ data: data1 }));
+        console.log("user registered")
+        // dispatch(getSuppliers({ data: data1 }));
     }
 
 
@@ -127,7 +129,7 @@ const SupplierForm = props => {
                             size='medium'
                             id="role"
                             label="Role"
-                            defaultValue="Supplier"
+                            defaultValue={state.role}
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                         />

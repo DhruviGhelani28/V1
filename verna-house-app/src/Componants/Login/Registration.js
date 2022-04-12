@@ -144,6 +144,7 @@ const Registration = props => {
 
         // dispatch(getRegisterData({ data: data }));
         if (data.role === 'Supplier') {
+            console.log('registration data send')
             navigateForm("/SupplierForm", { state: data });
         }
         else if (data.role === 'Customer') {

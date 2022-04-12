@@ -15,7 +15,7 @@ const Suppliers = props => {
         dispatch(getSuppliers())
     }, [dispatch])
 
-    // console.log(suppliers['getSuppliers'])
+    console.log(suppliers.getSuppliers)
     // console.log(loading)
     // console.log(details)
     // console.log(error)

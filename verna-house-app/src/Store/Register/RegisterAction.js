@@ -3,7 +3,7 @@ import { UserActionType } from "../Constants/UserActionType";
 
 
 const BaseUrl = "http://localhost:8000";
-// export const GET_SUPPLIER_DATA = "GET_REGISTER_DATA ";
+
 
 export const getRegisterData = (values) => async (dispatch) => {
     console.log("Register dispatch")
@@ -17,7 +17,7 @@ export const getRegisterData = (values) => async (dispatch) => {
             },
         };
         console.log("RegisterData save successfully");
-        const { data } = await axios.post("http://127.0.0.1:8000/api/register/", values, config);
+        const { data } = await axios.post(`${BaseUrl}/api/register/`, values, config);
 
         dispatch({
             type: UserActionType.USER_REGISTER_SUCCESS, payload: data,
@@ -39,10 +39,9 @@ export const getLoginData = (values) => async (dispatch) => {
     try {
 
         console.log("axs", values);
-        const { data } = await axios.post(
-            "http://127.0.0.1:8000/api/users/token/", values);
+        const { data } = await axios.post(`${BaseUrl}/api/users/token/`, values);
         console.log("assas", data)
-
+        const username = values.username
         const token = data['access']
         const config = {
             headers: {
@@ -52,12 +51,12 @@ export const getLoginData = (values) => async (dispatch) => {
         };
 
 
-        const login = await axios.post("http://127.0.0.1:8000/api/login/", values, config)
+        const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
         dispatch({
             type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
         });
         console.log("login call", login)
-        localStorage.setItem("userInfo", JSON.stringify(token));
+        localStorage.setItem("userInfo", JSON.stringify({ username, token }));
     } catch (error) {
         const login_error = error.response.data.non_field_errors[0];
         dispatch({

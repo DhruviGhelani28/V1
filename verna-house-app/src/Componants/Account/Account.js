@@ -33,6 +33,14 @@ const Account = props => {
     const changeHandler = (event, newValue) => {
         setValue(newValue)
     }
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
+  
     return (
         <React.Fragment>
             {/* <Box sx={{ width: '100%' }}>
@@ -51,10 +59,12 @@ const Account = props => {
                             <Tab label="Item Three" value="3" />
                         </TabList>
                     </Box>
-                    <TabPanel value="1">
+                    <TabPanel value="1" >
                         <Tasks> {props.children} </Tasks>
                     </TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
+                    <TabPanel value="2">
+                        {/* <Bills>{props.children}</Bills> */}
+                    </TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                 </TabContext>
             </Box>

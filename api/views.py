@@ -84,7 +84,7 @@ def getSuppliers(request):
 @permission_classes([IsAuthenticated])
 def getAgencies(request):
     user = request.user.profile
-    if user.roll != 'Agency':
+    if user.role != 'Agency':
         agencies = Profile.objects.filter(role="Agency")
         serializer = AgencyProfileSerializer(agencies, many=True)
         return Response(serializer.data)
@@ -96,7 +96,7 @@ def getAgencies(request):
 @permission_classes([IsAuthenticated])
 def getCustomers(request):
     user = request.user.profile
-    if user.roll != 'Customer':
+    if user.role != 'Customer':
         customers = Profile.objects.filter(role="Customer")
         serializer = CustomerProfileSerializer(customers, many=True)
         return Response(serializer.data)
@@ -323,16 +323,44 @@ def UserRegistrationViewSet(request):
         user= user,
         username = user.username,
         email = user.email,
-        role = data['roll']
-    )
-    supplier = Supplier.objects.create(
-        user= user,
-        username = user.username,
-        email = user.email,
-        role = data['roll']
+        role = data['role']
     )
     print("Profile", profile)
-    profile.save()
+    profile.save()  
+
+    if (data['role'] == 'Supplier'):
+        supplier = Supplier.objects.create(
+            supplier = user,
+            username = user.username,
+            email = user.email,
+            name = data['fullname']
+        )
+        supplier.save()
+
+    elif(data['role'] == 'Agency'):
+        agency= Agency.objects.create(
+            agency = user,
+            username = user.username,
+            email = user.email,
+            name = data['fullname']
+        )
+        agency.save()
+    elif(data['role'] == 'Customer'):
+        customer = Customer.objects.create(
+            customer = user,
+            username = user.username,
+            email = user.email,
+            name = data['fullname']
+        )
+        customer.save()
+    else:
+        worker = Worker.objects.create(
+            worker = profile,
+            username = profile.username,
+            email = profile.email,
+            name = data['fullname']
+        )
+        worker.save()
     serializer = UserSerializer(user, many = False)
     return Response(serializer.data)
 
@@ -396,3 +424,22 @@ def UserLoginViewSet(request):
 #             'token':token
 #         })
 #
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getTasks(request):
+    user = request.user.profile
+    if user.role == "Supplier":
+        # supplier = Supplier.objects.get(id=user.id)
+        tasks = Task.objects.filter(owner = user)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    elif user.role == "Agency":
+        # agency = Agency.objects.get(id=user.id)
+        tasks = Task.objects.filter(owner = user)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    
+    
