@@ -149,7 +149,7 @@ def getWorkerTasks(request, pk):
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getSupplierBills(request, pk):
     user = request.user
     supplier = Supplier.objects.get(id=pk)
@@ -158,7 +158,7 @@ def getSupplierBills(request, pk):
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getAgencyBills(request, pk):
     user = request.user
     agency = Agency.objects.get(id=pk)
@@ -167,7 +167,7 @@ def getAgencyBills(request, pk):
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getCustomerBills(request, pk):
     user = request.user
     customer = Customer.objects.get(id=pk)
@@ -176,7 +176,7 @@ def getCustomerBills(request, pk):
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def getWorkerBills(request, pk):
     user = request.user
     worker = Worker.objects.get(id=pk)
@@ -187,34 +187,38 @@ def getWorkerBills(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def getSupplier(request, pk):
-    user = request.user
-    supplier = Supplier.objects.get(id=pk)
-    serializer = SupplierProfileSerializer(supplier, many=False)
-    return Response(serializer.data)
+    user = request.user.profile
+    if user.role != "Supplier":
+        supplier = Supplier.objects.get(id=pk)
+        serializer = SupplierProfileSerializer(supplier, many=False)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def getAgency(request, pk):
-    user = request.user
-    agency = Agency.objects.get(id=pk)
-    serializer = AgencyProfileSerializer(agency, many=False)
-    return Response(serializer.data)
+    user = request.user.profile
+    if user.role != "Agency":
+        agency = Agency.objects.get(id=pk)
+        serializer = AgencyProfileSerializer(agency, many=False)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def getCustomer(request,pk):
-    user = request.user
-    customer = Customer.objects.get(id=pk)
-    serializer = CustomerProfileSerializer(customer, many=False)
-    return Response(serializer.data)
+    user = request.user.profile
+    if user.role != "Customer":
+        customer = Customer.objects.get(id=pk)
+        serializer = CustomerProfileSerializer(customer, many=False)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def getWorker(request, pk):
-    user = request.user
-    worker = Worker.objects.get(id=pk)
-    serializer = WorkerProfileSerializer(worker, many=False)
-    return Response(serializer.data)
+    user = request.user.profile
+    if user.role != "Worker":
+        worker = Worker.objects.get(id=pk)
+        serializer = WorkerProfileSerializer(worker, many=False)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsAdminUser])
@@ -430,13 +434,31 @@ def UserLoginViewSet(request):
 def getTasks(request):
     user = request.user.profile
     if user.role == "Supplier":
-        # supplier = Supplier.objects.get(id=user.id)
+        
         tasks = Task.objects.filter(owner = user)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
 
     elif user.role == "Agency":
-        # agency = Agency.objects.get(id=user.id)
+       
+        tasks = Task.objects.filter(owner = user)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    elif user.role == "Customer":
+        
+        tasks = Task.objects.filter(owner = user)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    elif user.role == "Worker":
+       
+        tasks = Task.objects.filter(owner = user)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    else:
+        
         tasks = Task.objects.filter(owner = user)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)

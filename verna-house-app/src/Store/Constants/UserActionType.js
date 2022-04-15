@@ -1,3 +1,5 @@
+import { List } from "@mui/material";
+
 export const UserActionType = {
     USER_LOGIN_REQUEST: "USER_LOGIN_REQUEST",
     USER_LOGIN_SUCCESS: "USER_LOGIN_SUCCESS",
@@ -21,5 +23,10 @@ export const UserActionType = {
     
     GET_MYTASKS_SUCCESS: "GET_MYTASKS_SUCCESS",
     GET_MYTASKS_FAIL: "GET_MYTASKS_FAIL",
-    
+
+    ADD_TASK_SUCCESS: "ADD_TASK_SUCCESS",
+    ADD_TASK_FAIL: "ADD_TASK_FAIL",
+
+    LIST_TASKS_SUCCESS : "LIST_TASKS_SUCCESS",
+    LIST_TASKS_FAIL: "LIST_TASKS_FAIL",
 }

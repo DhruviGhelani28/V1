@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -8,26 +8,48 @@ import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import classes from '../Login.module.css';
 import Divider from '@mui/material/Divider';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Backdrop from '@mui/material/Backdrop';
 import TaskForm from './TaskForm';
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyTasks } from "../../Store/Task/TaskAction";
+import { getMyTasks, addTask } from "../../Store/Task/TaskAction";
 
 
 const Tasks = (props) => {
+
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
     const dispatch = useDispatch()
     const myTasks = useSelector((state) => state.tasks)
-    const { loading, details, error } = myTasks;
+    const { getMyTasks } = myTasks;
+    const task = useSelector((state) => state.addTask)
+    const { loading, success, addTask } = task;
+
+    const [tasks, setTasks] = useState([])
     useEffect(() => {
-        dispatch(getMyTasks())
-    }, [dispatch])
+        dispatch(getMyTasks)
+    }, [dispatch, task])
+
     console.log(myTasks.getMyTasks)
+
+    useEffect(() => {
+        setTasks(getMyTasks)
+    }, [getMyTasks])
+
     const navigate = useNavigate()
-    const addTaskHandler = () => {
-        navigate("/TaskForm")
-    }
+    // const addTaskHandler = () => {
+    //     navigate("/TaskForm")
+    // }
+    
+    // useEffect(() => {
+    //     setTasks([...tasks, { state }])
+    //    console.log("task come")
+    // },[tasks])
+    
+
 
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {

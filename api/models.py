@@ -21,7 +21,7 @@ class Profile(models.Model):
     )
     role = models.CharField(max_length=50, choices=ROLE_TYPE)
 
-class Roll(models.Model):
+class Role(models.Model):
     ROLL_TYPE=(
         ('Supplier','Supplier'),
         ('Worker','Worker'),
@@ -67,7 +67,7 @@ class Billing(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
     # client = models.ForeignKey(, on_delete=models.SET_NULL,null=True, blank=False)
-    roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+    roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
     status = models.ForeignKey(BillStatus, on_delete=models.SET_NULL, null=True, blank=False)
     orderstatus = models.ForeignKey(OrderStatus ,on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -81,14 +81,15 @@ class Billing(models.Model):
 
     
 class Registration(models.Model):
-    roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+    roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
 
 class Task(models.Model):
     owner = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, blank=False )
-    roll = models.ForeignKey(Roll,on_delete=models.CASCADE, null=True, blank=False)
+    roll = models.ForeignKey(Role,on_delete=models.CASCADE, null=True, blank=False)
+    name = models.CharField(max_length=20,null=True, blank=False )
+    description = models.TextField(null=True, blank=False)
     date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
-    description = models.TextField(null=True, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
     
@@ -101,7 +102,7 @@ class Agency(models.Model):
     name = models.CharField(max_length=100,null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
-    roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+    roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
     # phone_regex = RegexValidator(regex="^(\+\d{1,3})?,?\s?\d{8,13}")validators=[phone_regex]
     # contact_no = models.CharField(verbose_name=("Mobile Number"),max_length=10, blank=True,null=True)
     mobileNo = models.IntegerField(null=True, blank=False, unique=True)

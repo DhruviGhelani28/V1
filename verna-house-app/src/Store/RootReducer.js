@@ -2,7 +2,7 @@ import SupplierReducer from "./Supplier/SupplierReducer";
 import WorkerReducer from "./Worker/WorkerReducer";
 import AgencyReducer from "./Agency/AgencyReducer";
 import CustomerReducer from "./Customer/CustomerReducer";
-import TaskReducer from "./Task/TaskReducer";
+import { TaskReducer, AddTaskReducer } from "./Task/TaskReducer";
 import { combineReducers } from "redux";
 import { userLoginReducer, userRegisterReducer } from "./Register/RegisterReducer";
 const RootReducers = combineReducers(
@@ -13,7 +13,8 @@ const RootReducers = combineReducers(
         workers: WorkerReducer,
         agencies: AgencyReducer,
         customers: CustomerReducer,
-        tasks : TaskReducer,
+        tasks: TaskReducer,
+        addTask: AddTaskReducer,
     }
 )
 

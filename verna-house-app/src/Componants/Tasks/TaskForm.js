@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,9 +18,37 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useForm } from 'react-hook-form';
-
+import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from '@mui/material/MenuItem';
 import { Select } from '@mui/material';
+
+const useStyles = makeStyles({
+    root1: {
+        color: '#121212',
+        '&:hover': {
+            color: '#EC255A',
+        }
+    },
+    root4:
+    {
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        color: 'action.home',
+    },
+    root5:
+    {
+        marginTop: 30,
+    },
+    allfield:
+    {
+        width: '40ch',
+        marginTop: '10ch',
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        color: 'action.home',
+    }
+});
+
+
+
 
 const Rolls = [
     {
@@ -48,39 +77,58 @@ const Rolls = [
 
 const TaskForm = props => {
     const navigate = useNavigate()
-    
+    const classes1 = useStyles();
     const goBackHandler = () => {
-        // setOpen(false)
+        props.onClick()
         navigate("/Account")
     }
-  
+
     const [values, setValues] = React.useState({
-        'mobileNo': "",
-        "agencyName": '',
-        "agencyAddress": '',
-        "profileImageAgency": '',
-        "locationAgency": '',
-        "scocialWebsite": "",
+        'username': "",
+        "taskName": '',
+        "discription": '',
+        "dateTime": '',
+
     });
+   
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const onSubmit = (data, e) => {
 
         // const data1 = a.push(data)
-
+        e.preventDefault();
         console.log(JSON.stringify(data, null, 2));
-       
+        navigate("/Task", {state: data})
+        
+        setValues(
+            {
+                'username': "",
+                "taskName": '',
+                "discription": '',
+                "dateTime": ''
+            })
     }
 
-   
-
-    const [value, setValue] = React.useState(null);
     return (
         <Container align="center">
-            <Card variant="outlined" sx={{ maxWidth: 500, maxHeight: 8000, borderRadius: 5, borderColor: 'primary.main', paddingTop: 1, m: 1 }} margin="10px">
+            <Card
+                variant="outlined"
+                sx={{
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
+                    borderColor: '#EC255A',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    color: 'action.home',
+                    paddingTop: 1,
+                    m: 1,
+                    marginTop: 10,
+                    transition: "all 0.5s ease",
+                    "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+                }}
+                onSubmit={handleSubmit(onSubmit)}>
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
                         <ChevronLeftIcon />
@@ -88,40 +136,89 @@ const TaskForm = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Add Task</Typography>
-                    <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            marginLeft: 0,
-                            '& .MuiTextField-root': { m: 1, width: '40ch', size: 'small' },
-                        }}
-                        noValidate
-                        autoComplete="off"  >
-                        <div>
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="username"
-                                label="UserName"
-                                placeholder="xyz_abc123"
-                            />
-                            <TextField
-                                multiline
-                                size='medium'
-                                id="role"
-                                label="Role"
-                            // defaultValue="Agency"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="description-task"
-                                label="Description"
-                                placeholder="xyzbfhfkabc"
-                            />
-                            {/* <TextField
+                    <div className={classes1.root5}>
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="username"
+                            label="UserName"
+                            placeholder="xyz_abc123"
+                            {...register('username', { required: true, maxLength: 10 })}
+                            error={!!errors?.username}
+                            helpertext={errors?.username ? errors.username.message : null}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="taskName"
+                            label="Task Name"
+                            {...register('taskname', { required: true, maxLength: 20 })}
+                            error={!!errors?.taskname}
+                            helpertext={errors?.taskname ? errors.taskname.message : null}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            required
+                            multiline
+                            size='medium'
+                            id="description"
+                            label="Description"
+                            placeholder="xyzbfhfkabc"
+                            {...register('description', { required: true, maxLength: 100 })}
+                            error={!!errors?.description}
+                            helpertext={errors?.description ? errors.description.message : null}
+                            onChange={handleChange}
+                        />
+                  
+                        <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+
+                            variant="outlined"
+                            color="primary"
+                            inputProps={{
+                                type: "datetime-local",
+                                accept: "datetime-local"
+                            }}
+                            id="dateTime"
+                            label="Date & Time"
+                            {...register('datetime', { required: true})}
+                            error={!!errors?.datetime}
+                            helpertext={errors?.datetime ? errors.datetime.message : null}
+                            onChange={handleChange} />
+
+                        
+                        <div className={classes.button}>
+                            <Button
+                                variant="contained"
+                                className={classes1.root4}
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{
+                                    marginTop: 0.5,
+                                    marginRight: -34,
+                                    color: 'black',
+                                }}>Submit</Button>
+                        </div>
+                    </div>
+
+                </CardContent>
+            </Card>
+        </Container>
+    );
+
+};
+export default TaskForm;
+
+{/* <TextField
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -143,18 +240,8 @@ const TaskForm = props => {
                                 }}
                                 variant="outlined">
                             </TextField> */}
-                            <TextField
-                                disablefuture='true'
-                                variant="outlined"
-                                color="primary"
-                                inputProps={{
-                                    type: "date",
-                                    accept: "date"
-                                }}
 
-                                label="Date" />
-
-                            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+{/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                     disableFuture
                                     label="Date"
@@ -167,7 +254,7 @@ const TaskForm = props => {
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider> */}
-                            <FormControl required sx={{ m: 1, width: '40ch' }} >
+{/* <FormControl required sx={{ m: 1, width: '40ch' }} >
                                 <InputLabel id="roll-id">Roll</InputLabel>
                                 <Select
                                     sx={{ textAlign: 'left' }}
@@ -184,23 +271,4 @@ const TaskForm = props => {
                                     ))}
                                 </Select>
                                 <FormHelperText>Please select your roll in system.</FormHelperText>
-                            </FormControl>
-                            <div className={classes.button}>
-                                <Button
-                                    variant="contained"
-                                    onClick={props.onClick}
-                                    sx={{
-                                        marginTop: 0.5,
-                                        marginRight: -34,
-                                    }}>
-                                    Submit</Button>
-                            </div>
-                        </div>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Container>
-    );
-
-};
-export default TaskForm;
+                            </FormControl> */}

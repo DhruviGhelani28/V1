@@ -23,10 +23,10 @@ urlpatterns = [
     path('Users/Customers/<str:pk>', getCustomer),
     path('Users/Workers/<str:pk>', getWorker),
 
-    path('Users/Suppliers/<str:pk>/Tasks/', getSupplierTasks),
-    path('Users/Agencies/<str:pk>/Tasks/', getAgencyTasks),
-    path('Users/Customers/<str:pk>/Tasks/', getCustomerTasks),
-    path('Users/Workers/<str:pk>/Tasks/', getWorkerTasks),
+    # path('Users/Suppliers/<str:pk>/Tasks/', getSupplierTasks),
+    # path('Users/Agencies/<str:pk>/Tasks/', getAgencyTasks),
+    # path('Users/Customers/<str:pk>/Tasks/', getCustomerTasks),
+    # path('Users/Workers/<str:pk>/Tasks/', getWorkerTasks),
 
     path('Users/Suppliers/<str:pk>/Tasks/<str:pk1>/', getSupplierTask),
     path('Users/Agencies/<str:pk>/Tasks/<str:pk1>/', getAgencyTask),
