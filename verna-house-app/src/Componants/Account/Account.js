@@ -33,23 +33,17 @@ const Account = props => {
     const changeHandler = (event, newValue) => {
         setValue(newValue)
     }
-    const [open, setOpen] = React.useState(false);
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-    };
-  
+    
+    // const [open, setOpen] = React.useState(false);
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
+    // const handleToggle = () => {
+    //     setOpen(!open);
+    // };
+  //onClick={tasksHandler}
     return (
         <React.Fragment>
-            {/* <Box sx={{ width: '100%' }}>
-                <Tabs value={value} onChange={changeHandler} aria-label="nav tabs example" indicatorColor="secondary">
-                    <LinkTab label="Tasks" href="/drafts" />
-                    <LinkTab label="Bills" href="/trash" />
-                    {/* <LinkTab label="Page Three" href="/spam" /> */}
-            {/* </Tabs> */}
-            {/* </Box> */}
             <Box sx={{ width: '100%', height: '20%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -61,6 +55,7 @@ const Account = props => {
                     </Box>
                     <TabPanel value="1" >
                         <Tasks> {props.children} </Tasks>
+                       
                     </TabPanel>
                     <TabPanel value="2">
                         {/* <Bills>{props.children}</Bills> */}
@@ -68,7 +63,6 @@ const Account = props => {
                     <TabPanel value="3">Item Three</TabPanel>
                 </TabContext>
             </Box>
-
         </React.Fragment>
     )
 

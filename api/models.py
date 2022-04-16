@@ -21,6 +21,9 @@ class Profile(models.Model):
     )
     role = models.CharField(max_length=50, choices=ROLE_TYPE)
 
+
+    def __str__(self) -> str:
+        return str(self.username)
 class Role(models.Model):
     ROLL_TYPE=(
         ('Supplier','Supplier'),
@@ -85,7 +88,7 @@ class Registration(models.Model):
 
 class Task(models.Model):
     owner = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, blank=False )
-    roll = models.ForeignKey(Role,on_delete=models.CASCADE, null=True, blank=False)
+    role = models.ForeignKey(Role,on_delete=models.CASCADE, null=True, blank=False)
     name = models.CharField(max_length=20,null=True, blank=False )
     description = models.TextField(null=True, blank=False)
     date = models.DateField(null=True, blank=True)

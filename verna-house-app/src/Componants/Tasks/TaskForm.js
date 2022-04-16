@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -21,7 +21,8 @@ import { useForm } from 'react-hook-form';
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from '@mui/material/MenuItem';
 import { Select } from '@mui/material';
-
+import { useDispatch } from 'react-redux';
+import { addTask } from '../../Store/Task/TaskAction';
 const useStyles = makeStyles({
     root1: {
         color: '#121212',
@@ -46,9 +47,6 @@ const useStyles = makeStyles({
         color: 'action.home',
     }
 });
-
-
-
 
 const Rolls = [
     {
@@ -76,21 +74,22 @@ const Rolls = [
 
 
 const TaskForm = props => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const classes1 = useStyles();
-    const goBackHandler = () => {
-        props.onClick()
-        navigate("/Account")
-    }
+   
+    // const goBackHandler = () => {
+    //     props.onClick()
+    //     // navigate("/Account")
+    // }
 
     const [values, setValues] = React.useState({
         'username': "",
         "taskName": '',
         "discription": '',
         "dateTime": '',
-
     });
-   
+
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -101,17 +100,20 @@ const TaskForm = props => {
         // const data1 = a.push(data)
         e.preventDefault();
         console.log(JSON.stringify(data, null, 2));
-        navigate("/Task", {state: data})
-        
+        props.onClick()
+        dispatch(addTask({data}))
         setValues(
             {
                 'username': "",
                 "taskName": '',
                 "discription": '',
-                "dateTime": ''
+                "dateTime": 'dd-mm-yyyy --:--:--'
             })
     }
-
+    useEffect(() => {
+        const body = document.querySelector("body");
+        body.style.overflow = props.open ? "hidden" : "auto";
+    }, [props.open])
     return (
         <Container align="center">
             <Card
@@ -130,7 +132,7 @@ const TaskForm = props => {
                 }}
                 onSubmit={handleSubmit(onSubmit)}>
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
+                    <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </CardActions>
@@ -146,7 +148,7 @@ const TaskForm = props => {
                             id="username"
                             label="UserName"
                             placeholder="xyz_abc123"
-                            {...register('username', { required: true, maxLength: 10 })}
+                            {...register('username', { required: true, maxLength: 20 })}
                             error={!!errors?.username}
                             helpertext={errors?.username ? errors.username.message : null}
                             onChange={handleChange}
@@ -178,25 +180,26 @@ const TaskForm = props => {
                             helpertext={errors?.description ? errors.description.message : null}
                             onChange={handleChange}
                         />
-                  
+
                         <TextField
+
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-
-                            variant="outlined"
-                            color="primary"
-                            inputProps={{
-                                type: "datetime-local",
-                                accept: "datetime-local"
-                            }}
                             id="dateTime"
                             label="Date & Time"
-                            {...register('datetime', { required: true})}
+                            variant="outlined"
+                            // color="primary"
+                            type="datetime-local"
+                            // placeholder="dd-mm-yyyy, --:--:--"
+                            accept="datetime-local"
+                            // value={values['dateTime']}
+                            
+                            {...register('datetime', { required: true })}
                             error={!!errors?.datetime}
                             helpertext={errors?.datetime ? errors.datetime.message : null}
                             onChange={handleChange} />
 
-                        
+
                         <div className={classes.button}>
                             <Button
                                 variant="contained"

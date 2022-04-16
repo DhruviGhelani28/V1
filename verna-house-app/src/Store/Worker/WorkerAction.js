@@ -1,26 +1,25 @@
 
 
 import axios from "axios";
-    
+
 const baseUrl = "http://localhost:8000";
 export const GET_WORKERS_DATA = "GET_WORKER_DATA ";
 export const GET_WORKERS_FAIL = "GET_WORKER_FAIL";
 
-export const getWorkers = () => async (dispatch, getState) => {
+export const getWorkers = () => async (dispatch) => {
     console.log("Worker dispatch");
     try {
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        
+        const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Bearer ${userInfo.token}`,
-            },
+                "Authorization": `Bearer ${token}`
+            }
         };
         const response = await axios.get(`${baseUrl}/api/Workers/`, config);
         console.log("worker call")
-        dispatch({ type: GET_WORKERS_DATA, workers: response.data });
+        dispatch({ type: GET_WORKERS_DATA, workers: response.data});
 
 
     } catch (error) {

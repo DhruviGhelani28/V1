@@ -17,10 +17,10 @@ export const TaskReducer = (state = initialState.getMyTasks , action) => {
 };
 export const AddTaskReducer = (state = initialState.addTask , action) => {
     switch (action.type) {
-        case UserActionType.LIST_TASKS_SUCCESS:
-            return { loading: false, success: true, addTask: action.payload }
-        case UserActionType.LIST_TASKS_FAIL:
-            return { loading: false, addTask: action.payload }
+        case UserActionType.ADD_TASK_SUCCESS:
+            return { loading: false, success: true, addTask: action.task }
+        case UserActionType.ADD_TASK_FAIL:
+            return { loading: false, addTask: action.task }
         default: return state;
     }
 }

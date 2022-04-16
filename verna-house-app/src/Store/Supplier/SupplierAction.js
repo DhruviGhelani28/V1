@@ -4,16 +4,14 @@ const baseUrl = "http://localhost:8000";
 export const GET_SUPPLIERS_DATA = "GET_SUPPLIER_DATA ";
 export const GET_SUPPLIERS_FAIL = "GET_SUPPLIER_FAIL";
 
-export const getSuppliers = () => async (dispatch, getState) => {
+export const getSuppliers = () => async (dispatch) => {
     console.log("Supplier dispatch");
     try {
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Bearer ${userInfo.token}`,
+                "Authorization": `Bearer ${token}`,
             },
         };
         const response = await axios.get("http://localhost:8000/api/Suppliers/", config);

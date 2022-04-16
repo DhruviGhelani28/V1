@@ -3,16 +3,14 @@ import { UserActionType } from "../Constants/UserActionType";
 
 
 const BaseUrl = "http://localhost:8000";
-export const getCustomers = () => async (dispatch, getState) => {
+export const getCustomers = () => async (dispatch) => {
     console.log("Customer dispatch");
     try {
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Bearer ${userInfo.token}`,
+                "Authorization": `Bearer ${token}`,
             },
         };
         const response = await axios.get(`${BaseUrl}/api/Customers/`, config);

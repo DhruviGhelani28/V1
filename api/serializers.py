@@ -8,11 +8,19 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework import serializers, exceptions
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """User registration serializer class"""
     username = serializers.CharField(required=True,help_text="Enter your Username.")
     email = serializers.CharField(required=True, help_text="Enter Your Email.")
-    first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
+    name = serializers.CharField(required=True, help_text="Enter Your Name")
+
+    # first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
     # last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
     roll = serializers.CharField(required=True, help_text="Enter Your Roll.")
     password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Password.")
@@ -79,7 +87,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class AgencyProfileSerializer(serializers.ModelSerializer):
-    agency = UserRegistrationSerializer(read_only =True)
+    agency = UserSerializer(read_only =True)
     class Meta:
         model = Agency
         fields = ['id','agency','name','email','username','roll','mobileNo','agencyName','agencyAddress','profile_image','location','social_website']
@@ -123,7 +131,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 
 class SupplierProfileSerializer(serializers.ModelSerializer):
-    supplier = UserRegistrationSerializer(read_only =True)
+    # supplier = UserRegistrationSerializer(read_only =True)
     class Meta:
         model = Supplier
         fields = '__all__'
@@ -145,7 +153,7 @@ class SupplierProfileSerializer(serializers.ModelSerializer):
 
 
 class WorkerProfileSerializer(serializers.ModelSerializer):
-    worker = UserRegistrationSerializer(read_only =True)
+    # worker = UserRegistrationSerializer(read_only =True)
     class Meta:
         model = Worker
         fields = '__all__'
@@ -155,7 +163,7 @@ class WorkerProfileSerializer(serializers.ModelSerializer):
             name = validated_data['name'],
             email = validated_data['email'],
             username = validated_data['username'],
-            roll = validated_data['roll'],
+            role = validated_data['role'],
             mobileNo = validated_data['mobileNo'],
             address = validated_data['address'],
             short_intro = validated_data['short_intro'],
@@ -169,11 +177,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model= Task
         fields = '__all__'
-        extra_kwargs = {
-            'roll': {
-            'read_only' : True
-        },
-        } 
+        
 
 class BillingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -264,7 +268,3 @@ class LoginSerializer(serializers.ModelSerializer):
             raise exceptions.AuthenticationFailed('Account is not active')
         raise exceptions.AuthenticationFailed()
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'

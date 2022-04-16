@@ -12,8 +12,8 @@ const Workers = props => {
 
     useEffect(() => {
         dispatch(getWorkers())
-    }, [dispatch])
-    console.log(workers.getWorkers)
+    }, [])
+    // console.log(workers.getWorkers)
 
     return (
         <React.Fragment>

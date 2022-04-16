@@ -6,13 +6,11 @@ const BaseUrl = "http://localhost:8000";
 export const getAgencies = () => async (dispatch, getState) => {
     console.log("Agency dispatch");
     try {
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Bearer ${userInfo.token}`,
+                "Authorization": `Bearer ${token}`,
             },
         };
         const response = await axios.get(`${BaseUrl}/api/Agencies/`, config);
