@@ -77,7 +77,7 @@ const TaskForm = props => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const classes1 = useStyles();
-   
+
     // const goBackHandler = () => {
     //     props.onClick()
     //     // navigate("/Account")
@@ -101,7 +101,7 @@ const TaskForm = props => {
         e.preventDefault();
         console.log(JSON.stringify(data, null, 2));
         props.onClick()
-        dispatch(addTask({data}))
+        dispatch(addTask({ data }))
         setValues(
             {
                 'username': "",
@@ -188,12 +188,13 @@ const TaskForm = props => {
                             id="dateTime"
                             label="Date & Time"
                             variant="outlined"
-                            // color="primary"
                             type="datetime-local"
                             // placeholder="dd-mm-yyyy, --:--:--"
-                            accept="datetime-local"
+                            // accept="datetime-local"
                             // value={values['dateTime']}
-                            
+                            InputLabelProps={{
+                                "shrink": true
+                            }}
                             {...register('datetime', { required: true })}
                             error={!!errors?.datetime}
                             helpertext={errors?.datetime ? errors.datetime.message : null}

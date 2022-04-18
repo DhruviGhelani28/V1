@@ -5,7 +5,7 @@ import Registration from "./Registration";
 import ChangePassword from "./ChangePassword";
 // import Button from '@mui/material/Button';
 // import { Outlet } from "react-router-dom";
-
+import classes from ".././Login.module.css"
 import { Container } from "@mui/material";
 
 
@@ -22,14 +22,14 @@ const LoginRegistration = props => {
     }
     return (
         <React.Fragment>
-            <Container align="center">
+            <div align="center">    
                 <Routes>
                     <Route path="/" element={<Login onClick={loginHandler} onRegisterClick={registrationHandler} />} exact />
                     <Route path="/Registration" element={<Registration />} exact />
                     <Route path="/ChangePassword" element={<ChangePassword />} exact />
                 </Routes>
-            </Container>
-
+       
+            </div>
 
         </React.Fragment>
 

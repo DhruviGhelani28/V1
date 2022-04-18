@@ -50,13 +50,15 @@ export const getLoginData = (values) => async (dispatch) => {
             },
         };
 
-
+        // const { data } = await axios.get(`${BaseUrl}/api/users/`, values);
         const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
         dispatch({
             type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
         });
+        const role = login['data']
         console.log("login call", login)
-        localStorage.setItem("userInfo", JSON.stringify({ username, token }));
+
+        localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
     } catch (error) {
         const login_error = error.response.data.non_field_errors[0];
         dispatch({

@@ -209,7 +209,8 @@ const Registration = props => {
     };
 
     return (
-        <Container align="center">
+        <div className={classes.registerBack} align="center">
+        {/* <Container align="center" > */}
             <Card variant="outlined"
                 sx={{
                     maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
@@ -219,7 +220,7 @@ const Registration = props => {
                     color: 'action.home',
                     paddingTop: 1,
                     m: 1,
-                    marginTop: 10,
+                    // marginTop: 1 ,
                     transition: "all 0.5s ease",
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
@@ -430,7 +431,8 @@ const Registration = props => {
                     {/* </Box> */}
                 </CardContent>
             </Card>
-        </Container>
+        {/* </Container> */}
+        </div>
     );
 
 };

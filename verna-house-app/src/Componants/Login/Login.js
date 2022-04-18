@@ -137,7 +137,6 @@ const Login = props => {
 
     };
 
-
     const goBackHandler = () => {
         navigate1("/Home")
     }
@@ -160,8 +159,9 @@ const Login = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
-        <div>
-            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#EC255A', borderWidth: 1, borderRadius: 5, marginTop: 10 }}>
+        <div className={classes.loginBack}>
+
+            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#EC255A', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
                 <CardActions >
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
                         <ChevronLeftIcon className={classes1.root1} />
@@ -185,7 +185,6 @@ const Login = props => {
                         component="form"
                         sx={{
                             marginTop: 5,
-
                             '& .MuiTextField-root': { m: 1, width: '40ch' },
                             '& .MuiButton-root': { textColor: '#121212' },
                         }}

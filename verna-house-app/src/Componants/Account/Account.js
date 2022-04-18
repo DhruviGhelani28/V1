@@ -44,7 +44,7 @@ const Account = props => {
   //onClick={tasksHandler}
     return (
         <React.Fragment>
-            <Box sx={{ width: '100%', height: '20%', typography: 'body1' }}>
+            <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={changeHandler} aria-label="lab API tabs example">

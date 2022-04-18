@@ -1,7 +1,7 @@
 import email
 from pickle import TRUE
 import profile
-from urllib import request
+from urllib import request, response
 from django.shortcuts import render
 from pandas import describe_option
 from .models import *
@@ -144,9 +144,15 @@ def UserLoginViewSet(request):
     # print(user.username)
     # print(user.password)
     user = User.objects.get(username=username)
-
+    profile = Profile.objects.get(username = username)
+    role = profile.role
+    data = {
+        "role" : role
+    }
+    print(data['role'])
     if user.check_password(password):
-        return Response({'mess': "You are logined succesfully"})
+        return Response(data['role'])
+    # return Response(data)
 
 
 @api_view(['GET'])

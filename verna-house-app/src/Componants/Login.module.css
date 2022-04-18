@@ -18,3 +18,73 @@
     
     margin-top: 0;
 }
+.appbar {
+    height : 50px;
+    background : 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)';
+    color : 'black';
+}
+/* .main{
+    height : "100%";
+    width : "100%";
+} */
+.mainBack {
+    background-image:  
+    url(https:images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/ed393553372b5fedbb31d038/pexelsphoto1002638.jpeg) ;
+    height: 500px;
+    background-repeat: no-repeat; 
+    background-size:cover;
+} 
+.loginBack{
+ background-image:   
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/31087d27a14357e5875cc8ae/pexels-photo-3894515.jpeg),
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/e566dee78e6b5524bd450ea0/pexels-photo-3894519.jpeg),
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/b3309f6094e9555197a00076/pexels-photo-3894538.jpeg);
+    background-repeat: no-repeat, no-repeat; 
+    background-position: right ,center, left; 
+    background-size: 33.5% , 33.5%, 33.5%; 
+                
+    /* background-size: 35% 35%;   */
+}
+.registerBack{
+    background-image:
+        url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/46cdbf04938b5c8ea60120a3/pexelsphoto3673557.jpeg);
+    background-repeat: no-repeat; 
+    background-position: cover; 
+    background-size: cover; 
+    margin-top: 0; 
+    padding : 0; 
+}
+.aboutBack{
+    background-image:
+        url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/46cdbf04938b5c8ea60120a3/pexelsphoto3673557.jpeg);
+    background-repeat: no-repeat; 
+    background-position: cover; 
+    background-size: cover; 
+    margin-top: 0; 
+    padding : 0; 
+}
+/* .scrollable {
+            height: 1000px;
+        } */
+/* @media only screen and (min-height:500px) {
+  body {
+    background-image:  
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/31087d27a14357e5875cc8ae/pexels-photo-3894515.jpeg) ,
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/e566dee78e6b5524bd450ea0/pexels-photo-3894519.jpeg) ,
+    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/b3309f6094e9555197a00076/pexels-photo-3894538.jpeg) ;
+    background-repeat: no-repeat, no-repeat; 
+    background-position: right top,center top, left top; 
+    background-size: 33.5% 200%, 33.5% 200%, 33.5% 200%;
+
+     
+}
+} */
+/* @media only screen and (min-height:100px) {
+  body {
+    background-image:  
+    url(https:images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/ed393553372b5fedbb31d038/pexelsphoto1002638.jpeg) ;
+    height: auto;
+    background-repeat: no-repeat; 
+     background-position: cover ; 
+    background-size:cover; 
+}}  */

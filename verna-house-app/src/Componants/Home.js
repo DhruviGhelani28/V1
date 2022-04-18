@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBarHeader from "./AppBar/AppBarHeader";
 import Drawer from "./Drawer/Drawer";
 // import DrawerHeader from "./Drawer/DrawerHeader";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+
 import { styled, useTheme } from '@mui/material/styles';
 import Registration from "./Login/Registration";
-// import Login from "./Login/Login";
+import Main1 from "./Main/Main";
 // import Button from '@mui/material/Button';
 import Suppliers from "./Suppliers/Suppliers";
 import { Outlet, Route, Routes } from 'react-router-dom';
-// import Typography from '@mui/material/Typography';
+
 import Agencies from "./Agencies/Agencies";
 import LoginRegistration from './Login/LoginRegistration';
 import About from './AppBar/About';
@@ -31,25 +32,29 @@ import AgencyForm from "./Agencies/AgencyForm";
 import TaskForm from "./Tasks/TaskForm";
 import Account from "./Account/Account";
 import { makeStyles } from "@material-ui/core/styles";
+
+
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, ##FFE3E3 25%, #F3C5C5 80%)',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'black',
     },
+
 });
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+    ({ theme, open, drawerwidth }) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
+        transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: "20px",
+        marginLeft: drawerwidth,
+        width: `calc(100% - ${drawerwidth}px)`,
         ...(open && {
-            transition: theme.transitions.create('margin', {
+            transition: theme.transitions.create(['width', 'margin'], {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
@@ -57,6 +62,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         }),
     }),
 );
+
 const Home = props => {
     const classes = useStyles();
 
@@ -71,18 +77,18 @@ const Home = props => {
         setOpen(false);
     };
 
-    // const [isLoggedIn, setIsLoggedIn] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
+    // const role,setRole
     return (
+
         <React.Fragment>
             <Box sx={{ display: 'flex' }} >
                 <CssBaseline />
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} />
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
-                <Main style={{ "marginTop": "4rem" }} >
-                    {/* <DrawerHeader /> */}
-                    {/* <Button className={classes.root}>Hello</Button> */}
+                <Main sx={{ paddingLeft: 2, marginTop: 8 }}>
                     <Routes>
-                        <Route path="/" element={<Workers />} ></Route>
+                        <Route path="/" element={<Main1 />} ></Route>
                         <Route path="/About" element={<About />} exact />
 
                         <Route path="/Login" element={<LoginRegistration />} exact />

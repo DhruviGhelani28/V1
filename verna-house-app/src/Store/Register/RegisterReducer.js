@@ -1,11 +1,16 @@
 import { UserActionType } from "../Constants/UserActionType";
 
+const initialState = {
+    registerDate: {},
+    loginData: {}
+}
+
 export const userLoginReducer = (state = {}, action) => {
     switch (action.type) {
         case UserActionType.USER_LOGIN_REQUEST:
             return { loading: true };
         case UserActionType.USER_LOGIN_SUCCESS:
-            return { loading: false, userInfo: action.payload };
+            return { loading: false, loginData: action.payload };
         case UserActionType.USER_LOGIN_FAIL:
             return { loading: false, error: action.payload };
 

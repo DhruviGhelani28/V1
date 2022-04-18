@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-
+import classes1 from "../Login.module.css"
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail';
@@ -30,7 +30,9 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
         // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'black',
+        
     },
+    
 });
 
 const AppBar = styled(MuiAppBar, {
@@ -168,7 +170,7 @@ const AppBarHeader = props => {
 
     return (
         <React.Fragment>
-            <AppBar position='fixed' open={props.open} drawerwidth={props.drawerwidth} className={classes.root} >
+            <AppBar position='fixed' open={props.open} drawerwidth={props.drawerwidth} className={classes1.appbar} >
                 <Toolbar className={classes.root}>
                     <IconButton
                         size="large"
