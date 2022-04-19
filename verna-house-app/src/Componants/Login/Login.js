@@ -160,7 +160,15 @@ const Login = props => {
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
         <div className={classes.loginBack}>
-
+            {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
+                <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent:"flex-start" }} align="left">
+                    Style Queen
+                </Typography>
+                <Typography variant="h5" sx={{ color: "white", padding: 1 }} align="left">
+                    Wide Fashion & Beauty
+                </Typography>
+            {/* </Box> */}
+            
             <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#EC255A', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
                 <CardActions >
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>

@@ -210,7 +210,7 @@ const Registration = props => {
 
     return (
         <div className={classes.registerBack} align="center">
-        {/* <Container align="center" > */}
+            {/* <Container align="center" > */}
             <Card variant="outlined"
                 sx={{
                     maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
@@ -431,7 +431,7 @@ const Registration = props => {
                     {/* </Box> */}
                 </CardContent>
             </Card>
-        {/* </Container> */}
+            {/* </Container> */}
         </div>
     );
 
