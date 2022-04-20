@@ -130,7 +130,8 @@ const TaskForm = props => {
                     transition: "all 0.5s ease",
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
-                onSubmit={handleSubmit(onSubmit)}>
+            onSubmit={handleSubmit(onSubmit)}
+            >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
                         <ChevronLeftIcon />
@@ -148,7 +149,7 @@ const TaskForm = props => {
                             id="username"
                             label="UserName"
                             placeholder="xyz_abc123"
-                            {...register('username', { required: true, maxLength: 20 })}
+                            {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.username}
                             helpertext={errors?.username ? errors.username.message : null}
                             onChange={handleChange}
@@ -161,7 +162,7 @@ const TaskForm = props => {
                             size='medium'
                             id="taskName"
                             label="Task Name"
-                            {...register('taskname', { required: true, maxLength: 20 })}
+                            {...register('taskname', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.taskname}
                             helpertext={errors?.taskname ? errors.taskname.message : null}
                             onChange={handleChange}
@@ -182,7 +183,6 @@ const TaskForm = props => {
                         />
 
                         <TextField
-
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             id="dateTime"

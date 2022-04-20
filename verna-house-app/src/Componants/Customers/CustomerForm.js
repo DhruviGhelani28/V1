@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import InputAdornment from '@mui/material/InputAdornment';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,6 +22,7 @@ import { getRegisterData } from '../../Store/Register/RegisterAction';
 // import { getCustomers } from '../../Store/Supplier/SupplierAction';
 import { useForm } from 'react-hook-form';
 import UploadButton from '../UploadButton';
+import { FormControl, OutlinedInput } from '@mui/material';
 // import PhotoCamera from '@mui/icons-material/PhotoCamera';
 // import userEvent from '@testing-library/user-event';
 const useStyles = makeStyles({
@@ -110,7 +111,7 @@ const CustomerForm = props => {
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Customer Profile</Typography>
 
                     <div className={classes1.root5}>
-                       
+
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
@@ -118,7 +119,7 @@ const CustomerForm = props => {
                             size='medium'
                             id="role"
                             label="Role"
-                            // defaultValue={state.role}
+                        // defaultValue={state.role}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -182,12 +183,18 @@ const CustomerForm = props => {
                             id="profileImageCustomer"
                             label="Profile Image Customer"
                             placeholder='Upload File'
+                            type="file"
+                            accept="image/*"
+                            
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <UploadButton className={classes1.root1} />
                                     </InputAdornment>
                                 ),
+                            }}
+                            inputlabelprops={{
+                                shrink: true
                             }}
                             variant="outlined"
                             onChange={handleChange}
@@ -236,9 +243,9 @@ const CustomerForm = props => {
                                 Submit</Button>
                         </div>
                     </div>
-               
-            </CardContent>
-        </Card>
+
+                </CardContent>
+            </Card>
         </Container >
     );
 

@@ -68,8 +68,18 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
 
     },
-
-
+    root5:
+    {
+        marginTop: 30,
+    },
+    allfield:
+    {
+        width: '40ch',
+        marginTop: '10ch',
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        color: 'action.home',
+    }
+    
 });
 
 const StyledBadge = styled(Badge)(({ theme }) => ({

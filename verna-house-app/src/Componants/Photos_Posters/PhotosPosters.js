@@ -11,8 +11,16 @@ import GradeRoundedIcon from "@mui/icons-material/GradeRounded";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Grid } from "@mui/material";
 import Tooltip from '@mui/material/Tooltip';
-import model1 from '../../static/PhotoPoster/model1.jpg';
+import reptile from '../../static/PhotoPoster/contemplative-reptile.jpg';
 import { makeStyles } from "@material-ui/core/styles";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Backdrop from '@mui/material/Backdrop';
+import PhotoPosterForm from "./PhotoPosterForm";
+
+
+
+
 const useStyles = makeStyles({
     root: {
         margin: 0.5,
@@ -23,63 +31,63 @@ const useStyles = makeStyles({
     }
 })
 const PhotosPosters = props => {
-
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
     const classes =  useStyles()
-       return (
+    return (
         <React.Fragment>
             <h2>Photos_Posters will be here</h2>
-            <Card sx={{ maxWidth: 350, maxHeight: 230, padding:0 }} elevation={4}
-            >
-                <CardContent sx={{ padding: 0.5, margin : 0 }}>
-                    <Grid container direction={'row'} spacing={0}>
-                        <Grid item xs={8}>
-                            <Typography sx={{ fontSize: 15 }} color="text.primary"  align="left">
-                                Alina Tandel
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={4} align="right">
-                            <Tooltip title="Save" >
-                                <BookmarkBorderIcon fontSize="medium" />
-                            </Tooltip>
-                        </Grid>
+            {/* {role === "Admin" && } */}
+            <Grid sx={{ flexGrow: 1 }} container spacing={{ xs: 0, md: 1 }}  >
+                <Grid item xs={12} >
+                    <Grid container justifyContent="flex-end" alignItems='center' direction='row' spacing={3} >
+                        <Fab color="primary" aria-label="add" size="small" sx={{ marginTop: 0.3, marginRight: 2 }} onClick={handleToggle} >
+                            <AddIcon />
+                        </Fab>
+                        <Backdrop
+                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            open={open}
+                        >
+                            <PhotoPosterForm onClick={handleClose} open={open}></PhotoPosterForm>
+                        </Backdrop>
                     </Grid>
-                    <Grid container direction={'row'}  >
-                        <Grid item xs={6} >
-                            <CardMedia
-                                align="center"
-                                component="img"
-                                sx={{ height: 200, padding:0.5 }}
-                                image={model1}
-                                alt="Paella dish"
-                            />
-                        </Grid>
-                        <Grid item xs={6}  >
-                            
-                            <div className={classes.root1}>
-                                <Typography sx={{ fontSize: 14 }} color="text.secondary" align="left">
-                                    Person no
-                                </Typography>
-                                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                    Work category
-                                </Typography>
-                                <Typography variant="body2">
-                                    exprience
-                                    <br />
-                                    Preferred Time
-                                    <br />
-                                    Age
-                                </Typography>
-                            </div>
-                            <div align='right' className={classes.root}>
-                                <Button >View Details </Button>
-                            </div>
-                        </Grid>
-                    </Grid>
+                </Grid>
+            </Grid>
+            <Card sx={{ maxWidth: 345, borderColor: "#121212", borderWidth: 0.1, borderRadius: 2 }} variant="outlined">
+                <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="250"
+                    image={reptile}
+                    // "../..//static/PhotoPoster/contemplative-reptile.jpg"
+                />
+                <CardContent> 
+                    <Typography gutterBottom variant="h5" component="div">
+                        Lizard
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Lizards are a widespread group 
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" align="left">
+                        Person no
+                    </Typography>
+                    <Typography color="text.secondary">
+                        Work category
+                    </Typography>
                 </CardContent>
+                <CardActions>
+                    <Button size="small">Give Order</Button>
+                    <Button size="small">View Details</Button>
+                </CardActions>
             </Card>
-
         </React.Fragment>
     );
+   
 };
 export default PhotosPosters;
 

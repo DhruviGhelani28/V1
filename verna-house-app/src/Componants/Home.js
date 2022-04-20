@@ -97,7 +97,7 @@ const Home = props => {
                 <CssBaseline />
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} />
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
-                <Main sx={{ paddingLeft: 0, marginTop: 5, marginRight: 0, paddingRight: 0 }} >
+                <Main sx={{ paddingLeft: 1.5, marginTop: 5, marginRight: 0, paddingRight: 0}} >
 
                     <Routes>
                         <Route path="/" element={<Main1 />} exact></Route>
