@@ -234,17 +234,7 @@ const Registration = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Register Here</Typography>
-                    {/* <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            marginLeft: 0,
-                            '& .MuiTextField-root': { m: 1, width: '40ch' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={onRegisterHandler}
-                    > */}
+                   
                     <div className={classes1.root5}>
                         <TextField
                             sx={{ marginTop: 2 }}
@@ -428,7 +418,7 @@ const Registration = props => {
                             </Typography>
                         </div>
                     </div>
-                    {/* </Box> */}
+                 
                 </CardContent>
             </Card>
             {/* </Container> */}

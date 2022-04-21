@@ -246,7 +246,7 @@ const Login = props => {
                                     label="Enter Your UserName"
                                     placeholder="xyz_abc123"
                                     onChange={handleChange}
-                                    inputprops={{ tabIndex: "3" }}
+                                    
                                     {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                                     error={!!errors?.username}
                                     helpertext={errors?.username ? errors.username.message : null}

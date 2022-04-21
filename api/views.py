@@ -1,6 +1,4 @@
-import email
-from pickle import TRUE
-import profile
+
 from urllib import request, response
 from django.shortcuts import render
 from pandas import describe_option

@@ -64,13 +64,28 @@ const SupplierForm = props => {
         'mobileNo': "",
         "organizationName": '',
         "organizationAddress": '',
-        "profileImageSupplier": '',
+        "profileImageSupplier": null,
         "locationSupplier": '',
         "scocialWebsite": "",
     });
 
     const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
+
+        console.log(prop)
+        if (prop !== "picture") {
+            setValues({ ...values, [prop]: event.target.value });
+        }
+        else {
+            console.log(event.target.files[0])
+            setValues({
+                ...values,
+                [prop]: event.target.files[0],
+            });
+        }
+
+
+
+        // setValues({ ...values, [prop]: event.target.value });
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {

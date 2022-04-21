@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 import uuid
 from django.utils import timezone
@@ -54,9 +55,11 @@ class BillStatus(models.Model):
   
 class OrderStatus(models.Model):
     ORDERSTATUS_TYPE=(
-        ('Not Given','Not Given'),
+        # ('Not Given','Not Given'),
         ('Pending','Pending'),
-        ('Clear','Clear'),
+        # ('Clear','Clear'),
+        ('Available', 'Available'),
+        ('Purchased','Purchased')
     )
     name = models.CharField( max_length=50 ,null=True, blank=False, choices=ORDERSTATUS_TYPE )
     created = models.DateTimeField(auto_now_add=True)
@@ -213,3 +216,13 @@ class Worker(models.Model):
 #     USERNAME_FIELD = 'email'
 #     REQUIRED_FIELDS = [] # Email & Password are required by default.
 
+class PhotoPoster(models.Model):
+    image = models.ImageField(null=True, blank=True,upload_to="PhotoPoster/")
+    category = models.CharField(max_length=20, null=True, blank=False)
+    name = models.CharField(max_length=50, null= True, blank=True)
+    orderStatus = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, null=True, blank=False)
+    price= models.DecimalField(max_digits=5, decimal_places=2)
+    timeDuration = models.DurationField()
+
+    def __str__(self):
+        return str(self.name) + ": $" + str(self.price)

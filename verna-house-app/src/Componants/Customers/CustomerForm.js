@@ -67,13 +67,29 @@ const CustomerForm = props => {
         'mobileNo': "",
         "companyName": '',
         "companyAddress": '',
-        "profileImageCustomer": '',
+        "profileImageCustomer": null,
         "locationCustomer": '',
         "scocialWebsite": "",
     });
 
     const handleChange = (prop) => (event) => {
+
+        console.log(prop)
+        // if (prop !== "picture") {
+        console.log(event.target.files[0])
         setValues({ ...values, [prop]: event.target.value });
+        // }
+        // else {
+        //     console.log(event.target.files[0])
+        //     setValues({
+        //         ...values,
+        //         [prop]: event.target.files[0],
+        //     });
+        // }
+
+
+
+        // setValues({ ...values, [prop]: event.target.value });
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -119,7 +135,7 @@ const CustomerForm = props => {
                             size='medium'
                             id="role"
                             label="Role"
-                        // defaultValue={state.role}
+                            defaultValue={state.role}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -134,7 +150,7 @@ const CustomerForm = props => {
                             {...register('mobileNoCustomer', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNoCustomer}
                             helpertext={errors?.mobileNoCustomer ? errors.mobileNoCustomer.message : null}
-                            onChange={handleChange}
+                            onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -145,7 +161,7 @@ const CustomerForm = props => {
                             id="companyName"
                             label="Company Name"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+                            onChange={handleChange('companyName')}
                             {...register('companyName', { required: true, maxLength: 20 })}
                             error={!!errors?.companyName}
                             helpertext={errors?.companyName ? errors.companyName.message : null}
@@ -159,6 +175,7 @@ const CustomerForm = props => {
                             id="companyAddress"
                             label="Company Address"
                             placeholder="xyz abc"
+                            onChange={handleChange('companyAddress')}
                             {...register('companyAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.companyAddress}
                             helpertext={errors?.companyAddress ? errors.companyAddress.message : null}
@@ -185,16 +202,17 @@ const CustomerForm = props => {
                             placeholder='Upload File'
                             type="file"
                             accept="image/*"
-                            
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <UploadButton className={classes1.root1} />
-                                    </InputAdornment>
-                                ),
-                            }}
+                            ref={register}
+                            // value = { values.profileImageCustomer}
+                            // InputProps={{
+                            //     endAdornment: (
+                            //         <InputAdornment position="end">
+                            //             <UploadButton className={classes1.root1} />
+                            //         </InputAdornment>
+                            //     ),
+                            // }}
                             inputlabelprops={{
-                                shrink: true
+                                shrink: true,
                             }}
                             variant="outlined"
                             onChange={handleChange}

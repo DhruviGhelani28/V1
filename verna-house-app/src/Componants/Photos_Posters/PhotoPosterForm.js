@@ -16,19 +16,20 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, FormControl } from '@mui/material';
 import { useDispatch } from "react-redux";
-import { getLoginData } from "../../Store/Register/RegisterAction";
+// import { getLoginData } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Grid from '@mui/material/Grid';
 import { useRef } from 'react';
-import { OutlinedInput, InputLabel } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
 import UploadButton from '../UploadButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Input } from '@mui/material';
 import { useState } from 'react';
-import { Select } from '@mui/material';
+import Select from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
+
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
@@ -105,7 +106,7 @@ const OrderStatus = [
 ]
 const PhotoPosterForm = props => {
 
-    const uploadInputRef = useRef(null);
+
     const dispatch = useDispatch();
     const navigateHome = useNavigate();
     const classes1 = useStyles();
@@ -113,68 +114,57 @@ const PhotoPosterForm = props => {
 
     const [values, setValues] = React.useState({
         category: "",
-        picture: null,
-        name: "",
+        picture: "",
+        photoName: "",
         orderStatus: "",
         timeDuration: "",
     });
-    const onFileHandler = (e) => {
-        console.log(e.target.files[0])
-        // setFile(e.target.files[0])
-        setValues({
-            ...values,
-            picture: e.target.files[0],
-        });
-    };
+    // const [file, setFile] = useState(null)
+    // const photoData = {
+    //     ...values,
+    //     file
+    // }
+    // console.log(photoData)
+    // console.log(values)
+    // const onFileHandler = (e) => {
 
+    //     console.log("file :: ", e.target.files[0])
+    //     // setFile(e.target.files[0])
+    //     setValues((values) => {
+    //         // console.log(values.picture)
+    //         return {
+    //             ...values,
+    //             picture: e.target.files[0].name,
+
+    //         };
+
+    //     });
+
+    //     // console.log(values)
+    // };
+    // console.log(values.picture)
     // console.log(values)
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const handleChange = (prop) => (event) => {
-        // const { name, value } = e.target;
-        // console.log(name, value)
-        console.log(prop)
-        if (prop !== "picture") {
-            setValues({ ...values, [prop]: event.target.value });
-        }
-        else {
-            console.log(event.target.files[0])
-            setValues({
-                ...values,
-                [prop]: event.target.files[0],
-            });
-        }
 
-
-    };
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     console.log(name)
+    //     setValues((prevStatus) => {
+    //         return {
+    //             ...prevStatus,
+    //             [name]: value,
+    //         }
+    //         // ...values,
+    //         // [name]: value,
+    //     });
+    //     // console.log(values)
+    // };
     const onSubmit = (data) => {
+        console.log(values)
+        // data = data.push("picture", file)
         console.log(JSON.stringify(data, null, 2));
-
-        // setValues(
-        //     {
-        //         Category: "",
-        //         picture: null,
-        //         name: "",
-        //         orderStatus: "",
-        //         timeDuration: "",
-        //     }
-        // )
     }
 
-    const formSubmit = (e) => {
-        e.preventDefault();
-
-        const formdata = new FormData();
-        formdata.append("Category", values.Category)
-        formdata.append("picture", values.picture.name)
-        console.log(values.Category)
-        console.log(values.picture.name)
-        // console.log(formdata)
-        const config = {
-            headers: {
-                'content-type': "multipart/formdata",
-            },
-        }
-    }
 
     // console.log(values)
     useEffect(() => {
@@ -197,6 +187,8 @@ const PhotoPosterForm = props => {
                     transition: "all 0.5s ease",
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
@@ -204,48 +196,173 @@ const PhotoPosterForm = props => {
                     </IconButton>
                 </CardActions>
                 <CardContent>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <h4 >Add Photos/Posters</h4>
-                        <Grid container spacing={0}>
-                            <Grid item xs={12}>
-                                <TextField
+                    {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+                    <h4 >Add Photos/Posters</h4>
+                    <Grid container spacing={0}>
+                        <Grid item xs={12}>
+                            {/* <TextField
                                     sx={{ marginTop: 1 }}
                                     className={classes1.allfield}
                                     required
-                                    size='medium'
+
                                     id="category"
                                     label="Enter Category"
                                     placeholder="xyz_abc123"
-                                    onChange={handleChange("category")}
-                                    inputprops={{ tabIndex: "3" }}
+                                    onChange={handleChange}
+
                                     {...register('category', { required: true, maxLength: 20, minLength: 4 })}
                                     error={!!errors?.category}
                                     helpertext={errors?.category ? errors.category.message : null}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControl>
-                                    <InputLabel id="label-picture">Upload</InputLabel>
-                                    <OutlinedInput
-                                        required
-                                        className={classes1.allfield}
-                                        sx={{ marginTop: 1 }}
-                                        label="Upload"
-                                        id='picture'
-                                        inputlabelprops={{
-                                            'shrink': true,
-                                        }}
-                                        defaultValue=""
-                                        onChange={handleChange("picture")}
-                                        type="file"
-                                        accept="image/*"
-                                        {...register('picture', { required: true })}
-                                        error={!!errors?.picture}
-                                        helpertext={errors?.picture ? errors.picture.message : null}
-                                    // onChange={handleChange('name')}
-                                    >
+                                /> */}
+                            <TextField
+                                required
+                                className={classes1.allfield}
+                                sx={{ marginTop: 1 }}
+                                id="category"
+                                label="Enter Category"
+                                placeholder="xyz_abc123"
+                                {...register('category', { required: true, maxLength: 20, minLength: 4 })}
+                                error={!!errors?.category}
+                                helpertext={errors?.category ? errors.category.message : null}
+                                onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, category: e.target.value } })}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                // ref={register}
+                                type="file"
+                                accept="image/*"
+                                required
+                                // name="picture"
+                                className={classes1.allfield}
+                                sx={{ marginTop: 1 }}
+                                label="Upload"
+                                id='picture'
+                                // inputlabelprops={{
+                                //     'shrink': true,
+                                // }}
 
-                                        {/* <Input
+                                onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, picture: e.target.files[0].name } })}
+                            // {...register('picture', { required: true })}
+                            // error={!!errors?.picture}
+                            // helpertext={errors?.picture ? errors.picture.message : null}
+
+                            >
+                            </TextField>
+                        </Grid>
+                        {/* <Grid item xs={12}>
+                                <Input
+                                    variant="outlined"
+                                    type='file'
+                                    accept="image/*"
+                                    lable="Upload"
+                                    id="upload">
+                                </Input>
+                            </Grid> */}
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                className={classes1.allfield}
+                                sx={{ marginTop: 1 }}
+                                id="photoName"
+                                label="Name"
+
+                                {...register('photoName', { required: true, maxLength: 20, minLength: 4 })}
+                                error={!!errors?.photoName}
+                                helpertext={errors?.photoName ? errors.photoName.message : null}
+                                onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, photoName: e.target.value } })}
+                            /></Grid>
+                        <Grid item xs={12}>
+                            <FormControl
+                                required
+                                sx={{ marginTop: 1, width: '40ch' }}
+                                className={classes1.allfield}>
+                                <InputLabel id="order-id">Order Status</InputLabel>
+                                <Select
+                                    onChange={(event) => {
+                                        console.log(event.target.value)
+                                        setValues((prevStatus) => { return { ...prevStatus, orderStatus: event.target.value } })
+                                    }}
+                                    sx={{ textAlign: 'left' }}
+                                    labelId="demo-simple-select-label"
+                                    id="orderStatus"
+                                    label="Order Status"
+                                    // {...register('orderStatus', { required: true })}
+                                    error={!!errors?.orderStatus}
+                                    helpertext={errors?.orderStatus ? errors.orderStatus.message : null}
+                                    defaultValue="n"
+
+                                >
+                                    {OrderStatus.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}{option.value}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        {/* <Grid item xs={12}>
+                                <TextField
+                                    variant='outlined'
+                                    className={classes1.allfield}
+                                    // sx={{ marginTop: 1 }}
+                                    sx={{ textAlign: 'left', marginTop: 2 }}
+                                    id="orderStatus"
+                                    lable="orderstatus"
+                                    type="select"
+                                    defaultValue=""
+                                    onChange={handleChange}
+                                    {...register('orderStatus', { required: true })}
+                                    error={!!errors?.orderStatus}
+                                    helpertext={errors?.orderStatus ? errors.orderStatus.message : null}
+                                >
+                                    {OrderStatus.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid> */}
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes1.allfield}
+                                sx={{ marginTop: 1 }}
+                                required
+
+                                id="timeDuration"
+                                label="TimeDuration"
+                                placeholder="1 to 365 in days"
+                                {...register('timeDuration', { required: true, maxLength: 365, minLength: 1 })}
+                                error={!!errors?.timeDuration}
+                                helpertext={errors?.timeDuration ? errors.timeDuration.message : null}
+                                onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, timeDuration: e.target.value } })}
+
+                            />
+                        </Grid>
+                        <Grid item xs={12} className={classes.button}>
+                            <Button
+                                className={classes1.root4}
+                                variant="contained"
+                                type="submit"
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{
+                                    marginTop: 0.5,
+                                    marginRight: -38.5,
+                                    color: 'black',
+                                }}>
+                                Sign In</Button>
+                        </Grid>
+                    </Grid>
+                    {/* </Box> */}
+                    {/* </form> */}
+                </CardContent>
+            </Card>
+        </Container >
+    );
+
+};
+export default PhotoPosterForm;
+{/* <Input
 
                                             style={styles.hidden}
                                             required
@@ -257,89 +374,18 @@ const PhotoPosterForm = props => {
                                             id="picture"
                                             label="Upload "
                                             onChange={onFileHandler}> */}
+                                               // const formSubmit = (e) => {
+    //     e.preventDefault();
 
-                                    </OutlinedInput>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    className={classes1.allfield}
-                                    sx={{ marginTop: 1 }}
-                                    size='medium'
-                                    id="name"
-                                    label="Name"
-                                    {...register('name', { required: true, maxLength: 20, minLength: 4 })}
-                                    error={!!errors?.name}
-                                    helpertext={errors?.name ? errors.name.message : null}
-                                    onChange={handleChange('name')}
-                                /></Grid>
-                            <Grid item xs={12}>
-                                <FormControl
-                                    required sx={{ marginTop: 1, width: '40ch' }}
-                                    className={classes1.allfield}
-                                // inputprops={{ tabIndex: "6" }}
-                                >
-                                    {/* {
-                                console.log("vvvv", getFieldState("roll"))
-                            } */}
-                                    <InputLabel id="order-id">Order Status</InputLabel>
-                                    <Select
-                                        onChange={handleChange('orderStatus')}
-                                        sx={{ textAlign: 'left' }}
-                                        id="orderStatus"
-                                        label="Order Status"
-                                        {...register('orderStatus', { required: true })}
-                                        error={!!errors?.orderStatus}
-                                        helpertext={errors?.orderStatus ? errors.orderStatus.message : null}
-                                        defaultValue=""
-
-                                    >
-                                        {OrderStatus.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-
-                                    {/* <FormHelperText>Please select your role in system.</FormHelperText> */}
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    className={classes1.allfield}
-                                    sx={{ marginTop: 1 }}
-                                    required
-                                    size='medium'
-                                    id="timeDuration"
-                                    label="TimeDuration"
-                                    placeholder="1 to 365 in days"
-                                    {...register('timeDuration', { required: true, maxLength: 365, minLength: 1 })}
-                                    error={!!errors?.timeDuration}
-                                    helpertext={errors?.timeDuration ? errors.timeDuration.message : null}
-                                    onChange={handleChange('timeDuration')}
-                                />
-                            </Grid>
-                            <Grid item xs={12} className={classes.button}>
-                                <Button
-                                    className={classes1.root4}
-                                    variant="contained"
-                                    type="submit"
-                                    onClick={handleSubmit(onSubmit)}
-                                    sx={{
-                                        marginTop: 0.5,
-                                        marginRight: -38.5,
-                                        color: 'black',
-                                    }}>
-                                    Sign In</Button>
-                            </Grid>
-                        </Grid>
-                        {/* </Box> */}
-                    </form>
-                </CardContent>
-            </Card>
-        </Container >
-    );
-
-};
-export default PhotoPosterForm;
+    //     const formdata = new FormData();
+    //     formdata.append("Category", values.Category)
+    //     formdata.append("picture", values.picture.name)
+    //     console.log(values.Category)
+    //     console.log(values.picture.name)
+    //     // console.log(formdata)
+    //     const config = {
+    //         headers: {
+    //             'content-type': "multipart/formdata",
+    //         },
+    //     }
+    // }

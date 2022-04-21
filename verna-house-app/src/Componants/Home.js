@@ -95,7 +95,7 @@ const Home = props => {
         <React.Fragment>
             <Box sx={{ display: 'flex' }} >
                 <CssBaseline />
-                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} />
+                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display : "flex" }}/>
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
                 <Main sx={{ paddingLeft: 1.5, marginTop: 5, marginRight: 0, paddingRight: 0}} >
 
