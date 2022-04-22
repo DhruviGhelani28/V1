@@ -178,6 +178,25 @@ class TaskSerializer(serializers.ModelSerializer):
         model= Task
         fields = '__all__'
         
+class PhotoPosterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= PhotoPoster
+        fields = '__all__'
+
+class ActorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Actor
+        fields = '__all__'
+
+class GarmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Garment
+        fields = '__all__'
+
+class PremiseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Premise
+        fields = '__all__'
 
 class BillingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -194,36 +213,36 @@ class GarmentSerializer(serializers.ModelSerializer):
         model= Garment
         fields = '__all__'
 
-class UserApprovalSerializer(serializers.ModelSerializer):
-    is_active = serializers.BooleanField(required=True)
-    username = serializers.CharField(required=True, write_only = True,help_text="Enter your Username.")
+# class UserApprovalSerializer(serializers.ModelSerializer):
+#     is_active = serializers.BooleanField(required=True)
+#     username = serializers.CharField(required=True, write_only = True,help_text="Enter your Username.")
     
-    class Meta:
-        model = User
-        fields = ['id','is_activate','username','first_name','email']
-        extra_kwargs ={
-            'username':{
-                'read_only':True
-            },
-            'first_name':{
-                'read_only':True
-            },
-            'is_active':{
-                'read_only':True
-            },
-            'email':{
-                'read_only':True
-            },
-        }
+#     class Meta:
+#         model = User
+#         fields = ['id','is_activate','username','first_name','email']
+#         extra_kwargs ={
+#             'username':{
+#                 'read_only':True
+#             },
+#             'first_name':{
+#                 'read_only':True
+#             },
+#             'is_active':{
+#                 'read_only':True
+#             },
+#             'email':{
+#                 'read_only':True
+#             },
+#         }
 
-    def update(self, instance, validated_data):
-        if instance.username == validated_data['username']:
-            instance.is_active = validated_data['is_active']
-            instance.save()
-        else:
-            raise serializers.ValidationError('You are not right user')
+#     def update(self, instance, validated_data):
+#         if instance.username == validated_data['username']:
+#             instance.is_active = validated_data['is_active']
+#             instance.save()
+#         else:
+#             raise serializers.ValidationError('You are not right user')
         
-        return instance
+#         return instance
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
     old_Password = serializers.CharField(write_only = True, required = True,style={'input_type': 'password'},help_text="Enter your old Password.") 

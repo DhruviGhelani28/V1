@@ -45,9 +45,9 @@ const Tasks = (props) => {
     }, [dispatch, task])
 
     useEffect(() => {
-        setTasks(getMyTasks)
+        setTasks(myTasks.getMyTasks)
 
-    }, [getMyTasks, task])
+    }, [myTasks.getMyTasks, task])
     console.log(tasks)
     const navigate = useNavigate()
 
@@ -80,7 +80,7 @@ const Tasks = (props) => {
                 </Grid>
                 <Grid item xs={12} >
                     <Grid container justifyContent="flex-start" alignItems='flex-start' direction='row' spacing={2} >
-                        {tasks && tasks.map((value) => (
+                        {tasks && tasks.map((value, index) => (
                             <Grid key={value.id} item xs={3}>
                                 <Paper
                                     sx={{

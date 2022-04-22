@@ -197,10 +197,10 @@ const Agencies = props => {
         dispatch(getAgencies())
     }, [dispatch])
     console.log(agencies.getAgencies)
-    
+
     const length = agencies.getAgencies.length
     console.log(length)
-    const rows = agencies.getAgencies
+    const rows =  [agencies.getAgencies]
 
     const apiRef = useGridApiRef();
 
@@ -445,10 +445,10 @@ const Agencies = props => {
         );
     };
 
-    
+
     return (
         // <Typography>
-        
+
         <Box
             sx={{
                 height: 500,

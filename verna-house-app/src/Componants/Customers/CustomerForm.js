@@ -65,7 +65,7 @@ const CustomerForm = props => {
 
     const [values, setValues] = React.useState({
         'mobileNo': "",
-        "companyName": '',
+        "companyName": '', 
         "companyAddress": '',
         "profileImageCustomer": null,
         "locationCustomer": '',
@@ -96,7 +96,7 @@ const CustomerForm = props => {
         // const data1 = a.push(data)
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
-        // dispatch(getCustomers({ data: data1 }));
+        
     }
 
     return (
@@ -202,7 +202,7 @@ const CustomerForm = props => {
                             placeholder='Upload File'
                             type="file"
                             accept="image/*"
-                            ref={register}
+                            // ref={register}
                             // value = { values.profileImageCustomer}
                             // InputProps={{
                             //     endAdornment: (

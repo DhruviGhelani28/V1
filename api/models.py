@@ -104,7 +104,7 @@ class Task(models.Model):
 
 
 class Agency(models.Model):
-    agency = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=False)
+    agency = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False)
     name = models.CharField(max_length=100,null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
@@ -125,7 +125,8 @@ class Agency(models.Model):
     
 class Premise(models.Model):
     agency = models.ForeignKey(Agency,on_delete=models.CASCADE, null=True, blank=False)
-    ItemName = models.CharField(max_length=100, null=True, blank=False)
+    itemName = models.CharField(max_length=100, null=True, blank=False)
+    premiseImage = models.ImageField(null = True, blank = True, upload_to = "premises/", default = "profiles/user-default.png")
     price = models.IntegerField(null=True, blank=False)
     TimeDurationFrom = models.DateField(null=True, blank=False)
     TimeDurationTo = models.DateField(null=True, blank=False)
@@ -137,7 +138,7 @@ class Premise(models.Model):
         return str(self.ItemName)
 
 class Customer(models.Model):
-    customer = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    customer = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -154,7 +155,7 @@ class Customer(models.Model):
         return str(self.customer.first_name)
 
 class Supplier(models.Model):
-    supplier = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    supplier = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -173,6 +174,7 @@ class Supplier(models.Model):
 class Garment(models.Model):
     supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE, null=True, blank=False)
     GarmentName = models.CharField(max_length=100, null=True, blank=False)
+    garmentImage = models.ImageField(null = True, blank = True, upload_to = "garments/", default = "profiles/user-default.png")
     price = models.IntegerField(null=True, blank=False)
     TimeDurationFrom = models.DateField(null=True, blank=False)
     TimeDurationTo = models.DateField(null=True, blank=False)
@@ -217,8 +219,8 @@ class Worker(models.Model):
 #     REQUIRED_FIELDS = [] # Email & Password are required by default.
 
 class PhotoPoster(models.Model):
-    image = models.ImageField(null=True, blank=True,upload_to="PhotoPoster/")
     category = models.CharField(max_length=20, null=True, blank=False)
+    photoimage = models.ImageField(null=True, blank=True,upload_to="PhotoPoster/")
     name = models.CharField(max_length=50, null= True, blank=True)
     orderStatus = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, null=True, blank=False)
     price= models.DecimalField(max_digits=5, decimal_places=2)
@@ -226,3 +228,21 @@ class PhotoPoster(models.Model):
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)
+
+
+class Actor(models.Model):
+    model = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(null=True, blank=False, max_length=50)
+    username = models.CharField(max_length=50, null=True, blank=False)
+    email = models.EmailField(null=True, blank=False)
+    mobileNo = models.BigIntegerField(null=True, blank=False)
+    address = models.CharField(max_length=400, null=True, blank=False)
+    background = models.TextField(null=True, blank=False)
+    profile_image = models.ImageField(null=True, blank=True,upload_to="profiles/", default="profiles/user-default.png" )
+    salary = models.IntegerField(null=True,blank=False)
+    nativePlace = models.CharField(max_length=50, null=True, blank=False)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
+    
+    def __str__(self) -> str:
+        return str(self.name)

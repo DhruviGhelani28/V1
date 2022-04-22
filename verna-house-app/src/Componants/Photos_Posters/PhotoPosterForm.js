@@ -146,19 +146,18 @@ const PhotoPosterForm = props => {
     // console.log(values)
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     console.log(name)
-    //     setValues((prevStatus) => {
-    //         return {
-    //             ...prevStatus,
-    //             [name]: value,
-    //         }
-    //         // ...values,
-    //         // [name]: value,
-    //     });
-    //     // console.log(values)
-    // };
+    const handleChange = (prop) => (event) => {
+
+        console.log(prop)
+
+        setValues({ ...values, [prop]: event.target.value });
+        if (prop == "picture") {
+            console.log(event.target.files[0])
+            setValues({ ...values, picture: event.target.files[0].name });
+        }
+
+    };
+
     const onSubmit = (data) => {
         console.log(values)
         // data = data.push("picture", file)
@@ -200,20 +199,6 @@ const PhotoPosterForm = props => {
                     <h4 >Add Photos/Posters</h4>
                     <Grid container spacing={0}>
                         <Grid item xs={12}>
-                            {/* <TextField
-                                    sx={{ marginTop: 1 }}
-                                    className={classes1.allfield}
-                                    required
-
-                                    id="category"
-                                    label="Enter Category"
-                                    placeholder="xyz_abc123"
-                                    onChange={handleChange}
-
-                                    {...register('category', { required: true, maxLength: 20, minLength: 4 })}
-                                    error={!!errors?.category}
-                                    helpertext={errors?.category ? errors.category.message : null}
-                                /> */}
                             <TextField
                                 required
                                 className={classes1.allfield}
@@ -225,40 +210,31 @@ const PhotoPosterForm = props => {
                                 error={!!errors?.category}
                                 helpertext={errors?.category ? errors.category.message : null}
                                 onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, category: e.target.value } })}
+                            // onChange={handleChange()}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                // ref={register}
+
                                 type="file"
                                 accept="image/*"
                                 required
-                                // name="picture"
+
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
                                 label="Upload"
                                 id='picture'
-                                // inputlabelprops={{
-                                //     'shrink': true,
-                                // }}
 
+                                // ref={register}
+
+                                {...register('picture', { required: true })}
+                                error={!!errors?.picture}
+                                helpertext={errors?.picture ? errors.picture.message : null}
                                 onChange={(e) => setValues((prevStatus) => { return { ...prevStatus, picture: e.target.files[0].name } })}
-                            // {...register('picture', { required: true })}
-                            // error={!!errors?.picture}
-                            // helpertext={errors?.picture ? errors.picture.message : null}
 
                             >
                             </TextField>
                         </Grid>
-                        {/* <Grid item xs={12}>
-                                <Input
-                                    variant="outlined"
-                                    type='file'
-                                    accept="image/*"
-                                    lable="Upload"
-                                    id="upload">
-                                </Input>
-                            </Grid> */}
                         <Grid item xs={12}>
                             <TextField
                                 required
@@ -279,10 +255,8 @@ const PhotoPosterForm = props => {
                                 className={classes1.allfield}>
                                 <InputLabel id="order-id">Order Status</InputLabel>
                                 <Select
-                                    onChange={(event) => {
-                                        console.log(event.target.value)
-                                        setValues((prevStatus) => { return { ...prevStatus, orderStatus: event.target.value } })
-                                    }}
+
+                                    // ref={register}
                                     sx={{ textAlign: 'left' }}
                                     labelId="demo-simple-select-label"
                                     id="orderStatus"
@@ -290,8 +264,11 @@ const PhotoPosterForm = props => {
                                     // {...register('orderStatus', { required: true })}
                                     error={!!errors?.orderStatus}
                                     helpertext={errors?.orderStatus ? errors.orderStatus.message : null}
-                                    defaultValue="n"
-
+                                    defaultValue=""
+                                    onChange={(event) => {
+                                        console.log(event.target.value)
+                                        setValues((prevStatus) => { return { ...prevStatus, orderStatus: event.target.value } })
+                                    }}
                                 >
                                     {OrderStatus.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>

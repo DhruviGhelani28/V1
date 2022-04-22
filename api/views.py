@@ -2,11 +2,13 @@
 from urllib import request, response
 from django.shortcuts import render
 from pandas import describe_option
+from pytest import console_main
 from .models import *
+from .models import Supplier, Customer, Worker, Agency
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -70,6 +72,7 @@ def getUser(request, pk):
     return Response(serializer.data)
    
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def UserRegistrationViewSet(request):
     print("\n\nRegister")
     data = request.data['data']
@@ -89,18 +92,19 @@ def UserRegistrationViewSet(request):
         role = data['role']
     )
     print("Profile", profile)
-    profile.save()  
+    profile.save() 
+    print("role:::", profile.role) 
 
-    if (data['role'] == 'Supplier'):
+    if data['role'] == "Supplier":
         supplier = Supplier.objects.create(
-            supplier = user,
-            username = user.username,
-            email = user.email,
+            supplier = profile,
+            username = profile.username,
+            email = profile.email,
             name = data['fullname']
         )
         supplier.save()
 
-    elif(data['role'] == 'Agency'):
+    if data['role'] == 'Agency':
         agency= Agency.objects.create(
             agency = user,
             username = user.username,
@@ -108,7 +112,8 @@ def UserRegistrationViewSet(request):
             name = data['fullname']
         )
         agency.save()
-    elif(data['role'] == 'Customer'):
+
+    if data['role'] == 'Customer':
         customer = Customer.objects.create(
             customer = user,
             username = user.username,
@@ -116,14 +121,26 @@ def UserRegistrationViewSet(request):
             name = data['fullname']
         )
         customer.save()
-    else:
-        worker = Worker.objects.create(
-            worker = profile,
+
+    if data['role'] == 'Worker':
+        # worker = Worker.objects.create(
+        #     worker = profile,
+        #     username = profile.username,
+        #     email = profile.email,
+        #     name = data['fullname']
+        # )
+        # worker.save()
+        workers = Worker.objects.all()
+        print("Workers\n\n\n", workers)
+    if data['role'] == 'Model':
+        model = Actor.objects.create(
+            model = profile,
             username = profile.username,
             email = profile.email,
             name = data['fullname']
         )
-        worker.save()
+        model.save()
+    
     serializer = UserSerializer(user, many = False)
     return Response(serializer.data)
 
@@ -188,7 +205,7 @@ def getTasks(request ):
         return Response(serializer.data)
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def addTask(request):
     print(request.headers)
     user = request.user.profile
@@ -207,7 +224,50 @@ def addTask(request):
     serializer = TaskSerializer(task, many=False)
     return Response(serializer.data)
 
-class Supplier(APIView):
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getGadgets(request):
+    user = request.user.profile
+    if user.role == "Agency":
+        
+        gadgets = Premise.objects.filter(agency = user)
+        serializer = PremiseSerializer(gadgets, many=True)
+        return Response(serializer.data)
+
+    else:
+        
+        return Response({"message" : "You are not authorised person or agency roled user"})
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addGadget(request):
+    print(request.headers)
+    agency = request.user.agency
+    data = request.data
+    print(data)
+    gadget = Premise.objects.create(
+        owner = agency,
+        role = Role.objects.get(name=request.user.role),
+        # owner. = data['user'],
+        itemName = data['gadgetName'],
+        premiseImage = data['gadgetImage'],
+        price = data['price'],
+        orderstatus = data['orderStatus']
+        # date = data['datetime'].split("T")[0],
+        # time = data['datetime'].split("T")[1]
+        
+    )
+    print(gadget.owner)
+    # print(data['datetime'].split("T")[0])
+    serializer = PremiseSerializer(gadget, many=False)
+    return Response(serializer.data)
+
+
+
+
+
+
+class SupplierView(APIView):
     # permission_classes=[IsAuthenticated]
 
     @api_view(['GET'])
@@ -267,7 +327,7 @@ class Supplier(APIView):
         serializer = BillingSerializer(bill, many=True)
         return Response(serializer.data)
 
-class Agency(APIView):
+class AgencyView(APIView):
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated])
@@ -326,7 +386,7 @@ class Agency(APIView):
         return Response(serializer.data)
 
 
-class Customer(APIView):
+class CustomerView(APIView):
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated])
@@ -384,7 +444,7 @@ class Customer(APIView):
         serializer = BillingSerializer(bill, many=True)
         return Response(serializer.data)
 
-class Worker(APIView):
+class WorkerView(APIView):
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated])

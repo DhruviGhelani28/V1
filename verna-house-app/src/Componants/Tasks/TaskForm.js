@@ -105,9 +105,9 @@ const TaskForm = props => {
         setValues(
             {
                 'username': "",
-                "taskName": '',
+                "taskname": '',
                 "discription": '',
-                "dateTime": 'dd-mm-yyyy --:--:--'
+                "datetime": 'dd-mm-yyyy --:--:--'
             })
     }
     useEffect(() => {
@@ -130,7 +130,7 @@ const TaskForm = props => {
                     transition: "all 0.5s ease",
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
-            onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>

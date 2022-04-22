@@ -1,9 +1,8 @@
 import axios from "axios";
 import { UserActionType } from "../Constants/UserActionType";
 
-
 const BaseUrl = "http://localhost:8000";
-export const getAgencies = () => async (dispatch) => {
+export const getAgencies = () => async (dispatch, getState) => {
     console.log("Agency dispatch");
     try {
         const token = JSON.parse(localStorage.getItem("userInfo")).token

@@ -10,7 +10,7 @@ import GradeRoundedIcon from "@mui/icons-material/GradeRounded";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Grid } from "@mui/material";
 import Tooltip from '@mui/material/Tooltip';
-import model1 from '../../../static/PhotoPoster/model1.jpg';
+import model1 from '../../static/PhotoPoster/model1.jpg';
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
     root: {

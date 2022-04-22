@@ -106,6 +106,10 @@ const Rolls = [
         label: 'Worker',
     },
     {
+        value: 'Model',
+        label: 'Model',
+    },
+    {
         value: 'Admin',
         label: 'Admin',
     },
@@ -153,13 +157,12 @@ const Registration = props => {
         else if (data.role === 'Worker') {
             navigateForm("/WorkerForm", { state: data });
         }
-        else {
-
+        else if (data.role === 'Agency') {
             navigateForm("/AgencyForm", { state: data });
         }
-        // else {
-        //     navigateForm("/Department");
-        // }
+        else {
+            navigateForm("/ModelForm", { state: data });
+        }
 
     };
     const goBackHandler = () => {
@@ -234,7 +237,7 @@ const Registration = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Register Here</Typography>
-                   
+
                     <div className={classes1.root5}>
                         <TextField
                             sx={{ marginTop: 2 }}
@@ -289,6 +292,7 @@ const Registration = props => {
                             helpertext={errors?.username ? errors.username.message : null}
                         />
                         <TextField
+                            autoComplete="true"
                             inputprops={{ tabIndex: "4" }}
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
@@ -326,7 +330,7 @@ const Registration = props => {
                             helpertext={errors?.password ? errors.password.message : null}
                         />
                         <TextField
-
+                            autoComplete="true"
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
                             required
@@ -418,7 +422,7 @@ const Registration = props => {
                             </Typography>
                         </div>
                     </div>
-                 
+
                 </CardContent>
             </Card>
             {/* </Container> */}

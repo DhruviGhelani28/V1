@@ -49,7 +49,7 @@ const List = props => {
 
     if (role === "Supplier")
     {
-        const list2 = ['Garments', 'Customers', 'Workers', 'Agencies', 'PhotosPosters', 'Models', 'Settings']
+        const list2 = ['Garments', 'Customers', 'Workers', 'Agencies', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton
@@ -79,7 +79,7 @@ const List = props => {
         })
     }
     else if (role === "Agency") {
-        const list2 = ['Gadgets', 'Suppliers', 'Customers', 'Workers', 'PhotosPosters', 'Models', 'Settings']
+        const list2 = ['Gadgets', 'Suppliers', 'Customers', 'Workers', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton
@@ -108,7 +108,7 @@ const List = props => {
         })
     }
     else if (role === "Customer") {
-        const list2 = [ 'Suppliers', 'Agencies', 'Workers', 'PhotosPosters', 'Models', 'Settings']
+        const list2 = [ 'Suppliers', 'Agencies', 'Workers', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton
@@ -137,7 +137,7 @@ const List = props => {
         })
     }
     else if (role === "Worker") {
-        const list2 = [ 'Suppliers', 'Agencies', 'Customers', 'PhotosPosters', 'Models', 'Settings']
+        const list2 = [ 'Suppliers', 'Agencies', 'Customers', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton
@@ -166,7 +166,7 @@ const List = props => {
         })
     }
     else {
-        const list1 = ['Departments', 'Suppliers', 'Customers', 'Workers', 'Agencies', 'Garments', 'Gadgets', 'PhotosPosters', 'Models', 'Settings']
+        const list1 = ['Departments', 'Suppliers', 'Customers', 'Workers', 'Agencies', 'Garments', 'Gadgets', 'PhotosPosters', 'Models']
         list = list1.map((value, index) => {
             return (
                 <ListItemButton
