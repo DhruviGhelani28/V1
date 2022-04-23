@@ -17,7 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Garments from "../../static/images/Garments.png"
 import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
 import { makeStyles } from "@material-ui/core/styles";
-import { Escalator } from '@mui/icons-material';
+// import { Escalator } from '@mui/icons-material';
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',

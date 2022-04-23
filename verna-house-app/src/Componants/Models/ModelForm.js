@@ -73,9 +73,9 @@ const ModelForm = () => {
         }
         // setValues({ ...values, [prop]: event.target.value });
     };
-    const onFileHandler = (event) => {
-        setValues({ ...values, profileImage: event.target.files[0].name });
-    }
+    // const onFileHandler = (event) => {
+    //     setValues({ ...values, profileImage: event.target.files[0].name });
+    // }
     // const handleChange = (prop) => (event) => {
     //     console.log(event.target.files[0])
     //     setValues({ ...values, [prop]: event.target.files[0] });

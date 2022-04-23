@@ -61,12 +61,12 @@ const SupplierForm = props => {
 
     const a = [state.fullname, state.username, state.email]
     const [values, setValues] = React.useState({
-        'mobileNo': "",
-        "organizationName": '',
-        "organizationAddress": '',
-        "profileImageSupplier": null,
-        "locationSupplier": '',
-        "scocialWebsite": "",
+        mobileNo: "",
+        organizationName: '',
+        organizationAddress: '',
+        profileImage: null,
+        location: '',
+        scocialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
@@ -91,7 +91,7 @@ const SupplierForm = props => {
     const onSubmit = data => {
 
         const data1 = a.push(data)
-
+        console.log(values)
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
         console.log("user registered")
@@ -125,23 +125,12 @@ const SupplierForm = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Supplier Profile</Typography>
-                    {/* <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            marginLeft: 0,
-                            '& .MuiTextField-root': { m: 1, width: '40ch', size: 'small' },
-                            // '& .MuiButton-root': { marginRight:10 },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    > */}
+                  
                     <div className={classes1.root5}>
                        
                         <TextField
                             disabled
-                            multiline
-                            size='medium'
+                            
                             id="role"
                             label="Role"
                             defaultValue={state.role}
@@ -152,16 +141,15 @@ const SupplierForm = props => {
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            required
-                            multiline
-                            size='medium'
+                           
                             id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
+                        
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
                             helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            onChange={handleChange}
+                            onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -172,10 +160,11 @@ const SupplierForm = props => {
                             id="organisationName"
                             label="Organisation Name"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+                           
                             {...register('organizationName', { required: true, maxLength: 20 })}
                             error={!!errors?.organizationName}
                             helpertext={errors?.organizationName ? errors.organizationName.message : null}
+                            onChange={handleChange('organizationName')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -186,43 +175,28 @@ const SupplierForm = props => {
                             id="organisationAddress"
                             label="Organisation Address"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+                           
                             {...register('organizationAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.organizationAddress}
                             helpertext={errors?.organizationAddress ? errors.organizationAddress.message : null}
+                            onChange={handleChange('organizationAddress')}
                         />
-                        {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
-                                <InputLabel htmlFor="outlined-adornment-password" >Profile Image</InputLabel>
-                                <OutlinedInput
-                                    id="profile-image-agency"
-                                    label="Profile Image"
-                                    placeholder='Upload File'
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <UploadButton />
-                                        </InputAdornment>
-                                    }>
-                                </OutlinedInput>
-                            </FormControl> */}
-
+                    
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            id="profileImageSupplier"
+                            id="profileImage"
                             label="Profile Image"
                             placeholder='Upload File'
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <UploadButton className={classes1.root1}/>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            {...register('profileImageSupplier', { required: true })}
-                            error={!!errors?.profileImageSupplier}
-                            helpertext={errors?.profileImageSupplier ? errors.profileImageSupplier.message : null}>
+                            type="file"
+                            accept ="image/*"
+                            
+                           
+                            {...register('profileImage', { required: true })}
+                            error={!!errors?.profileImage}
+                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            onChange={handleChange('profileImage')}
+                        >
                         </TextField>
                         <TextField
                             className={classes1.allfield}
@@ -230,13 +204,14 @@ const SupplierForm = props => {
                             required
                             multiline
                             size='medium'
-                            id="locationSupplier"
+                            id="location"
                             label="Location"
                             placeholder="xyz"
-                            onChange={handleChange}
-                            {...register('locationSupplier', { required: true, maxLength: 100 })}
-                            error={!!errors?.locationSupplier}
-                            helpertext={errors?.locationSupplier ? errors.locationSupplier.message : null}
+                           
+                            {...register('location', { required: true, maxLength: 100 })}
+                            error={!!errors?.location}
+                            helpertext={errors?.location ? errors.location.message : null}
+                            onChange={handleChange('location')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -247,10 +222,11 @@ const SupplierForm = props => {
                             id="social-website"
                             label="Social Website"
                             placeholder="http://xyz.com"
-                            onChange={handleChange}
+                           
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
                             helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+                            onChange={handleChange('socialWebsite')}
                         />
                         <div className={classes.button}>
                             <Button

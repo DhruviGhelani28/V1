@@ -60,24 +60,29 @@ const AgencyForm = props => {
         navigate("/Registration")
     }
     // const a = [state.fullname, state.username, state.email]
-
     const [values, setValues] = React.useState({
-        'mobileNo': "",
-        "agencyName": '',
-        "agencyAddress": '',
-        "profileImageAgency": '',
-        "locationAgency": '',
-        "scocialWebsite": "",
+        mobileNo: "",
+        agencyName: '',
+        agencyAddress: '',
+        profileImage: "",
+        location: '',
+        scocialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
+
+        console.log(prop)
         setValues({ ...values, [prop]: event.target.value });
+        if (prop == "profileImage") {
+            console.log(event.target.files[0])
+            setValues({ ...values, profileImage: event.target.files[0].name });
+        }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
 
         // const data1 = a.push(data)
-
+        console.log(values)
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
         // dispatch(getAgencies({ data: data1 }));
@@ -115,19 +120,18 @@ const AgencyForm = props => {
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             disabled
-                            multiline
+
                             size='medium'
                             id="role"
                             label="Role"
-                        // defaultValue={state.role}
+                            defaultValue={state.role}
 
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            required
-                            multiline
+
                             size='medium'
                             id="mobileNo"
                             label="Mobile No."
@@ -135,96 +139,73 @@ const AgencyForm = props => {
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
                             helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            onChange={handleChange}
+                            onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
-                            id="agency-name"
+
+                            id="agencyName"
                             label="Agency Name"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+
                             {...register('agencyName', { required: true, maxLength: 20 })}
                             error={!!errors?.agencyName}
                             helpertext={errors?.agencyName ? errors.agencyName.message : null}
+                            onChange={handleChange('agencyName')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="agencyAddress"
                             label="Agency Address"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+
                             {...register('agencyAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.agencyAddress}
                             helpertext={errors?.agencyAddress ? errors.agencyAddress.message : null}
+                            onChange={handleChange('agencyAddress')}
                         />
-                        {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
-                                <InputLabel htmlFor="outlined-adornment-password" >Profile Image</InputLabel>
-                                <OutlinedInput
-                                    id="profile-image-agency"
-                                    label="Profile Image"
-                                    placeholder='Upload File'
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <UploadButton />
-                                        </InputAdornment>
-                                    }>
-                                </OutlinedInput>
-                            </FormControl> */}
-
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            id="profileImageAgency"
+                            id="profileImage"
                             label="Profile Image"
                             placeholder='Upload File'
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <UploadButton className={classes1.root1} />
-                                    </InputAdornment>
-                                ),
-                            }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            {...register('profileImageAgency', { required: true })}
-                            error={!!errors?.profileImageAgency}
-                            helpertext={errors?.profileImageAgency ? errors.profileImageAgency.message : null}
+                            type="file"
+                            accept = "image/*"
+                            
+                            {...register('profileImage', { required: true })}
+                            error={!!errors?.profileImage}
+                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            onChange={handleChange('profileImage')}
                         >
                         </TextField>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
-                            id="locationAgency"
+                            id="location"
                             label="Location"
                             placeholder="xyz"
-                            onChange={handleChange}
-                            {...register('locationAgency', { required: true, maxLength: 100 })}
-                            error={!!errors?.locationAgency}
-                            helpertext={errors?.locationAgency ? errors.locationAgency.message : null}
+
+                            {...register('location', { required: true, maxLength: 100 })}
+                            error={!!errors?.location}
+                            helpertext={errors?.location ? errors.location.message : null}
+                            onChange={handleChange('location')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            multiline
-                            size='medium'
+
                             id="socialWebsite"
                             label="Social Website"
                             placeholder="http://xyz.com"
-                            onChange={handleChange}
+
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
                             helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+                            onChange={handleChange('socialWebsite')}
                         />
                         <div className={classes.button}>
                             <Button

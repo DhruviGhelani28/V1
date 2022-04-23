@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import { useForm, Controller } from 'react-hook-form';
@@ -19,6 +19,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import { useDispatch } from "react-redux";
 import MenuItem from '@mui/material/MenuItem';
+import { addGarment } from "../../Store/Garment/GarmentAction";
 
 const useStyles = makeStyles({
     root1: {
@@ -82,7 +83,6 @@ const GarmentForm = (props) => {
     const handleChange = (prop) => (event) => {
 
         console.log(prop)
-
         setValues({ ...values, [prop]: event.target.value });
         if (prop == "garmentImage") {
             console.log(event.target.files[0])
@@ -92,13 +92,27 @@ const GarmentForm = (props) => {
     };
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-
+    const onSubmit = (data, e) => {
+        e.preventDefault();
         console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-
-
+        let data1 = values['values']
+        // console.log(JSON.stringify(data, null, 2));
+        console.log(data1)
+        props.onClick()
+        dispatch(addGarment({ values }))
+        setValues(
+            {
+                garmentName: "",
+                garmentImage: "",
+                price: '',
+                orderStatus: '',
+                timeDuration: '',
+            })
     }
+    useEffect(() => {
+        const body = document.querySelector("body");
+        body.style.overflow = props.open ? "hidden" : "auto";
+    }, [props.open])
 
     return (
         <Container align="center">
@@ -154,7 +168,7 @@ const GarmentForm = (props) => {
                                 id="garmentImage"
                                 label="Garment Image"
                                 type="file"
-                                accept="image/png image/jpeg"
+                                accept="image/*"
                                 {...register('garmentImage', { required: true })}
                                 error={!!errors?.garmentImage}
                                 helpertext={errors?.garmentImage ? errors.garmentImage.message : null}
@@ -197,9 +211,7 @@ const GarmentForm = (props) => {
                                     {...register('orderStatus', { required: true })}
                                     error={!!errors?.orderStatus}
                                     helpertext={errors?.orderStatus ? errors.orderStatus.message : null}
-
                                     onChange={handleChange('orderStatus')}
-
                                 >
                                     {OrderStatus.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>

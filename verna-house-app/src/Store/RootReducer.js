@@ -3,6 +3,10 @@ import WorkerReducer from "./Worker/WorkerReducer";
 import AgencyReducer from "./Agency/AgencyReducer";
 import CustomerReducer from "./Customer/CustomerReducer";
 import { TaskReducer, AddTaskReducer } from "./Task/TaskReducer";
+import { GadgetReducer, AddGadgetReducer } from "./Gadget/GadgetReducer";
+import { GarmentReducer, AddGarmentReducer } from "./Garment/GarmentReducer";
+import { PhotoPosterReducer } from "./PhotoPoster/PhotoPosterReducer";
+import { ModelReducer } from "./Model/ModelReducer";
 import { combineReducers } from "redux";
 import { userLoginReducer, userRegisterReducer } from "./Register/RegisterReducer";
 const RootReducers = combineReducers(
@@ -15,6 +19,12 @@ const RootReducers = combineReducers(
         customers: CustomerReducer,
         tasks: TaskReducer,
         addTask: AddTaskReducer,
+        gadgets: GadgetReducer,
+        addGadget: AddGadgetReducer,
+        garments: GarmentReducer,
+        addGarment: AddGarmentReducer,
+        photoposters: PhotoPosterReducer,
+        models: ModelReducer,
     }
 )
 

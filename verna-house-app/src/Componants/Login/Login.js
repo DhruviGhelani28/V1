@@ -79,13 +79,13 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
         color: 'action.home',
     }
-    
+
 });
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
         backgroundColor: '#44b700',
-        
+
         color: '#44b700',
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
         '&::after': {
@@ -171,14 +171,14 @@ const Login = props => {
     return (
         <div className={classes.loginBack}>
             {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
-                <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent:"flex-start" }} align="left">
-                    Style Queen
-                </Typography>
-                <Typography variant="h5" sx={{ color: "white", padding: 1 }} align="left">
-                    Wide Fashion & Beauty
-                </Typography>
+            <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent: "flex-start" }} align="left">
+                Style Queen
+            </Typography>
+            <Typography variant="h5" sx={{ color: "white", padding: 1 }} align="left">
+                Wide Fashion & Beauty
+            </Typography>
             {/* </Box> */}
-            
+
             <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#EC255A', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
                 <CardActions >
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
@@ -246,15 +246,15 @@ const Login = props => {
                                     label="Enter Your UserName"
                                     placeholder="xyz_abc123"
                                     onChange={handleChange}
-                                    
+
                                     {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                                     error={!!errors?.username}
                                     helpertext={errors?.username ? errors.username.message : null}
                                 />
 
                             </Grid>
-                           
-                            
+
+
                             {/* <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 <FormControl required sx={{ m: 1, width: '40ch' }} >
@@ -282,6 +282,7 @@ const Login = props => {
                             <Grid item xs={12} >
                                 <img width="23" src={key} className={classes.marginTop} alt="key"></img>
                                 <TextField
+                                    autoComplete="true"
                                     required
                                     sx={{ marginTop: 1 }}
                                     className={classes1.root2}

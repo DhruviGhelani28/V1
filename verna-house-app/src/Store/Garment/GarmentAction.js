@@ -2,9 +2,11 @@ import axios from "axios";
 import { UserActionType } from "../Constants/UserActionType";
 
 const BaseUrl = "http://localhost:8000";
-export const getAgencies = () => async (dispatch, getState) => {
-    console.log("Agency dispatch");
+
+export const getMyGarments = () => async (dispatch) => {
+    console.log("garments dispatch");
     try {
+
         const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
             headers: {
@@ -12,15 +14,41 @@ export const getAgencies = () => async (dispatch, getState) => {
                 "Authorization": `Bearer ${token}`,
             },
         };
-        const response = await axios.get(`${BaseUrl}/api/Agencies/`, config);
-        console.log("agency call")
-        dispatch({ type: UserActionType.GET_AGENCIES_DATA, agencies: response.data });
+        const response = await axios.get(`${BaseUrl}/api/MyGarments/`, config);
+        console.log("garments call")
+        dispatch({ type: UserActionType.GET_MYGARMENTS_SUCCESS, garments: response.data });
 
 
     } catch (error) {
-        const agency_error = "You are not authorised person to list the agencies.";
+        const garment_error = "You are not authorised person to list the garments.";
         dispatch({
-            type: UserActionType.GET_AGENCIES_FAIL, agencies: agency_error,
+            type: UserActionType.GET_MYGARMENTS_FAIL, garments: garment_error,
+        });
+        // console.log("You are not authorised person to list the suppliers.");
+    }
+}
+
+export const addGarment = (values) => async (dispatch) => {
+    console.log("addgarment dispatch");
+    console.log(values)
+    try {
+        const token = JSON.parse(localStorage.getItem("userInfo")).token
+
+        const config = {
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        };
+        const response = await axios.post(`${BaseUrl}/api/AddGarment/`, values['data'], config);
+        console.log("garment call")
+        dispatch({ type: UserActionType.ADD_GARMENT_SUCCESS, garment: response.data });
+
+
+    } catch (error) {
+        const garment_error = "You are not authorised person to ADD the garment.";
+        dispatch({
+            type: UserActionType.ADD_GARMENT_FAIL, garment: garment_error,
         });
         // console.log("You are not authorised person to list the suppliers.");
     }

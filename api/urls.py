@@ -22,6 +22,10 @@ urlpatterns = [
     path('addTask/', addTask),
     path('MyGadgets/', getGadgets),
     path('AddGadget/', addGadget),
+    path('MyGarments/', getGarments),
+    path('AddGarment/', addGarment),
+    path('PhotoPosters/',PhotoPosterView.getPhotoPosters),
+    path('Models/', ModelView.getModels),
 
     # path('Suppliers/', Supplier.getSuppliers),
     # path('Agencies/', Agency.getAgencies),
@@ -38,19 +42,19 @@ urlpatterns = [
     # path('Users/Customers/<str:pk>/Tasks/', Customer.getCustomerTasks),
     # path('Users/Workers/<str:pk>/Tasks/', Worker.getWorkerTasks),
 
-    path('Users/Suppliers/<str:pk>/Tasks/<str:pk1>/', Supplier.getSupplierTask),
-    path('Users/Agencies/<str:pk>/Tasks/<str:pk1>/', Agency.getAgencyTask),
-    path('Users/Customers/<str:pk>/Tasks/<str:pk1>/', Customer.getCustomerTask),
-    path('Users/Workers/<str:pk>/Tasks/<str:pk1>/', Worker.getWorkerTask),
+    path('Users/Suppliers/<str:pk>/Tasks/<str:pk1>/', SupplierView.getSupplierTask),
+    path('Users/Agencies/<str:pk>/Tasks/<str:pk1>/', AgencyView.getAgencyTask),
+    path('Users/Customers/<str:pk>/Tasks/<str:pk1>/', CustomerView.getCustomerTask),
+    path('Users/Workers/<str:pk>/Tasks/<str:pk1>/', WorkerView.getWorkerTask),
 
-    path('Users/Suppliers/<str:pk>/Bills/', Supplier.getSupplierBills),
-    path('Users/Agencies/<str:pk>/Bills/', Agency.getAgencyBills),
-    path('Users/Customers/<str:pk>/Bills/', Customer.getCustomerBills),
-    path('Users/Workers/<str:pk>/Bills/', Worker.getWorkerBills),
+    path('Users/Suppliers/<str:pk>/Bills/', SupplierView.getSupplierBills),
+    path('Users/Agencies/<str:pk>/Bills/', AgencyView.getAgencyBills),
+    path('Users/Customers/<str:pk>/Bills/', CustomerView.getCustomerBills),
+    path('Users/Workers/<str:pk>/Bills/', WorkerView.getWorkerBills),
 
-    path('Users/Suppliers/<str:pk>/Bills/<str:pk1>/', Supplier.getSupplierBill),
-    path('Users/Agencies/<str:pk>/Bills/<str:pk1>/', Agency.getAgencyBill),
-    path('Users/Customers/<str:pk>/Bills/<str:pk1>/', Customer.getCustomerBill),
-    path('Users/Workers/<str:pk>/Bills/<str:pk1>/', Worker.getWorkerBill),
+    path('Users/Suppliers/<str:pk>/Bills/<str:pk1>/', SupplierView.getSupplierBill),
+    path('Users/Agencies/<str:pk>/Bills/<str:pk1>/', AgencyView.getAgencyBill),
+    path('Users/Customers/<str:pk>/Bills/<str:pk1>/', CustomerView.getCustomerBill),
+    path('Users/Workers/<str:pk>/Bills/<str:pk1>/', WorkerView.getWorkerBill),
 
 ]

@@ -61,22 +61,28 @@ const WorkerForm = props => {
 
     // const a = [state.fullname, state.username, state.email]
     const [values, setValues] = React.useState({
-        'mobileNo': "",
-        "shortIntro": '',
-        "Address": '',
-        "profileImageWorker": '',
-        "locationWorker": '',
-        "scocialWebsite": "",
+        mobileNo: "",
+        shortIntro: '',
+        address: '',
+        profileImage: '',
+        location: '',
+        // scocialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
+
+        console.log(prop)
         setValues({ ...values, [prop]: event.target.value });
+        if (prop == "profileImage") {
+            console.log(event.target.files[0])
+            setValues({ ...values, profileImage: event.target.files[0].name });
+        }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
 
         // const data1 = a.push(data)
-
+        console.log(values)
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
         // dispatch(getAgencies({ data: data1 }));
@@ -111,26 +117,15 @@ const WorkerForm = props => {
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Worker Profile</Typography>
-                    {/* <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            marginLeft: 0,
-                            '& .MuiTextField-root': { m: 1, width: '40ch', size: 'small' },
-                            // '& .MuiButton-root': { marginRight:10 },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    > */}
-                    <div className={classes1.root5}>
 
+                    <div className={classes1.root5}>
                         <TextField
                             disabled
                             multiline
                             size='medium'
                             id="rol"
                             label="Role"
-                            defaultValue="Worker"
+                            defaultValue={state.role}
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                         />
@@ -147,7 +142,7 @@ const WorkerForm = props => {
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
                             helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            onChange={handleChange}
+                            onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -158,10 +153,11 @@ const WorkerForm = props => {
                             id="shortIntro"
                             label="Short Intro"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+
                             {...register('shortIntro', { required: true, maxLength: 50 })}
                             error={!!errors?.shortIntro}
                             helpertext={errors?.shortIntro ? errors.shortIntro.message : null}
+                            onChange={handleChange('shortIntro')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -169,46 +165,29 @@ const WorkerForm = props => {
                             required
                             multiline
                             size='medium'
-                            id="Address"
+                            id="address"
                             label="Address"
                             placeholder="xyz abc"
-                            onChange={handleChange}
+
                             {...register('Address', { required: true, maxLength: 100 })}
                             error={!!errors?.Address}
                             helpertext={errors?.Address ? errors.Address.message : null}
+                            onChange={handleChange('address')}
                         />
-                        {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
-                                <InputLabel htmlFor="outlined-adornment-password" >Profile Image</InputLabel>
-                                <OutlinedInput
-                                    id="profile-image-agency"
-                                    label="Profile Image"
-                                    placeholder='Upload File'
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <UploadButton />
-                                        </InputAdornment>
-                                    }>
-                                </OutlinedInput>
-                            </FormControl> */}
 
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            id="profile"
+                            id="profileImage"
                             label="Profile Image"
                             placeholder='Upload File'
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <UploadButton className={classes1.root1}/>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            {...register('profileImageWorker', { required: true })}
-                            error={!!errors?.profileImageWorker}
-                            helpertext={errors?.profileImageWorker ? errors.profileImageWorker.message : null}>
+                            tyep="file"
+                            accept="image/*"
+
+                            {...register('profileImage', { required: true })}
+                            error={!!errors?.profileImage}
+                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            onChange={handleChange('profileImage')}>
                         </TextField>
                         <TextField
                             className={classes1.allfield}
@@ -216,15 +195,16 @@ const WorkerForm = props => {
                             required
                             multiline
                             size='medium'
-                            id="locationWorker"
+                            id="location"
                             label="Location"
                             placeholder="xyz"
-                            onChange={handleChange}
-                            {...register('locationWorker', { required: true, maxLength: 100 })}
-                            error={!!errors?.locationWorker}
-                            helpertext={errors?.locationWorker ? errors.locationWorker.message : null}
+
+                            {...register('location', { required: true, maxLength: 100 })}
+                            error={!!errors?.location}
+                            helpertext={errors?.location ? errors.location.message : null}
+                            onChange={handleChange('location')}
                         />
-                        <TextField
+                        {/* <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             multiline
@@ -237,7 +217,7 @@ const WorkerForm = props => {
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
                             helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
-                        />
+                        /> */}
                         <div className={classes.button}>
                             <Button
                                 variant="contained"

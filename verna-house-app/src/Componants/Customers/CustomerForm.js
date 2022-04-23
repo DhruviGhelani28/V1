@@ -64,39 +64,30 @@ const CustomerForm = props => {
     // const a = [state.fullname, state.username, state.email]
 
     const [values, setValues] = React.useState({
-        'mobileNo': "",
-        "companyName": '', 
-        "companyAddress": '',
-        "profileImageCustomer": null,
-        "locationCustomer": '',
-        "scocialWebsite": "",
+        mobileNo: "",
+        companyName: '',
+        companyAddress: '',
+        profileImage: null,
+        location: '',
+        scocialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
 
         console.log(prop)
-        // if (prop !== "picture") {
-        console.log(event.target.files[0])
         setValues({ ...values, [prop]: event.target.value });
-        // }
-        // else {
-        //     console.log(event.target.files[0])
-        //     setValues({
-        //         ...values,
-        //         [prop]: event.target.files[0],
-        //     });
-        // }
+        if (prop == "profileImage") {
+            setValues({ ...values, [prop]: event.target.files[0] })
+        }
 
-
-
-        // setValues({ ...values, [prop]: event.target.value });
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         // const data1 = a.push(data)
+        console.log(values)
         console.log(JSON.stringify(data, null, 2));
         dispatch(getRegisterData({ data: state }));
-        
+
     }
 
     return (
@@ -129,6 +120,7 @@ const CustomerForm = props => {
                     <div className={classes1.root5}>
 
                         <TextField
+                            disabled
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             multiline
@@ -141,98 +133,69 @@ const CustomerForm = props => {
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            required
-                            multiline
-                            size='medium'
-                            id="mobileNoCustomer"
+
+
+                            id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
-                            {...register('mobileNoCustomer', { required: true, maxLength: 10 })}
-                            error={!!errors?.mobileNoCustomer}
-                            helpertext={errors?.mobileNoCustomer ? errors.mobileNoCustomer.message : null}
+                            {...register('mobileNo', { required: true, maxLength: 10 })}
+                            error={!!errors?.mobileNo}
+                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
                             onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="companyName"
                             label="Company Name"
                             placeholder="xyz abc"
-                            onChange={handleChange('companyName')}
+
                             {...register('companyName', { required: true, maxLength: 20 })}
                             error={!!errors?.companyName}
                             helpertext={errors?.companyName ? errors.companyName.message : null}
+                            onChange={handleChange('companyName')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="companyAddress"
                             label="Company Address"
                             placeholder="xyz abc"
-                            onChange={handleChange('companyAddress')}
+
                             {...register('companyAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.companyAddress}
                             helpertext={errors?.companyAddress ? errors.companyAddress.message : null}
+                            onChange={handleChange('companyAddress')}
                         />
-                        {/* <FormControl required sx={{ m: 1, width: '40ch' }} variant="outlined" >
-                                <InputLabel htmlFor="outlined-adornment-password" >Profile Image</InputLabel>
-                                <OutlinedInput
-                                    id="profile-image-agency"
-                                    label="Profile Image"
-                                    placeholder='Upload File'
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <UploadButton />
-                                        </InputAdornment>
-                                    }>
-                                </OutlinedInput>
-                            </FormControl> */}
 
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            id="profileImageCustomer"
-                            label="Profile Image Customer"
+                            id="profileImage"
+                            label="Profile Image"
                             placeholder='Upload File'
                             type="file"
                             accept="image/*"
-                            // ref={register}
-                            // value = { values.profileImageCustomer}
-                            // InputProps={{
-                            //     endAdornment: (
-                            //         <InputAdornment position="end">
-                            //             <UploadButton className={classes1.root1} />
-                            //         </InputAdornment>
-                            //     ),
-                            // }}
-                            inputlabelprops={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            {...register('profileImageCustomer', { required: true })}
-                            error={!!errors?.profileImageCustomer}
-                            helpertext={errors?.profileImageCustomer ? errors.profileImageCustomer.message : null}>
+
+                            {...register('profileImage', { required: true })}
+                            error={!!errors?.profileImage}
+                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            onChange={handleChange('profileImage')}>
                         </TextField>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
-                            id="locationCustomer"
+
+                            id="location"
                             label="Location"
                             placeholder="xyz"
-                            onChange={handleChange}
-                            {...register('locationCustomer', { required: true, maxLength: 100 })}
-                            error={!!errors?.locationCustomer}
-                            helpertext={errors?.locationCustomer ? errors.locationCustomer.message : null}
+
+                            {...register('location', { required: true, maxLength: 100 })}
+                            error={!!errors?.location}
+                            helpertext={errors?.location ? errors.location.message : null}
+                            onChange={handleChange('location')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -243,10 +206,11 @@ const CustomerForm = props => {
                             id="socialWebsite"
                             label="Social Website"
                             placeholder="http://xyz.com"
-                            onChange={handleChange}
+
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
                             helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+                            onChange={handleChange('socialWebsite')}
                         />
                         <div className={classes.button}>
                             <Button

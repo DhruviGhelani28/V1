@@ -121,17 +121,19 @@ def UserRegistrationViewSet(request):
             name = data['fullname']
         )
         customer.save()
+        print("customer:: ",customer)
 
     if data['role'] == 'Worker':
-        # worker = Worker.objects.create(
-        #     worker = profile,
-        #     username = profile.username,
-        #     email = profile.email,
-        #     name = data['fullname']
-        # )
-        # worker.save()
-        workers = Worker.objects.all()
-        print("Workers\n\n\n", workers)
+        worker = Worker.objects.create(
+            worker = profile,
+            username = profile.username,
+            email = profile.email,
+            name = data['fullname']
+        )
+        worker.save()
+        # workers = Worker.objects.all()
+        print("Worker\n\n\n", worker)
+
     if data['role'] == 'Model':
         model = Actor.objects.create(
             model = profile,
@@ -227,42 +229,81 @@ def addTask(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getGadgets(request):
-    user = request.user.profile
-    if user.role == "Agency":
-        
-        gadgets = Premise.objects.filter(agency = user)
-        serializer = PremiseSerializer(gadgets, many=True)
-        return Response(serializer.data)
-
-    else:
-        
-        return Response({"message" : "You are not authorised person or agency roled user"})
+    user = request.user.agency
+    # if user.role == "Agency" :  
+    gadgets = Premise.objects.filter(agency = user)
+    serializer = PremiseSerializer(gadgets, many=True)
+    return Response(serializer.data)
+    # else: 
+    #     return Response({"message" : "You are not authorised person or admin user"})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def addGadget(request):
     print(request.headers)
     agency = request.user.agency
+    # if user.role == "Agency":
     data = request.data
     print(data)
     gadget = Premise.objects.create(
-        owner = agency,
-        role = Role.objects.get(name=request.user.role),
+        agency = agency,
+        # role = Role.objects.get(name=request.user.role),
         # owner. = data['user'],
         itemName = data['gadgetName'],
         premiseImage = data['gadgetImage'],
         price = data['price'],
-        orderstatus = data['orderStatus']
+        orderstatus = data['orderStatus'],
+        timeDuration = data['timeDuration'],
         # date = data['datetime'].split("T")[0],
         # time = data['datetime'].split("T")[1]
-        
-    )
-    print(gadget.owner)
+        )
+    print(gadget)
+    gadget.save()
+
+    # else:
+    #      return Response({"message" : "You are not authorised person"})
     # print(data['datetime'].split("T")[0])
     serializer = PremiseSerializer(gadget, many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getGarments(request):
+    user = request.user.profile.supplier
+    # if user.role == "Supplier" :
+    garments = Garment.objects.filter(supplier = user)
+    serializer = GarmentSerializer(garments, many=True)
+    return Response(serializer.data)
+    # else: 
+    #     return Response({"message" : "You are not authorised person or admin user to list garments"})
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addGarment(request):
+    print(request.headers)
+    user = request.user.profile
+    if user.role == "Supplier":
+        data = request.data
+        print("garment data ::: ",data)
+        garment = Garment.objects.create(
+            supplier = user,
+            # role = Role.objects.get(name=request.user.role),
+            # owner. = data['user'],
+            garmentName = data['garmentName'],
+            garmentImage = data['garmentImage'],
+            price = data['price'],
+            orderstatus = data['orderStatus'],
+            timeDuration = data['timeDuration'],
+            # date = data['datetime'].split("T")[0],
+            # time = data['datetime'].split("T")[1]
+        )
+        print(garment)
+        garment.save()
+    else:
+        return Response({"message" : "You are not authorised person or admin user to add garment"})
+    # print(data['datetime'].split("T")[0])
+    serializer = GarmentSerializer(garment, many=False)
+    return Response(serializer.data)
 
 
 
@@ -512,3 +553,50 @@ class TaskViewSet(viewsets.ModelViewSet):
     #         tasks = Task.objects.filter(role = "Supplier")
     #         serializer = TaskSerializer(tasks, many=True)
     #         return Response(serializer.data)
+
+class ModelView(APIView):
+    @api_view(['GET'])
+    @permission_classes([IsAuthenticated])
+    def getModels(request):
+        user = request.user.profile
+        models = Actor.objects.all()
+        serializer = ActorProfileSerializer(models, many=True)
+        return Response(serializer.data)
+
+    # @api_view(['POST'])
+    # @permission_classes([IsAuthenticated])
+    # def addModel(request):
+    #     print(request.headers)
+    #     user = request.user.profile
+    #     if user.role == "Supplier":
+    #         data = request.data
+    #         print(data)
+    #         garment = Garment.objects.create(
+    #             supplier = user,
+    #             # role = Role.objects.get(name=request.user.role),
+    #             # owner. = data['user'],
+    #             garmentName = data['gadgetName'],
+    #             garmentImage = data['gadgetImage'],
+    #             price = data['price'],
+    #             orderstatus = data['orderStatus'],
+    #             timeDuration = data['timeDuration'],
+    #                 # date = data['datetime'].split("T")[0],
+    #             # time = data['datetime'].split("T")[1]
+    #         )
+    #         print(garment)
+    #         garment.save()
+    #     # print(data['datetime'].split("T")[0])
+    #     serializer = GarmentSerializer(garment, many=False)
+    #     return Response(serializer.data)
+
+class PhotoPosterView(APIView):
+    @api_view(['GET'])
+    @permission_classes([IsAuthenticated])
+    def getPhotoPosters(request):
+        user = request.user.profile
+
+        photposters = PhotoPoster.objects.all()
+        serializer = PhotoPosterSerializer(photposters, many=True)
+        return Response(serializer.data)
+
+

@@ -2,8 +2,8 @@ import axios from "axios";
 import { UserActionType } from "../Constants/UserActionType";
 
 const BaseUrl = "http://localhost:8000";
-export const getAgencies = () => async (dispatch, getState) => {
-    console.log("Agency dispatch");
+export const getModels = () => async (dispatch) => {
+    console.log("models dispatch");
     try {
         const token = JSON.parse(localStorage.getItem("userInfo")).token
         const config = {
@@ -12,15 +12,15 @@ export const getAgencies = () => async (dispatch, getState) => {
                 "Authorization": `Bearer ${token}`,
             },
         };
-        const response = await axios.get(`${BaseUrl}/api/Agencies/`, config);
-        console.log("agency call")
-        dispatch({ type: UserActionType.GET_AGENCIES_DATA, agencies: response.data });
+        const response = await axios.get(`${BaseUrl}/api/Models/`, config);
+        console.log("models call")
+        dispatch({ type: UserActionType.LIST_MODEL_SUCCESS, models: response.data });
 
 
     } catch (error) {
-        const agency_error = "You are not authorised person to list the agencies.";
+        const model_error = "You are not authorised person to list the models.";
         dispatch({
-            type: UserActionType.GET_AGENCIES_FAIL, agencies: agency_error,
+            type: UserActionType.LIST_MODEL_FAIL, models: model_error,
         });
         // console.log("You are not authorised person to list the suppliers.");
     }

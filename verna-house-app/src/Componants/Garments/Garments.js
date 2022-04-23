@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -18,9 +18,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Backdrop from '@mui/material/Backdrop';
 import GarmentForm from "./GarmentForm";
-
-
-
+import { getMyGarments, addGarment } from "../../Store/Garment/GarmentAction";
 
 const useStyles = makeStyles({
     root: {
@@ -32,6 +30,25 @@ const useStyles = makeStyles({
     }
 })
 const Garments = props => {
+    const classes = useStyles()
+    const dispatch = useDispatch()
+    const mygarments = useSelector((state) => state.garments);
+    // const { loading, details, error } = garments;
+    const garment = useSelector((state) => state.addGarment)
+    // const { loading, success, addTask } = garment;
+    const [garments, setGarments] = useState([])
+
+    console.log(mygarments.getMyGarments)
+    useEffect(() => {
+        dispatch(getMyGarments())
+    }, [dispatch, garment])
+
+    useEffect(() => {
+        setGarments(mygarments.getMyGarments)
+
+    }, [mygarments.getMyGarments, garment])
+    console.log(garments)
+
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
         setOpen(false);
@@ -39,8 +56,6 @@ const Garments = props => {
     const handleToggle = () => {
         setOpen(!open);
     };
-    const classes = useStyles()
-
 
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -83,33 +98,38 @@ const Garments = props => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Card sx={{ maxWidth: 345, borderColor: "#121212", borderWidth: 0.1, borderRadius: 2 }} variant="outlined">
-                <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="250"
-                    image={reptile}
-                // "../..//static/PhotoPoster/contemplative-reptile.jpg"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group
-                    </Typography>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" align="left">
-                        Person no
-                    </Typography>
-                    <Typography color="text.secondary">
-                        Work category
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Give Order</Button>
-                    <Button size="small">View Details</Button>
-                </CardActions>
-            </Card>
+            <Grid container justifyContent="flex-start" alignItems='flex-start' direction='row' spacing={1} >
+                {garments && garments.map((value, index) => (
+                    <Grid item xs={3} key={index}>
+                        <Card sx={{ maxWidth: 345, borderColor: "#121212", borderWidth: 0.1, borderRadius: 2, maxHeight: 550 }} variant="outlined">
+                            <CardMedia
+                                component="img"
+                                alt="green iguana"
+                                height="250"
+                                image={`http://127.0.0.1:8000${value.garmentImage}`}
+                            // "../..//static/PhotoPoster/contemplative-reptile.jpg"
+                            />
+                            <CardContent sx={{ paddingBottom: 0 }}>
+                                <Typography variant="h6" component="div" color="text.primary">
+                                    Garment Name: {value.garmentName}
+                                </Typography>
+                                <Typography variant="body2" color="text.primary">
+                                    Price: {value.price}
+                                </Typography>
+                                <Typography sx={{ fontSize: 14 }} color="text.primary" align="left">
+                                    OrderStatus: {value.orderStatus}
+                                </Typography>
+                                <Typography color="text.primary">
+                                    TimeDuration: {value.timeDuration.split("")[0]} Days
+                                </Typography>
+                            </CardContent>
+                            <CardActions sx={{ marginTop: 0, marginBottom: 0, justifyContent: "flex-end", paddingBottom: 0.3 }}>
+                                <Button size="small">Give Order</Button>
+                                {/* <Button size="small">View Details</Button> */}
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                ))}</Grid>
         </React.Fragment>
     );
 

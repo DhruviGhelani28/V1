@@ -3,7 +3,7 @@ import { UserActionType } from "../Constants/UserActionType";
 
 const BaseUrl = "http://localhost:8000";
 
-export const getMyTasks = () => async (dispatch, getState) => {
+export const getMyTasks = () => async (dispatch) => {
     console.log("tasks dispatch");
     try {
 

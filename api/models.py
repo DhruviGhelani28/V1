@@ -108,7 +108,7 @@ class Agency(models.Model):
     name = models.CharField(max_length=100,null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
-    roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
+    # roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
     # phone_regex = RegexValidator(regex="^(\+\d{1,3})?,?\s?\d{8,13}")validators=[phone_regex]
     # contact_no = models.CharField(verbose_name=("Mobile Number"),max_length=10, blank=True,null=True)
     mobileNo = models.IntegerField(null=True, blank=False, unique=True)
@@ -128,14 +128,15 @@ class Premise(models.Model):
     itemName = models.CharField(max_length=100, null=True, blank=False)
     premiseImage = models.ImageField(null = True, blank = True, upload_to = "premises/", default = "profiles/user-default.png")
     price = models.IntegerField(null=True, blank=False)
-    TimeDurationFrom = models.DateField(null=True, blank=False)
-    TimeDurationTo = models.DateField(null=True, blank=False)
-    orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=True)
+    # TimeDurationFrom = models.DateField(null=True, blank=False)
+    # TimeDurationTo = models.DateField(null=True, blank=False)
+    timeDuration = models.DurationField(null=True, blank=True)
+    orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
     
     def __str__(self) -> str:
-        return str(self.ItemName)
+        return str(self.itemName)
 
 class Customer(models.Model):
     customer = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -152,7 +153,7 @@ class Customer(models.Model):
     id = models.UUIDField(default = uuid.uuid4, editable=False, primary_key=True, unique= True)
     
     def __str__(self) -> str:
-        return str(self.customer.first_name)
+        return str(self.username)
 
 class Supplier(models.Model):
     supplier = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
@@ -173,17 +174,18 @@ class Supplier(models.Model):
     
 class Garment(models.Model):
     supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE, null=True, blank=False)
-    GarmentName = models.CharField(max_length=100, null=True, blank=False)
+    garmentName = models.CharField(max_length=100, null=True, blank=False)
     garmentImage = models.ImageField(null = True, blank = True, upload_to = "garments/", default = "profiles/user-default.png")
     price = models.IntegerField(null=True, blank=False)
-    TimeDurationFrom = models.DateField(null=True, blank=False)
-    TimeDurationTo = models.DateField(null=True, blank=False)
+    # TimeDurationFrom = models.DateField(null=True, blank=False)
+    # TimeDurationTo = models.DateField(null=True, blank=False)
+    timeDuration = models.DurationField(null=True, blank=True)
     orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
     
     def __str__(self) -> str:
-        return str(self.GarmentName)
+        return str(self.garmentName)
 
 class Worker(models.Model):
     worker = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
@@ -224,7 +226,7 @@ class PhotoPoster(models.Model):
     name = models.CharField(max_length=50, null= True, blank=True)
     orderStatus = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, null=True, blank=False)
     price= models.DecimalField(max_digits=5, decimal_places=2)
-    timeDuration = models.DurationField()
+    timeDuration = models.DurationField(null=True, blank=True)
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)

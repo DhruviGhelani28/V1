@@ -213,6 +213,23 @@ class GarmentSerializer(serializers.ModelSerializer):
         model= Garment
         fields = '__all__'
 
+class ActorProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Actor
+        fields = '__all__'
+class OrderStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=OrderStatus
+        fields = ['name']
+class PhotoPosterSerializer(serializers.ModelSerializer):
+    orderStatus = OrderStatusSerializer(many=False)
+    # print(orderStatus)
+    class Meta:
+        model= PhotoPoster
+        fields = ['category','name','price','photoimage','orderStatus', 'timeDuration']
+
+
+
 # class UserApprovalSerializer(serializers.ModelSerializer):
 #     is_active = serializers.BooleanField(required=True)
 #     username = serializers.CharField(required=True, write_only = True,help_text="Enter your Username.")

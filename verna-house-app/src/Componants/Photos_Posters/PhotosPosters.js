@@ -1,5 +1,5 @@
-import React from "react";
 
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -13,14 +13,12 @@ import { Grid } from "@mui/material";
 import Tooltip from '@mui/material/Tooltip';
 import reptile from '../../static/PhotoPoster/contemplative-reptile.jpg';
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Backdrop from '@mui/material/Backdrop';
 import PhotoPosterForm from "./PhotoPosterForm";
-
-
-
-
+import { getPhotoPosters } from "../../Store/PhotoPoster/PhotoPosterAction";
 const useStyles = makeStyles({
     root: {
         margin: 0.5,
@@ -31,6 +29,18 @@ const useStyles = makeStyles({
     }
 })
 const PhotosPosters = props => {
+    const dispatch = useDispatch()
+    const photoposters = useSelector((state) => state.photoposters);
+    // const { error } = photoposters;
+    useEffect(() => {
+        dispatch(getPhotoPosters())
+    }, [dispatch])
+
+    console.log(photoposters.getPhotoPosters)
+    // const length = photoposters.getPhotoPosters.length
+    // console.log(length)
+    // const rows = suppliers.getSuppliers
+
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
         setOpen(false);
@@ -38,7 +48,7 @@ const PhotosPosters = props => {
     const handleToggle = () => {
         setOpen(!open);
     };
-    const classes =  useStyles()
+    const classes = useStyles()
     return (
         <React.Fragment>
             <h2>Photos_Posters will be here</h2>
@@ -58,36 +68,46 @@ const PhotosPosters = props => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Card sx={{ maxWidth: 345, borderColor: "#121212", borderWidth: 0.1, borderRadius: 2 }} variant="outlined">
-                <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="250"
-                    image={reptile}
-                    // "../..//static/PhotoPoster/contemplative-reptile.jpg"
-                />
-                <CardContent> 
-                    <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group 
-                    </Typography>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" align="left">
-                        Person no
-                    </Typography>
-                    <Typography color="text.secondary">
-                        Work category
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Give Order</Button>
-                    <Button size="small">View Details</Button>
-                </CardActions>
-            </Card>
+            <Grid container justifyContent="flex-start" alignItems='flex-start' direction='row' spacing={1} >
+                {photoposters.getPhotoPosters && photoposters.getPhotoPosters.map((value, index) => (
+                    <Grid item xs={3} key={index}>
+                        <Card sx={{ maxWidth: 345, borderColor: "#121212", borderWidth: 0.1, borderRadius: 2, maxHeight: 550 }} variant="outlined" >
+                            <CardMedia
+                                component="img"
+                                alt="green iguana"
+                                height="250"
+                                image={`http://127.0.0.1:8000${value.photoimage}`}
+                            // "../..//static/PhotoPoster/contemplative-reptile.jpg"
+                            />
+                            <CardContent sx={{ marginTop: 0, marginBottom: 0, paddingBottom:0 }}>
+                                <Typography gutterBottom variant="h6" component="div" color="text.primary">
+                                    Category:       {value.category}
+                                </Typography>
+                                <Typography variant="body2" color="text.primary">
+                                    Name:           {value.name}
+                                </Typography>
+                                <Typography sx={{ fontSize: 14 }} color="text.primary" align="left">
+                                    Price:          {value.price}
+                                </Typography>
+                                <Typography color="text.primary">
+                                    OrderStatus:    {value.orderStatus.name}
+                                </Typography>
+                                <Typography color="text.primary">
+                                    TimeDuration:   {value.timeDuration.split("")[0]} Days
+                                </Typography>
+                            </CardContent>
+                            <CardActions sx={{ marginTop: 0, marginBottom: 0, justifyContent:"flex-end", paddingBottom: 0.3}}>
+                                <Button size="small">Give Order</Button>
+                                {/* <Button size="small">View Details</Button> */}
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                ))}</Grid>
+
+
         </React.Fragment>
     );
-   
+
 };
 export default PhotosPosters;
 
