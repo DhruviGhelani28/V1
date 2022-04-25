@@ -208,11 +208,6 @@ class PremiseSerializer(serializers.ModelSerializer):
         model = Premise
         fields = '__all__'
 
-class GarmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= Garment
-        fields = '__all__'
-
 class ActorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model= Actor
@@ -227,6 +222,12 @@ class PhotoPosterSerializer(serializers.ModelSerializer):
     class Meta:
         model= PhotoPoster
         fields = ['category','name','price','photoimage','orderStatus', 'timeDuration']
+
+class GarmentSerializer(serializers.ModelSerializer):
+    orderstatus = OrderStatusSerializer(many=False)
+    class Meta:
+        model= Garment
+        fields = ['supplier', 'garmentName','garmentImage', 'price','timeDuration','orderstatus']
 
 
 

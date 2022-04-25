@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -35,20 +35,32 @@ const useStyles = makeStyles({
 const List = props => {
     const classes = useStyles();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // const data = JSON.parse(localStorage.getItem("userInfo"))
+    // const role = data["role"]
+
     const data = JSON.parse(localStorage.getItem("userInfo"))
-    const role = data["role"]
+    let role="";
+    console.log(role)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // useEffect((data) => {
+    //     if (data != null) {
+    //         setIsLoggedIn(true)
+    //     }
+    //     if (isLoggedIn == true) {
+    //         role = data["role"]
+    //     }
+    // }, [])
     // console.log(data)
     // console.log(role)
-   
+
     let list = []
     const iconlist = [<SegmentIcon />, <GroupsIcon />, <PeopleIcon />, <GroupIcon />, <PeopleAltIcon />, <img width="25" src={Garments} alt="Garments"></img>, <ConstructionIcon />, <PhotoAlbumIcon />, <WcIcon />, <SettingsIcon />]
-    
 
-    
 
-    if (role === "Supplier")
-    {
+
+
+    if (role === "Supplier") {
         const list2 = ['Garments', 'Customers', 'Workers', 'Agencies', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
@@ -108,7 +120,7 @@ const List = props => {
         })
     }
     else if (role === "Customer") {
-        const list2 = [ 'Suppliers', 'Agencies', 'Workers', 'PhotosPosters', 'Models']
+        const list2 = ['Suppliers', 'Agencies', 'Workers', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton
@@ -137,7 +149,7 @@ const List = props => {
         })
     }
     else if (role === "Worker") {
-        const list2 = [ 'Suppliers', 'Agencies', 'Customers', 'PhotosPosters', 'Models']
+        const list2 = ['Suppliers', 'Agencies', 'Customers', 'PhotosPosters', 'Models']
         list = list2.map((value, index) => {
             return (
                 <ListItemButton

@@ -1,7 +1,7 @@
 
 from urllib import request, response
-from django.shortcuts import render
-from pandas import describe_option
+
+import datetime
 from pytest import console_main
 from .models import *
 from .models import Supplier, Customer, Worker, Agency
@@ -58,7 +58,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many = True)
@@ -97,10 +97,17 @@ def UserRegistrationViewSet(request):
 
     if data['role'] == "Supplier":
         supplier = Supplier.objects.create(
-            supplier = profile,
-            username = profile.username,
-            email = profile.email,
-            name = data['fullname']
+            supplier = user,
+            username = user.username,
+            email = user.email,
+            name = data['fullname'],
+            mobileNo = data['mobileNo'],
+            organisationName = data['organizationName'],
+            organisationAddress =  data['organizationAddress'],
+            profile_image = data['profileImage'],
+            location = data['location'],
+            social_website =  data['socialWebsite'],
+
         )
         supplier.save()
 
@@ -109,7 +116,13 @@ def UserRegistrationViewSet(request):
             agency = user,
             username = user.username,
             email = user.email,
-            name = data['fullname']
+            name = data['fullname'],
+            mobileNo = data['mobileNo'],
+            agencyName = data['agencyName'],
+            agencyAddress =  data['agencyAddress'],
+            profile_image = data['profileImage'],
+            location = data['location'],
+            social_website =  data['socialWebsite'],
         )
         agency.save()
 
@@ -118,7 +131,13 @@ def UserRegistrationViewSet(request):
             customer = user,
             username = user.username,
             email = user.email,
-            name = data['fullname']
+            name = data['fullname'],
+            mobileNo = data['mobileNo'],
+            companyName = data['companyName'],
+            companyAddress =  data['companyAddress'],
+            profile_image = data['profileImage'],
+            location = data['location'],
+            social_website =  data['socialWebsite'],
         )
         customer.save()
         print("customer:: ",customer)
@@ -128,7 +147,13 @@ def UserRegistrationViewSet(request):
             worker = profile,
             username = profile.username,
             email = profile.email,
-            name = data['fullname']
+            name = data['fullname'],
+            mobileNo = data['mobileNo'],
+            short_intro = data['shortIntro'],
+            address =  data['address'],
+            profile_image = data['profileImage'],
+            location = data['location'],
+           
         )
         worker.save()
         # workers = Worker.objects.all()
@@ -139,7 +164,13 @@ def UserRegistrationViewSet(request):
             model = profile,
             username = profile.username,
             email = profile.email,
-            name = data['fullname']
+            name = data['fullname'],
+            mobileNo = data['mobileNo'],
+            address =  data['address'],
+            background = data['background'],
+            profile_image = data['profileImage'],
+            nativePlace = data['nativePlace'],
+            salary = 0
         )
         model.save()
     
@@ -164,17 +195,20 @@ def UserLoginViewSet(request):
     profile = Profile.objects.get(username = username)
     role = profile.role
     data = {
-        "role" : role
+        "role" : role,
+        "password" : data
     }
     print(data['role'])
     if user.check_password(password):
         return Response(data['role'])
+    else:
+        return Response(response.error.data)
     # return Response(data)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getTasks(request ):
+def getTasks(request):
     user = request.user.profile
     if user.role == "Supplier":
         
@@ -226,50 +260,50 @@ def addTask(request):
     serializer = TaskSerializer(task, many=False)
     return Response(serializer.data)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getGadgets(request):
-    user = request.user.agency
-    # if user.role == "Agency" :  
-    gadgets = Premise.objects.filter(agency = user)
-    serializer = PremiseSerializer(gadgets, many=True)
-    return Response(serializer.data)
-    # else: 
-    #     return Response({"message" : "You are not authorised person or admin user"})
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def getGadgets(request):
+#     user = request.user.agency
+#     # if user.role == "Agency" :  
+#     gadgets = Premise.objects.filter(agency = user)
+#     serializer = PremiseSerializer(gadgets, many=True)
+#     return Response(serializer.data)
+#     # else: 
+#     #     return Response({"message" : "You are not authorised person or admin user"})
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def addGadget(request):
-    print(request.headers)
-    agency = request.user.agency
-    # if user.role == "Agency":
-    data = request.data
-    print(data)
-    gadget = Premise.objects.create(
-        agency = agency,
-        # role = Role.objects.get(name=request.user.role),
-        # owner. = data['user'],
-        itemName = data['gadgetName'],
-        premiseImage = data['gadgetImage'],
-        price = data['price'],
-        orderstatus = data['orderStatus'],
-        timeDuration = data['timeDuration'],
-        # date = data['datetime'].split("T")[0],
-        # time = data['datetime'].split("T")[1]
-        )
-    print(gadget)
-    gadget.save()
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def addGadget(request):
+#     print(request.headers)
+#     agency = request.user.agency
+#     # if user.role == "Agency":
+#     data = request.data
+#     print(data)
+#     gadget = Premise.objects.create(
+#         agency = agency,
+#         # role = Role.objects.get(name=request.user.role),
+#         # owner. = data['user'],
+#         itemName = data['gadgetName'],
+#         premiseImage = data['gadgetImage'],
+#         price = data['price'],
+#         orderstatus = data['orderStatus'],
+#         timeDuration = data['timeDuration'],
+#         # date = data['datetime'].split("T")[0],
+#         # time = data['datetime'].split("T")[1]
+#         )
+#     print(gadget)
+#     gadget.save()
 
-    # else:
-    #      return Response({"message" : "You are not authorised person"})
-    # print(data['datetime'].split("T")[0])
-    serializer = PremiseSerializer(gadget, many=False)
-    return Response(serializer.data)
+#     # else:
+#     #      return Response({"message" : "You are not authorised person"})
+#     # print(data['datetime'].split("T")[0])
+#     serializer = PremiseSerializer(gadget, many=False)
+#     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getGarments(request):
-    user = request.user.profile.supplier
+    user = request.user.supplier
     # if user.role == "Supplier" :
     garments = Garment.objects.filter(supplier = user)
     serializer = GarmentSerializer(garments, many=True)
@@ -281,26 +315,29 @@ def getGarments(request):
 @permission_classes([IsAuthenticated])
 def addGarment(request):
     print(request.headers)
-    user = request.user.profile
-    if user.role == "Supplier":
-        data = request.data
-        print("garment data ::: ",data)
-        garment = Garment.objects.create(
-            supplier = user,
-            # role = Role.objects.get(name=request.user.role),
-            # owner. = data['user'],
-            garmentName = data['garmentName'],
-            garmentImage = data['garmentImage'],
-            price = data['price'],
-            orderstatus = data['orderStatus'],
-            timeDuration = data['timeDuration'],
-            # date = data['datetime'].split("T")[0],
-            # time = data['datetime'].split("T")[1]
-        )
-        print(garment)
-        garment.save()
-    else:
-        return Response({"message" : "You are not authorised person or admin user to add garment"})
+    user = request.user.supplier
+    # if user.role == "Supplier":
+    data = request.data
+    print("garment data ::: ",data)
+    garment = Garment.objects.create(
+        supplier = user,
+        garmentName = data['garmentName'],
+        garmentImage = data['garmentImage'],
+        price = data['price'],
+        orderstatus = str(OrderStatus.objects.get(name = data['orderStatus'])),
+        # timeDuration = datetime.timedelta(days= data['timeDuration'].split('days')[0], hours=data['timeDuration'].split('days')[1].split('hours')[0])
+       
+        
+    )
+    day =data['timeDuration'].split('days')[0],
+    hours = data['timeDuration'].split('days')[1].split('hours')[0]
+    # timeduration =  datetime.timedelta(days= data['timeDuration'].split('days')[0], hours=data['timeDuration'].split('days')[1].split('hours')[0])
+    print(garment.orderstatus, type(garment.orderstatus))
+    print(day, type(day))
+    print(hours, type(hours))
+    garment.save()
+    # else:
+    #     return Response({"message" : "You are not authorised person or admin user to add garment"})
     # print(data['datetime'].split("T")[0])
     serializer = GarmentSerializer(garment, many=False)
     return Response(serializer.data)

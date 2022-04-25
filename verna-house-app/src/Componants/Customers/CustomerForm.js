@@ -69,7 +69,7 @@ const CustomerForm = props => {
         companyAddress: '',
         profileImage: null,
         location: '',
-        scocialWebsite: "",
+        socialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
@@ -77,7 +77,7 @@ const CustomerForm = props => {
         console.log(prop)
         setValues({ ...values, [prop]: event.target.value });
         if (prop == "profileImage") {
-            setValues({ ...values, [prop]: event.target.files[0] })
+            setValues({ ...values, [prop]: event.target.files[0].name })
         }
 
     };
@@ -85,8 +85,14 @@ const CustomerForm = props => {
     const onSubmit = data => {
         // const data1 = a.push(data)
         console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData({ data: state }));
+        const data1 = { ...state, ...values }
+        // console.log(JSON.stringify(data, null, 2));
+        // console.log(values, typeof(values))
+        // console.log(data1)
+        dispatch(getRegisterData({ data: data1 }));
+        console.log("user registered customer created")
+        navigate("/Login")
+
 
     }
 

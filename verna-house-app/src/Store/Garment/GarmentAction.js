@@ -30,7 +30,7 @@ export const getMyGarments = () => async (dispatch) => {
 
 export const addGarment = (values) => async (dispatch) => {
     console.log("addgarment dispatch");
-    console.log(values)
+    console.log(values['val'])
     try {
         const token = JSON.parse(localStorage.getItem("userInfo")).token
 
@@ -40,7 +40,7 @@ export const addGarment = (values) => async (dispatch) => {
                 "Authorization": `Bearer ${token}`,
             },
         };
-        const response = await axios.post(`${BaseUrl}/api/AddGarment/`, values['data'], config);
+        const response = await axios.post(`${BaseUrl}/api/AddGarment/`, values['val'], config);
         console.log("garment call")
         dispatch({ type: UserActionType.ADD_GARMENT_SUCCESS, garment: response.data });
 

@@ -42,7 +42,7 @@ const Tasks = (props) => {
 
     useEffect(() => {
         dispatch(MyTasks())
-    }, [dispatch, task])
+    }, [dispatch])
 
     useEffect(() => {
         setTasks(myTasks.getMyTasks)

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -23,8 +23,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 
-import { useDispatch } from "react-redux";
-import { getLoginData } from "../../Store/Register/RegisterAction";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginData, getRegisterData, getUsers } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
 import { Divider } from "@mui/material";
 
@@ -114,6 +114,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 const Login = props => {
+    // const users = useSelector((state) => state.users)
+    // useEffect(() => {
+    //     dispatch(getUsers())
+    // }, [])
+    // console.log(users)
 
     const dispatch = useDispatch();
     const navigateHome = useNavigate();
@@ -138,12 +143,17 @@ const Login = props => {
     const onSubmit = (data) => {
 
         console.log(JSON.stringify(data, null, 2));
+        // {
+        //     users.map((value, index) => {
+        //         if (value.username == data.username) {
+
+        //         }
+
+        // })}
         console.log("sss", data);
         dispatch(getLoginData(data));
-        // if (data.roll == 'Supplier') {
-        //     
-        // }
-        navigateHome("/Home");
+        
+        navigateHome("/Account");
 
     };
 

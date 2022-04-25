@@ -85,9 +85,13 @@ const ModelForm = () => {
         // const data1 = a.push(data)
         // data.profileImage = event.ta
         console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData({ data: state }));
-
+        const data1 = { ...state, ...values }
+        // console.log(JSON.stringify(data, null, 2));
+        // console.log(values, typeof(values))
+        // console.log(data1)
+        dispatch(getRegisterData({ data: data1 }));
+        console.log("user registered model created")
+        navigate("/Login")
     }
     console.log(register)
     return (
@@ -223,7 +227,7 @@ const ModelForm = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                // ref={register}
+                                disabled
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
                                 id="salary"
@@ -231,7 +235,7 @@ const ModelForm = () => {
 
                                 // {...register('salary')}
                                 error={!!errors?.salary}
-                                helpertext={errors?.salary ? errors.salary.message : null}
+                                helpertext={errors?.salary ? "Only Admin can add salary of model." : null}
                                 onChange={handleChange('salary')}
                             />
                         </Grid>

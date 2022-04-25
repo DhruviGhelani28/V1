@@ -156,7 +156,7 @@ class Customer(models.Model):
         return str(self.username)
 
 class Supplier(models.Model):
-    supplier = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+    supplier = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)

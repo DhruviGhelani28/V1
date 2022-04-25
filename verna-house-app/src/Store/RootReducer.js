@@ -1,4 +1,4 @@
-import SupplierReducer from "./Supplier/SupplierReducer";
+import { SupplierReducer, SupplierCreateReducer } from "./Supplier/SupplierReducer";
 import WorkerReducer from "./Worker/WorkerReducer";
 import AgencyReducer from "./Agency/AgencyReducer";
 import CustomerReducer from "./Customer/CustomerReducer";
@@ -8,12 +8,14 @@ import { GarmentReducer, AddGarmentReducer } from "./Garment/GarmentReducer";
 import { PhotoPosterReducer } from "./PhotoPoster/PhotoPosterReducer";
 import { ModelReducer } from "./Model/ModelReducer";
 import { combineReducers } from "redux";
-import { userLoginReducer, userRegisterReducer } from "./Register/RegisterReducer";
+import { userLoginReducer, userRegisterReducer, usersReducer } from "./Register/RegisterReducer";
 const RootReducers = combineReducers(
     {
         userRegister: userRegisterReducer,
         userLogin: userLoginReducer,
+        // users : usersReducer,
         suppliers: SupplierReducer,
+        supplierData : SupplierCreateReducer,
         workers: WorkerReducer,
         agencies: AgencyReducer,
         customers: CustomerReducer,

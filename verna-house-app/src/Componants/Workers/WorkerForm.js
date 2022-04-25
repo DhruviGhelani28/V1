@@ -83,13 +83,14 @@ const WorkerForm = props => {
 
         // const data1 = a.push(data)
         console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData({ data: state }));
-        // dispatch(getAgencies({ data: data1 }));
+        const data1 = { ...state, ...values }
+        // console.log(JSON.stringify(data, null, 2));
+        // console.log(values, typeof(values))
+        // console.log(data1)
+        dispatch(getRegisterData({ data: data1 }));
+        console.log("user registered worker created")
+        navigate("/Login")
     }
-
-
-
 
     return (
         <Container align="center">
@@ -121,8 +122,7 @@ const WorkerForm = props => {
                     <div className={classes1.root5}>
                         <TextField
                             disabled
-                            multiline
-                            size='medium'
+
                             id="rol"
                             label="Role"
                             defaultValue={state.role}
@@ -133,9 +133,7 @@ const WorkerForm = props => {
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
@@ -147,9 +145,7 @@ const WorkerForm = props => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="shortIntro"
                             label="Short Intro"
                             placeholder="xyz abc"
@@ -162,9 +158,7 @@ const WorkerForm = props => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+
                             id="address"
                             label="Address"
                             placeholder="xyz abc"
@@ -181,7 +175,7 @@ const WorkerForm = props => {
                             id="profileImage"
                             label="Profile Image"
                             placeholder='Upload File'
-                            tyep="file"
+                            type="file"
                             accept="image/*"
 
                             {...register('profileImage', { required: true })}

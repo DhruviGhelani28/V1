@@ -47,15 +47,15 @@ const useStyles = makeStyles({
 });
 const OrderStatus = [
     {
-        value: 'Available',
+        value: "Available",
         label: 'Available',
     },
     {
-        value: 'Pending',
+        value: "Pending",
         label: 'Pending',
     },
     {
-        value: 'Purchased',
+        value: "Purchased",
         label: 'Purchased',
     },
 ]
@@ -94,19 +94,21 @@ const GarmentForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data, e) => {
         e.preventDefault();
-        console.log(values)
-        let data1 = values['values']
+        const val = values
+        console.log(values, typeof (values))
+        console.log(JSON.stringify(values), typeof (JSON.stringify(values)))
+
         // console.log(JSON.stringify(data, null, 2));
-        console.log(data1)
+
         props.onClick()
-        dispatch(addGarment({ values }))
+        dispatch(addGarment({ val }))
         setValues(
             {
                 garmentName: "",
                 garmentImage: "",
                 price: '',
-                orderStatus: '',
-                timeDuration: '',
+                orderStatus: "",
+                timeDuration: null,
             })
     }
     useEffect(() => {
@@ -147,8 +149,7 @@ const GarmentForm = (props) => {
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
                                 // ref={register}
-                                required
-                                size='medium'
+
                                 id="garmentName"
                                 label="Garment Name"
 
@@ -199,10 +200,6 @@ const GarmentForm = (props) => {
                                 className={classes1.allfield}>
                                 <InputLabel id="order-id">Order Status</InputLabel>
                                 <Select
-                                    // onChange={(event) => {
-                                    //     console.log(event.target.value)
-                                    //     setValues((prevStatus) => { return { ...prevStatus, orderStatus: event.target.value } })
-                                    // }}
                                     sx={{ textAlign: 'left' }}
                                     id="orderStatus"
                                     label="Order Status"
@@ -215,7 +212,7 @@ const GarmentForm = (props) => {
                                 >
                                     {OrderStatus.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>
-                                            {option.label}{option.value}
+                                            {option.value}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -228,6 +225,7 @@ const GarmentForm = (props) => {
                                 sx={{ marginTop: 1 }}
                                 id="timeDuration"
                                 label="TimeDuration"
+                                type="timeduration"
                                 placeholder="1 to 365 in days"
                                 // {...register('timeDuration')}
                                 error={!!errors?.timeDuration}

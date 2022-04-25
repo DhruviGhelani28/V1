@@ -71,3 +71,28 @@ export const logout = () => async (dispatch) => {
     localStorage.removeItem("userInfo");
     dispatch({ type: UserActionType.USER_LOGOUT });
 };
+
+// export const getUsers = () => async (dispatch) => {
+//     console.log("all users dispatch")
+//     try {
+//         // dispatch({
+//         //     type: UserActionType.USER_REGISTER_REQUEST
+//         // });
+//         const config = {
+//             headers: {
+//                 "content-type": "application/json",
+//             },
+//         };
+//         console.log("usesr call");
+//         const { data } = await axios.get(`${BaseUrl}/api/Users/`, config);
+//         console.log(data)
+//         dispatch({
+//             type: UserActionType.GET_USERS_SUCCESS, payload: data,
+//         })
+//     } catch (error) {
+//         // console.log(error.response.data);
+//         dispatch({
+//             type: UserActionType.GET_USERS_FAIL, payload: error.response.data,
+//         });
+//     }
+// };

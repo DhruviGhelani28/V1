@@ -66,7 +66,7 @@ const AgencyForm = props => {
         agencyAddress: '',
         profileImage: "",
         location: '',
-        scocialWebsite: "",
+        socialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
@@ -83,9 +83,13 @@ const AgencyForm = props => {
 
         // const data1 = a.push(data)
         console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData({ data: state }));
-        // dispatch(getAgencies({ data: data1 }));
+        const data1 = { ...state, ...values }
+        // console.log(JSON.stringify(data, null, 2));
+        // console.log(values, typeof(values))
+        // console.log(data1)
+        dispatch(getRegisterData({ data: data1 }));
+        console.log("user registered agency created")
+        navigate("/Login")
     }
     return (
         <Container align="center">

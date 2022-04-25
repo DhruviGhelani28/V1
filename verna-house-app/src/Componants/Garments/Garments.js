@@ -120,7 +120,7 @@ const Garments = props => {
                                     OrderStatus: {value.orderStatus}
                                 </Typography>
                                 <Typography color="text.primary">
-                                    TimeDuration: {value.timeDuration.split("")[0]} Days
+                                    {/* TimeDuration: {value.timeDuration.split("")[0]} Days */}
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{ marginTop: 0, marginBottom: 0, justifyContent: "flex-end", paddingBottom: 0.3 }}>

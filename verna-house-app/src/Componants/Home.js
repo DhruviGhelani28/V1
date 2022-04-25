@@ -81,15 +81,26 @@ const Home = props => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
+    let role = ""
     const data = JSON.parse(localStorage.getItem("userInfo"))
-    const role = data["role"]
+    role = data["role"]
+    console.log(role)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     useEffect(() => {
         if (role !== null) {
             setIsLoggedIn(true)
         }
     }, [])
+
+    // useEffect((data) => {
+    //     if (data != null) {
+    //         setIsLoggedIn(true)
+    //     }
+    //     if (isLoggedIn == true)
+    //     {
+
+    //         }
+    // })
 
     // console.log(data)
     // console.log(role)

@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import InputAdornment from '@mui/material/InputAdornment';
 import { makeStyles } from "@material-ui/core/styles";
 import { getRegisterData } from '../../Store/Register/RegisterAction';
+import { getSupplierData } from "../../Store/Supplier/SupplierAction";
 import { getSuppliers } from '../../Store/Supplier/SupplierAction';
 import UploadButton from '../UploadButton';
 import { useForm } from 'react-hook-form';
@@ -59,28 +60,25 @@ const SupplierForm = props => {
         navigate("/Registration")
     }
 
-    const a = [state.fullname, state.username, state.email]
+    let a = { "fullname" : state.fullname, "username" :  state.username, "email" :  state.email }
+    console.log(JSON.stringify(a), typeof(a))
     const [values, setValues] = React.useState({
         mobileNo: "",
         organizationName: '',
         organizationAddress: '',
         profileImage: null,
         location: '',
-        scocialWebsite: "",
+        socialWebsite: "",
     });
 
     const handleChange = (prop) => (event) => {
 
+
         console.log(prop)
-        if (prop !== "picture") {
-            setValues({ ...values, [prop]: event.target.value });
-        }
-        else {
+        setValues({ ...values, [prop]: event.target.value });
+        if (prop == "profileImage") {
             console.log(event.target.files[0])
-            setValues({
-                ...values,
-                [prop]: event.target.files[0],
-            });
+            setValues({ ...values, profileImage: event.target.files[0].name });
         }
 
 
@@ -89,13 +87,13 @@ const SupplierForm = props => {
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-
-        const data1 = a.push(data)
-        console.log(values)
-        console.log(JSON.stringify(data, null, 2));
-        dispatch(getRegisterData({ data: state }));
-        console.log("user registered")
-        // dispatch(getSuppliers({ data: data1 }));
+        const val = values
+        const data1 = {...state, ...val}
+        // console.log(values, typeof(values))
+        // console.log(data1)
+        dispatch(getRegisterData({ data: data1 }));
+        console.log("user registered supplier created")
+        navigate("/Login")
     }
 
 

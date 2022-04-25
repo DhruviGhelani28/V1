@@ -2,10 +2,11 @@ import { UserActionType } from "../Constants/UserActionType";
 
 const initialState = {
     registerDate: {},
-    loginData: {}
+    loginData: {},
+    users:{}
 }
 
-export const userLoginReducer = (state = {}, action) => {
+export const userLoginReducer = (state = initialState.loginData, action) => {
     switch (action.type) {
         case UserActionType.USER_LOGIN_REQUEST:
             return { loading: true };
@@ -22,7 +23,7 @@ export const userLoginReducer = (state = {}, action) => {
     }
 }
 
-export const userRegisterReducer = (state = {}, action) => {
+export const userRegisterReducer = (state = initialState.registerDate, action) => {
     switch (action.type) {
         case UserActionType.USER_REGISTER_REQUEST:
             return { loading: true };
@@ -34,3 +35,16 @@ export const userRegisterReducer = (state = {}, action) => {
             return state;
     }
 };
+
+// export const usersReducer = (state = initialState.users, action) => {
+//     switch (action.type) {
+//         // case UserActionType.USER_REGISTER_REQUEST:
+//         //     return { loading: true };
+//         case UserActionType.GET_USERS_SUCCESS:
+//             return { loading: false, users: action.payload };
+//         case UserActionType.GET_USERS_FAIL:
+//             return { loading: false, error: action.payload };
+//         default:
+//             return state;
+//     }
+// };
