@@ -64,7 +64,7 @@ const GarmentForm = (props) => {
     const state = useLocation().state
     const dispatch = useDispatch()
     // console.log(state)
-
+    // const ref = React.useRef();
     const classes1 = useStyles();
     const navigate = useNavigate()
 
@@ -87,6 +87,7 @@ const GarmentForm = (props) => {
         if (prop == "garmentImage") {
             console.log(event.target.files[0])
             setValues({ ...values, garmentImage: event.target.files[0].name });
+            // ref.current.value = ""
         }
 
     };
@@ -104,11 +105,11 @@ const GarmentForm = (props) => {
         dispatch(addGarment({ val }))
         setValues(
             {
-                garmentName: "",
+                garmentName: " ",
                 garmentImage: "",
-                price: '',
-                orderStatus: "",
-                timeDuration: null,
+                price: ' ',
+                orderStatus: " ",
+                timeDuration: " ",
             })
     }
     useEffect(() => {
@@ -152,7 +153,7 @@ const GarmentForm = (props) => {
 
                                 id="garmentName"
                                 label="Garment Name"
-
+                                value={values.garmentName}
                                 {...register('garmentName', { required: true, maxLength: 200 })}
                                 error={!!errors?.garmentName}
                                 helpertext={errors?.garmentName ? errors.garmentName.message : null}
@@ -170,6 +171,8 @@ const GarmentForm = (props) => {
                                 label="Garment Image"
                                 type="file"
                                 accept="image/*"
+                                // ref={ref}
+                                // value={values.garmentImage}
                                 {...register('garmentImage', { required: true })}
                                 error={!!errors?.garmentImage}
                                 helpertext={errors?.garmentImage ? errors.garmentImage.message : null}
@@ -182,11 +185,9 @@ const GarmentForm = (props) => {
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
                                 // ref={register}
-
-                                required
-                                size='medium'
                                 id="price"
                                 label="Price"
+                                value={values.price}
                                 placeholder="1234567892"
                                 {...register('price', { required: true, maxLength: 10 })}
                                 error={!!errors?.price}
@@ -203,7 +204,8 @@ const GarmentForm = (props) => {
                                     sx={{ textAlign: 'left' }}
                                     id="orderStatus"
                                     label="Order Status"
-                                    defaultValue=""
+                                    // defaultValue=""
+                                    value={values.orderStatus}
 
                                     {...register('orderStatus', { required: true })}
                                     error={!!errors?.orderStatus}
@@ -212,7 +214,7 @@ const GarmentForm = (props) => {
                                 >
                                     {OrderStatus.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>
-                                            {option.value}
+                                            {option.label}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -226,7 +228,9 @@ const GarmentForm = (props) => {
                                 id="timeDuration"
                                 label="TimeDuration"
                                 type="timeduration"
-                                placeholder="1 to 365 in days"
+                                format="DD HH:MM:SS.uuuuuu"
+                                placeholder="DD HH:MM:SS.uuuuuu"
+                                value={values.timeDuration}
                                 // {...register('timeDuration')}
                                 error={!!errors?.timeDuration}
                                 helpertext={errors?.timeDuration ? errors.timeDuration.message : null}

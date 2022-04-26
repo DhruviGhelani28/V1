@@ -301,10 +301,11 @@ def addTask(request):
 #     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def getGarments(request):
     user = request.user.supplier
     # if user.role == "Supplier" :
+    #     supplier = user
     garments = Garment.objects.filter(supplier = user)
     serializer = GarmentSerializer(garments, many=True)
     return Response(serializer.data)
@@ -324,15 +325,14 @@ def addGarment(request):
         garmentName = data['garmentName'],
         garmentImage = data['garmentImage'],
         price = data['price'],
-        orderstatus = str(OrderStatus.objects.get(name = data['orderStatus'])),
-        # timeDuration = datetime.timedelta(days= data['timeDuration'].split('days')[0], hours=data['timeDuration'].split('days')[1].split('hours')[0])
-       
-        
+        orderstatus = OrderStatus.objects.get(name = data['orderStatus']),
+        # timeDuration = datetim e.timedelta.objects.get(data['timeDuration'])
     )
-    day =data['timeDuration'].split('days')[0],
-    hours = data['timeDuration'].split('days')[1].split('hours')[0]
+    day =data['timeDuration'].split('')[0],
+    hours = data['timeDuration'].split('')[1]
     # timeduration =  datetime.timedelta(days= data['timeDuration'].split('days')[0], hours=data['timeDuration'].split('days')[1].split('hours')[0])
     print(garment.orderstatus, type(garment.orderstatus))
+    print(type(garment.timeDuration))
     print(day, type(day))
     print(hours, type(hours))
     garment.save()

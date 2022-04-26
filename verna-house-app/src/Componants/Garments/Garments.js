@@ -117,7 +117,7 @@ const Garments = props => {
                                     Price: {value.price}
                                 </Typography>
                                 <Typography sx={{ fontSize: 14 }} color="text.primary" align="left">
-                                    OrderStatus: {value.orderStatus}
+                                    OrderStatus: {value.orderstatus.name}
                                 </Typography>
                                 <Typography color="text.primary">
                                     {/* TimeDuration: {value.timeDuration.split("")[0]} Days */}

@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open, drawerwidth }) => ({
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: 0,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -111,7 +111,7 @@ const Home = props => {
                 <CssBaseline />
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} />
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
-                <Main sx={{ paddingLeft: 1.5, marginTop: 5, marginRight: 0, paddingRight: 0 }} >
+                <Main sx={{ paddingLeft: 0.5, marginTop: 8, marginRight: 0, paddingRight: 0 }} >
 
                     <Routes>
                         <Route path="/" element={<Main1 />} exact></Route>

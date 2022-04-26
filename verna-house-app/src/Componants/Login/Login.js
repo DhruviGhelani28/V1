@@ -152,7 +152,7 @@ const Login = props => {
         // })}
         console.log("sss", data);
         dispatch(getLoginData(data));
-        
+
         navigateHome("/Account");
 
     };
@@ -179,7 +179,7 @@ const Login = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
-        <div className={classes.loginBack}>
+        <div className={classes.loginBack} >
             {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
             <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent: "flex-start" }} align="left">
                 Style Queen
