@@ -41,7 +41,7 @@ import GadgetForm from "./Gadgets/GadgetForm";
 
 const useStyles = makeStyles({
     root: {
-        background: 'linear-gradient(45deg, ##FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'black',
     },

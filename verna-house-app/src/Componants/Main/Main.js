@@ -12,17 +12,20 @@ import { styled, useTheme } from '@mui/material/styles';
 import React, { Fragment } from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
+import images from "../ImageSlider/MainPageSliderImages";
+// import "react-carousel-animated/dist/style.css";
 
-const itemData = [
-    {
-        img: "https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/ed393553372b5fedbb31d038/pexelsphoto1002638.jpeg",
-        title: 'Breakfast',
-    },
-    {
-        img: "https://images02.nicepage.com/c461c07a441a5d220e8feb1a/dc8fb1e500cf5d99b9134449/26afbfd6f4b0f7d2c0352d2c78f559db.jpeg",
-        title: 'Burger',
-    },
-]
+// const itemData = [
+//     {
+//         img: "https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/ed393553372b5fedbb31d038/pexelsphoto1002638.jpeg",
+//         title: 'Breakfast',
+//     },
+//     {
+//         img: "https://images02.nicepage.com/c461c07a441a5d220e8feb1a/dc8fb1e500cf5d99b9134449/26afbfd6f4b0f7d2c0352d2c78f559db.jpeg",
+//         title: 'Burger',
+//     },
+// ]
 
 // const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 //     ({ theme, open, drawerwidth }) => ({
@@ -47,8 +50,44 @@ const itemData = [
 const Main1 = () => {
     return (
         <Fragment>
-            <div className={classes.mainBack}>
-                Hello fr
+            <div className={classes.container}>
+                <ReactCarousel
+                    carouselConfig={{
+                        transform: {
+                            rotateY: {
+                                [BEFORE]: () => "rotateY(25deg)",
+                                [CENTER]: () => "rotateY(0deg)",
+                                [AFTER]: () => "rotateY(-25deg)"
+                            }
+                        }
+                    }}
+                    // itemBackgroundStyle={{
+                    //     backgroundColor: "#ece4db",
+                    //     borderRadius: "3px",
+                    //     boxShadow: "8px 12px 14px -6px black"
+                    // }}
+                    // containerBackgroundStyle={{
+                    //     filter: "blur(7px)",
+                    //     backgroundColor: "rgba(62, 212, 214, 0.3)"
+                    // }}
+                    itemMaxWidth={50}
+                    carouselHeight="350px"
+                >
+                    {images[0].map((image, index) => (
+                        <img
+                            key={index}
+                            src={image.src}
+                            alt="test"
+                            style={{
+                                maxHeight: "300px",
+                                maxWidth: "400px",
+                                borderRadius: "20px",
+                                boxShadow: "0 7px 20px 2px rgb(150, 170, 180)",
+                                margin: ".5rem"
+                            }}
+                        />
+                    ))}
+                </ReactCarousel>
             </div>
         </Fragment>
     )
