@@ -111,16 +111,16 @@ const Garments = props => {
                             />
                             <CardContent sx={{ paddingBottom: 0 }}>
                                 <Typography variant="h6" component="div" color="text.primary">
-                                    Garment Name: {value.garmentName}
+                                    {value.garmentName}
                                 </Typography>
-                                <Typography variant="body2" color="text.primary">
+                                <Typography variant="body2" color="text.primary" >
                                     Price: {value.price}
                                 </Typography>
                                 <Typography sx={{ fontSize: 14 }} color="text.primary" align="left">
                                     OrderStatus: {value.orderstatus.name}
                                 </Typography>
-                                <Typography color="text.primary">
-                                    {/* TimeDuration: {value.timeDuration.split("")[0]} Days */}
+                                <Typography color="text.primary" sx={{ fontSize: 14 }}>
+                                    TimeDuration: {value.timeDuration ? value.timeDuration.split("")[0] + " Days" : "Not Given"} 
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{ marginTop: 0, marginBottom: 0, justifyContent: "flex-end", paddingBottom: 0.3 }}>

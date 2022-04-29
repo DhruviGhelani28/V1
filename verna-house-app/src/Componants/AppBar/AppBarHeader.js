@@ -30,9 +30,9 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
         // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'black',
-        
+
     },
-    
+
 });
 
 const AppBar = styled(MuiAppBar, {
@@ -137,6 +137,10 @@ const AppBarHeader = props => {
         navigate("/About")
     }
     const loginHandler = () => {
+        navigate("/Login")
+    }
+    const logoutHandler = () => {
+        localStorage.removeItem("userInfo")
         navigate("/Login")
     }
     const messHandler = () => {
@@ -245,6 +249,23 @@ const AppBarHeader = props => {
                                     pb: (theme) => `calc(${theme.spacing(2)} + 4px)`,
                                 }} >
                                 Login
+                                <ImageMarked className="MuiImageMarked-root" />
+                            </Typography>
+                        </Button1>
+                        <Button1 focusRipple textalign='center'>
+                            <Typography
+                                component="span"
+                                variant="button"
+                                onClick={logoutHandler}
+                                color="inherit"
+
+                                sx={{
+                                    position: 'relative',
+                                    p: 2,
+                                    pt: 0,
+                                    pb: (theme) => `calc(${theme.spacing(2)} + 4px)`,
+                                }} >
+                                Logout
                                 <ImageMarked className="MuiImageMarked-root" />
                             </Typography>
                         </Button1>

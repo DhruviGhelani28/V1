@@ -40,10 +40,12 @@ const Gadgets = props => {
     // const { loading, details, error } = gadgets;
     const gadget = useSelector((state) => state.addGadget)
     const [gadgets, setGadgets] = useState([])
+    
     console.log(mygadgets.getMyGadgets)
     useEffect(() => {
         dispatch(getMyGadgets())
     }, [dispatch, gadget])
+
     useEffect(() => {
         setGadgets(mygadgets.getMyGadgets)
 

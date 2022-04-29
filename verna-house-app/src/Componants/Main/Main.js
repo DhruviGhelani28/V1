@@ -51,16 +51,16 @@ const Main1 = () => {
     return (
         <Fragment>
             <div className={classes.container}>
-                <ReactCarousel
-                    carouselConfig={{
-                        transform: {
-                            rotateY: {
-                                [BEFORE]: () => "rotateY(25deg)",
-                                [CENTER]: () => "rotateY(0deg)",
-                                [AFTER]: () => "rotateY(-25deg)"
-                            }
-                        }
-                    }}
+                {/* <ReactCarousel
+                    // carouselConfig={{
+                    //     transform: {
+                    //         rotateY: {
+                    //             [BEFORE]: () => "rotateY(25deg)",
+                    //             [CENTER]: () => "rotateY(0deg)",
+                    //             [AFTER]: () => "rotateY(-25deg)"
+                    //         }
+                    //     }
+                    // }}
                     // itemBackgroundStyle={{
                     //     backgroundColor: "#ece4db",
                     //     borderRadius: "3px",
@@ -87,7 +87,7 @@ const Main1 = () => {
                             }}
                         />
                     ))}
-                </ReactCarousel>
+                </ReactCarousel> */}
             </div>
         </Fragment>
     )

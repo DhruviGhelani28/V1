@@ -20,6 +20,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import { useDispatch } from "react-redux";
 import MenuItem from '@mui/material/MenuItem';
+import { addGadget } from "../../Store/Gadget/GadgetAction";
 
 const useStyles = makeStyles({
     root1: {
@@ -97,6 +98,7 @@ const GadgetForm = (props) => {
 
         console.log(values)
         console.log(JSON.stringify(data, null, 2));
+        dispatch(addGadget({ values }))
 
 
     }

@@ -260,52 +260,53 @@ def addTask(request):
     serializer = TaskSerializer(task, many=False)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def getGadgets(request):
-#     user = request.user.agency
-#     # if user.role == "Agency" :  
-#     gadgets = Premise.objects.filter(agency = user)
-#     serializer = PremiseSerializer(gadgets, many=True)
-#     return Response(serializer.data)
-#     # else: 
-#     #     return Response({"message" : "You are not authorised person or admin user"})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getGadgets(request):
+    user = request.user.agency
+    # if user.role == "Agency" :  
+    gadgets = Premise.objects.filter(agency = user)
+    serializer = PremiseSerializer(gadgets, many=True)
+    return Response(serializer.data)
+    # else: 
+    #     return Response({"message" : "You are not authorised person or admin user"})
 
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def addGadget(request):
-#     print(request.headers)
-#     agency = request.user.agency
-#     # if user.role == "Agency":
-#     data = request.data
-#     print(data)
-#     gadget = Premise.objects.create(
-#         agency = agency,
-#         # role = Role.objects.get(name=request.user.role),
-#         # owner. = data['user'],
-#         itemName = data['gadgetName'],
-#         premiseImage = data['gadgetImage'],
-#         price = data['price'],
-#         orderstatus = data['orderStatus'],
-#         timeDuration = data['timeDuration'],
-#         # date = data['datetime'].split("T")[0],
-#         # time = data['datetime'].split("T")[1]
-#         )
-#     print(gadget)
-#     gadget.save()
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addGadget(request):
+    print(request.headers)
+    agency = request.user.agency
+    # if user.role == "Agency":
+    data = request.data
+    print(data)
+    gadget = Premise.objects.create(
+        agency = agency,
+        # role = Role.objects.get(name=request.user.role),
+        # owner. = data['user'],
+        itemName = data['gadgetName'],
+        premiseImage = data['gadgetImage'],
+        price = data['price'],
+        orderstatus = data['orderStatus'],
+        timeDuration = data['timeDuration'],
+        # date = data['datetime'].split("T")[0],
+        # time = data['datetime'].split("T")[1]
+        )
+    print(gadget)
+    gadget.save()
 
-#     # else:
-#     #      return Response({"message" : "You are not authorised person"})
-#     # print(data['datetime'].split("T")[0])
-#     serializer = PremiseSerializer(gadget, many=False)
-#     return Response(serializer.data)
+    # else:
+    #      return Response({"message" : "You are not authorised person"})
+    # print(data['datetime'].split("T")[0])
+    serializer = PremiseSerializer(gadget, many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getGarments(request):
     user = request.user.supplier
+    print(request.user.supplier)
     # if user.role == "Supplier" :
-    #     supplier = user
+        # supplier = user
     garments = Garment.objects.filter(supplier = user)
     serializer = GarmentSerializer(garments, many=True)
     return Response(serializer.data)

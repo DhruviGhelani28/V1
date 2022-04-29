@@ -179,7 +179,7 @@ class Garment(models.Model):
     price = models.IntegerField(null=True, blank=False)
     # TimeDurationFrom = models.DateField(null=True, blank=False)
     # TimeDurationTo = models.DateField(null=True, blank=False)
-    timeDuration = models.DurationField(default="00:00:00",null=True, blank=True)
+    timeDuration = models.DurationField(default="00 00:00:00",null=True, blank=True)
     orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)

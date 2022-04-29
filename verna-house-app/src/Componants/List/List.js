@@ -35,14 +35,14 @@ const useStyles = makeStyles({
 const List = props => {
     const classes = useStyles();
 
-    // const [isLoggedIn, setIsLoggedIn] = useState(false)
-    // const data = JSON.parse(localStorage.getItem("userInfo"))
-    // const role = data["role"]
-
-    const data = JSON.parse(localStorage.getItem("userInfo"))
-    let role="";
-    console.log(role)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const data = JSON.parse(localStorage.getItem("userInfo"))
+    const role = data["role"]
+
+    // const data = JSON.parse(localStorage.getItem("userInfo"))
+    // let role="";
+    // console.log(role)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
     // useEffect((data) => {
     //     if (data != null) {
     //         setIsLoggedIn(true)

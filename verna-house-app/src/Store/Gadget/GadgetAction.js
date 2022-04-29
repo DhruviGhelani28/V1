@@ -40,7 +40,7 @@ export const addGadget = (values) => async (dispatch) => {
                 "Authorization": `Bearer ${token}`,
             },
         };
-        const response = await axios.post(`${BaseUrl}/api/AddGadget/`, values['data'], config);
+        const response = await axios.post(`${BaseUrl}/api/AddGadget/`, values['values'], config);
         console.log("Gadget call")
         dispatch({ type: UserActionType.ADD_GADGET_SUCCESS, gadget: response.data });
 
