@@ -20,11 +20,11 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { Escalator } from '@mui/icons-material';
 const useStyles = makeStyles({
     root: {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
-        color: '#121212',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
+        color: '#fff',
     },
     root1: {
-        color: '#121212',
+        color: 'white',
         '&:hover': {
             color: '#EC255A',
         }
@@ -36,9 +36,9 @@ const List = props => {
     const classes = useStyles();
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const data = JSON.parse(localStorage.getItem("userInfo"))
-    const role = data["role"]
-
+    // const data = JSON.parse(localStorage.getItem("userInfo"))
+    // const role = data["role"]
+    const role = "Admin"
     // const data = JSON.parse(localStorage.getItem("userInfo"))
     // let role="";
     // console.log(role)
@@ -74,6 +74,7 @@ const List = props => {
                     }}
                 >
                     <ListItemIcon
+                        style={{ color: "white" }}
                         className={classes.root1}
                         sx={{
                             minWidth: 0,
@@ -104,6 +105,12 @@ const List = props => {
                     }}
                 >
                     <ListItemIcon
+                        style={{
+                            color: "white",
+                            '&:hover': {
+                                color: '#EC255A',
+                            }
+                        }}
                         className={classes.root1}
                         sx={{
                             minWidth: 0,
@@ -133,6 +140,7 @@ const List = props => {
                     }}
                 >
                     <ListItemIcon
+                        style={{ color: "white" }}
                         className={classes.root1}
                         sx={{
                             minWidth: 0,
@@ -162,6 +170,7 @@ const List = props => {
                     }}
                 >
                     <ListItemIcon
+                        style={{ color: "white" }}
                         className={classes.root1}
                         sx={{
                             minWidth: 0,
@@ -191,6 +200,7 @@ const List = props => {
                     }}
                 >
                     <ListItemIcon
+                        style={{ color: "white" }}
                         className={classes.root1}
                         sx={{
                             minWidth: 0,

@@ -36,14 +36,26 @@ import PhotoPosterForm from "./Photos_Posters/PhotoPosterForm";
 import ModelForm from "./Models/ModelForm";
 import GarmentForm from "./Garments/GarmentForm";
 import GadgetForm from "./Gadgets/GadgetForm";
-
+import { createTheme } from '@mui/material/styles';
+import { grey} from '@mui/material/colors';
+import { ThemeProvider } from "styled-components";
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: grey[50],
+        },
+        secondary: {
+            main: '#EC255A',
+        },
+    },
+});
 
 
 const useStyles = makeStyles({
     root: {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'black',
+        color: 'white',
     },
 
 });
@@ -81,9 +93,9 @@ const Home = props => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    let role = ""
-    const data = JSON.parse(localStorage.getItem("userInfo"))
-    role = data["role"]
+    let role = "Admin"
+    // const data = JSON.parse(localStorage.getItem("userInfo"))
+    // role = data["role"]
     console.log(role)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     useEffect(() => {
@@ -106,10 +118,11 @@ const Home = props => {
     // console.log(role)
     return (
 
-        <React.Fragment>
+        <React.Fragment >
+            <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex' }} >
                 <CssBaseline />
-                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} />
+                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme}/>
                 <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
                 <Main sx={{ paddingLeft: 0.5, marginTop: 8, marginRight: 0, paddingRight: 0 }} >
 
@@ -117,7 +130,7 @@ const Home = props => {
                         <Route path="/" element={<Main1 />} exact></Route>
                         <Route path="/About" element={<About />} exact />
 
-                        <Route path="/Login" element={<LoginRegistration />} exact />
+                        <Route path="/Login" element={<LoginRegistration theme={theme}/>} exact />
                         <Route path="/Registration" element={<Registration />} exact />
                         {isLoggedIn &&
                             <Route path="/Account" element={<Account />} exact />}
@@ -170,7 +183,8 @@ const Home = props => {
                         <Route path="/TaskForm" element={<TaskForm />} exact />
                     </Routes>
                 </Main>
-            </Box>
+                </Box>
+            </ThemeProvider>
         </React.Fragment >
 
     );

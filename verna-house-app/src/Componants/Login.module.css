@@ -1,6 +1,6 @@
 .marginTop {
     margin-top: 25px;
-    color : 'black';
+    color : 'white';
 }
 .button {
     
@@ -79,6 +79,11 @@
   /* background: #b24592; */
   background: linear-gradient(to right, #424242 25%, #212121 80%);
 }
+.Image { 
+    filter: grayscale(100%);
+    margin-top: 25px;
+    /* color : 'white'; */
+ }
 
 
 

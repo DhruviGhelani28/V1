@@ -24,7 +24,7 @@ const LoginRegistration = props => {
         <React.Fragment>
             <div align="center">    
                 <Routes>
-                    <Route path="/" element={<Login onClick={loginHandler} onRegisterClick={registrationHandler} />} exact />
+                    <Route path="/" element={<Login onClick={loginHandler} onRegisterClick={registrationHandler} theme={props.theme} />} exact />
                     <Route path="/Registration" element={<Registration />} exact />
                     <Route path="/ChangePassword" element={<ChangePassword />} exact />
                 </Routes>

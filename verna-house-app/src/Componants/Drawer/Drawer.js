@@ -37,13 +37,13 @@ const closedMixin = (theme) => ({
 
 const useStyles = makeStyles({
     root: {
-        background: 'linear-gradient(45deg, ##FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: '#000',
+        color: '#fff',
         
     },
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }

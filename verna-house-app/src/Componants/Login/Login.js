@@ -17,7 +17,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import key from "../../static/images/key.png";
+import key from "../../static/images/key2.jpg";
 import classes from '../Login.module.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ import { Divider } from "@mui/material";
 
 const useStyles = makeStyles({
     root: {
-        background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
+        background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
         color: 'action.home',
         maxWidth: 500,
         maxHeight: 4000,
@@ -40,18 +40,18 @@ const useStyles = makeStyles({
         margin: "center",
     },
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
     },
     root2: {
         '&:onClick': {
-            color: '#121212',
+            color: '#fff',
         },
         color: '#EC255A',
         '&:hover': {
-            color: '#121212',
+            color: '#fff',
         },
         '&:active': {
             color: '#EC255A',
@@ -60,26 +60,27 @@ const useStyles = makeStyles({
     root3: {
         color: '#EC255A',
         '&:hover': {
-            color: '#121212',
+            color: '#fff',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
 
     },
     root5:
     {
         marginTop: 30,
     },
+    // /#F3C5C5/#FFE3E3
     allfield:
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
-        color: 'action.home',
-    }
-
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
+        color: '#fff',
+    },
+   
 });
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -179,7 +180,7 @@ const Login = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
-        <div className={classes.loginBack} >
+        <div className={classes.loginBack} theme={props.theme}>
             {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
             <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent: "flex-start" }} align="left">
                 Style Queen
@@ -189,7 +190,7 @@ const Login = props => {
             </Typography>
             {/* </Box> */}
 
-            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#EC255A', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
+            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
                 <CardActions >
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
                         <ChevronLeftIcon className={classes1.root1} />
@@ -222,7 +223,7 @@ const Login = props => {
                     >
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
-                                <AccountCircle sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
+                                <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 {/* <TextField
                                     className={classes1.root5}
                                     sx={{
@@ -250,8 +251,6 @@ const Login = props => {
                                     sx={{ marginTop: 1 }}
                                     className={classes1.allfield}
                                     required
-                                    multiline
-                                    size='medium'
                                     id="username"
                                     label="Enter Your UserName"
                                     placeholder="xyz_abc123"
@@ -290,12 +289,12 @@ const Login = props => {
                                 </FormControl>
                             </Grid> */}
                             <Grid item xs={12} >
-                                <img width="23" src={key} className={classes.marginTop} alt="key"></img>
+                                <img width="23" src={key} className={classes.Image} alt="key" ></img>
                                 <TextField
                                     autoComplete="true"
                                     required
                                     sx={{ marginTop: 1 }}
-                                    className={classes1.root2}
+                                    className={classes1.allfield}
                                     label="Enter Password"
                                     placeholder='*******'
                                     id="password"

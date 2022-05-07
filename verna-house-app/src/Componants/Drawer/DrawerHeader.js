@@ -13,7 +13,7 @@ const DrawerHeader1 = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+    background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
