@@ -36,19 +36,10 @@ import PhotoPosterForm from "./Photos_Posters/PhotoPosterForm";
 import ModelForm from "./Models/ModelForm";
 import GarmentForm from "./Garments/GarmentForm";
 import GadgetForm from "./Gadgets/GadgetForm";
-import { createTheme } from '@mui/material/styles';
-import { grey} from '@mui/material/colors';
-import { ThemeProvider } from "styled-components";
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: grey[50],
-        },
-        secondary: {
-            main: '#EC255A',
-        },
-    },
-});
+import Tasks from "./Tasks/Tasks";
+
+
+
 
 
 const useStyles = makeStyles({
@@ -86,105 +77,110 @@ const Home = props => {
     const drawerWidth = 200;
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    let role = ""
+    const data = JSON.parse(localStorage.getItem("userInfo"))
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        if (data !== null) {
+            setOpen(true);
+        }
+
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    let role = "Admin"
-    // const data = JSON.parse(localStorage.getItem("userInfo"))
-    // role = data["role"]
+
     console.log(role)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     useEffect(() => {
-        if (role !== null) {
+
+        // role = data["role"]
+        if (data !== null) {
+            role = data["role"]
             setIsLoggedIn(true)
         }
     }, [])
 
-    // useEffect((data) => {
-    //     if (data != null) {
-    //         setIsLoggedIn(true)
-    //     }
-    //     if (isLoggedIn == true)
-    //     {
-
-    //         }
-    // })
-
-    // console.log(data)
+    console.log(data)
     // console.log(role)
     return (
 
-        <React.Fragment >
-            <ThemeProvider theme={theme}>
+        <React.Fragment>
             <Box sx={{ display: 'flex' }} >
                 <CssBaseline />
-                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme}/>
-                <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root}></Drawer>
-                <Main sx={{ paddingLeft: 0.5, marginTop: 8, marginRight: 0, paddingRight: 0 }} >
 
-                    <Routes>
-                        <Route path="/" element={<Main1 />} exact></Route>
-                        <Route path="/About" element={<About />} exact />
+                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
+                {data === null &&
+                    <Box sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.login}>
 
-                        <Route path="/Login" element={<LoginRegistration theme={theme}/>} exact />
-                        <Route path="/Registration" element={<Registration />} exact />
-                        {isLoggedIn &&
-                            <Route path="/Account" element={<Account />} exact />}
-                        {role !== "Supplier" &&
-                            <Route path="/Suppliers" element={<Suppliers />} exact />}
-                        {role !== "Customer" &&
-                            <Route path="/Customers" element={<Customers />} exact />}
-                        {role !== "Worker" &&
-                            <Route path="/Workers" element={<Workers />} exact />}
-                        {role !== "Agency" &&
-                            <Route path="/Agencies" element={<Agencies />} exact />}
-                        {role === "Supplier" && <>
-                            <Route path="/Garments" element={<Garments />} exact />
-                            <Route path="/Garments/GarmentForm" element={<Navigate replace to="GarmentForm" />} exact />
-                            <Route path="/GarmentForm" element={<GarmentForm />} exact />
-                        </>
-                        }
-                        {role === "Agency" && <>
-                            <Route path="/Gadgets" element={<Gadgets />} exact />
-                            <Route path="/Gadgets/GadgetForm" element={<Navigate replace to="GadgetForm" />} exact />
-                            <Route path="/GadgetForm" element={<GadgetForm />} exact />
+                        <Routes>
+                            <Route path="/" element={<Main1 />} exact></Route>
+                            <Route path="/About" element={<About />} exact />
+                            <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
+                            <Route path="/Registration" element={<Registration />} exact />
+                            <Route path="/SupplierForm" element={<SupplierForm />} exact />
+                            <Route path="/CustomerForm" element={<CustomerForm />} exact />
+                            <Route path="/AgencyForm" element={<AgencyForm />} exact />
+                            <Route path="/WorkerForm" element={<WorkerForm />} exact />
+                            <Route path="/ModelForm" element={<ModelForm />} exact />
+                        </Routes>
+                    </Box>
+                }
+                {data !== null &&
+                    <>
+                        <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
+                        <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} >
 
-                        </>
-                        }
+                            <Routes>
+                                <Route path="/" element={<Main1 />} exact></Route>
+                                <Route path="/About" element={<About />} exact />
+                                <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
+                                <Route path="/Registration" element={<Registration />} exact />
+                                {isLoggedIn &&
+                                    <Route path="/Account/Tasks" element={<Account />} exact />}
+                                {role !== "Supplier" &&
+                                    <Route path="/Suppliers" element={<Suppliers />} exact />}
+                                {role !== "Customer" &&
+                                    <Route path="/Customers" element={<Customers />} exact />}
+                                {role !== "Worker" &&
+                                    <Route path="/Workers" element={<Workers />} exact />}
+                                {role !== "Agency" &&
+                                    <Route path="/Agencies" element={<Agencies />} exact />}
+                                {role === "Supplier" && <>
+                                    <Route path="/Garments" element={<Garments />} exact />
+                                    <Route path="/Garments/GarmentForm" element={<Navigate replace to="GarmentForm" />} exact />
+                                    <Route path="/GarmentForm" element={<GarmentForm />} exact />
+                                </>
+                                }
+                                {role === "Agency" && <>
+                                    <Route path="/Gadgets" element={<Gadgets />} exact />
+                                    <Route path="/Gadgets/GadgetForm" element={<Navigate replace to="GadgetForm" />} exact />
+                                    <Route path="/GadgetForm" element={<GadgetForm />} exact />
 
-                        {role === "Admin" && <>
-                            <Route path="/Notifications" element={<Notifications />} exact />
-                            <Route path="/Messages" element={<Messages />} exact />
-                            <Route path="/Departments" element={<Departments />} exact />
-                        </>
-                        }
-                        {/* {role === "Admin" &&
-                          
-                        }
-                        {role === "Admin" &&
-                            
-                        } */}
-                        <Route path="/PhotosPosters" element={<PhotosPosters />} exact />
-                        <Route path="/PhotoPosterForm" element={<PhotoPosterForm />} exact />
+                                </>
+                                }
 
-                        <Route path="/Models" element={<Models />} exact />
-                        <Route path="/ModelForm" element={<ModelForm />} exact />
+                                {role === "Admin" && <>
+                                    <Route path="/Notifications" element={<Notifications />} exact />
+                                    <Route path="/Messages" element={<Messages />} exact />
+                                    <Route path="/Departments" element={<Departments />} exact />
+                                </>
+                                }
 
-                        {/* <Route path="/Settings" element={<Settings />} exact /> */}
-                        <Route path="/ChangePassword" element={<ChangePassword />} exact />
-                        <Route path="/SupplierForm" element={<SupplierForm />} exact />
-                        <Route path="/CustomerForm" element={<CustomerForm />} exact />
-                        <Route path="/AgencyForm" element={<AgencyForm />} exact />
-                        <Route path="/WorkerForm" element={<WorkerForm />} exact />
-                        <Route path="/TaskForm" element={<TaskForm />} exact />
-                    </Routes>
-                </Main>
-                </Box>
-            </ThemeProvider>
+                                <Route path="/PhotosPosters" element={<PhotosPosters />} exact />
+                                <Route path="/PhotoPosterForm" element={<PhotoPosterForm />} exact />
+
+                                <Route path="/Models" element={<Models />} exact />
+
+
+                                {/* <Route path="/Settings" element={<Settings />} exact /> */}
+                                <Route path="/ChangePassword" element={<ChangePassword />} exact />
+                                <Route path="/Tasks" element={<Tasks />} exact />
+                                <Route path="/TaskForm" element={<TaskForm />} exact />
+                            </Routes>
+                        </Main>
+                    </>}
+            </Box>
         </React.Fragment >
 
     );

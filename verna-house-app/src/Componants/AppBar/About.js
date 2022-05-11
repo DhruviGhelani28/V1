@@ -54,9 +54,9 @@ const itemData = [
     // },
 ];
 
-const About = () => {
+const About = (props) => {
     return (
-        <div className={classes.aboutBack}>
+        <div className={classes.aboutBack} theme={props.theme}>
             <Box sx={{ paddingLeft: 2, paddingTop: 1, marginTop: 0 }} >
                 About Us nligfgherigdnvuhnhfiourhbndkhr wrupoufhdn
                 <Box sx={{ marginTop: 100 }}>

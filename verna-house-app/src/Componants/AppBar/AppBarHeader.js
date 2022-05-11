@@ -128,6 +128,8 @@ const menuId = 'primary-search-account-menu';
 const mobileMenuId = 'primary-search-account-menu-mobile';
 // const drawerwidth = 240;
 const AppBarHeader = props => {
+
+    let data = JSON.parse(localStorage.getItem("userInfo"))
     const classes = useStyles();
     const navigate = useNavigate()
     const homeHandler = () => {
@@ -141,7 +143,7 @@ const AppBarHeader = props => {
     }
     const logoutHandler = () => {
         localStorage.removeItem("userInfo")
-        navigate("/Login")
+        navigate("/")
     }
     const messHandler = () => {
         navigate("/Messages")
@@ -186,6 +188,7 @@ const AppBarHeader = props => {
                             ...(props.open && { display: 'none' }),
                         }}
                         aria-haspopup="true"
+                        
                         onClick={props.onOpen}
                     >
                         <MenuIcon />

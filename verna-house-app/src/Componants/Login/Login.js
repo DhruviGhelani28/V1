@@ -17,12 +17,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import key from "../../static/images/key2.jpg";
+import key from "../../static/images/key.png";
 import classes from '../Login.module.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginData, getRegisterData, getUsers } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
@@ -80,7 +79,7 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         color: '#fff',
     },
-   
+
 });
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -126,7 +125,7 @@ const Login = props => {
     const classes1 = useStyles();
     const navigate = useNavigate()
     const navigate1 = useNavigate();
-
+    const data = JSON.parse(localStorage.getItem("userInfo"))
     const [values, setValues] = useState({
         username: "",
         roll: "",
@@ -162,7 +161,10 @@ const Login = props => {
         navigate1("/Home")
     }
     const changePasswordHandler = () => {
-        navigate("/ChangePassword")
+        if (data !== null) {
+            navigate("/ChangePassword")
+        }
+
     }
 
     const handleClickShowPassword = () => {
@@ -180,51 +182,52 @@ const Login = props => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     // sx={{ maxWidth: 500, maxHeight: 4000, borderRadius: 5, borderColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', paddingTop: 1, marginTop: 3, margin: "center" }}
     return (
-        <div className={classes.loginBack} theme={props.theme}>
-            {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
-            <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent: "flex-start" }} align="left">
+        <>
+            <div className={classes.loginBack} theme={props.theme}>
+                {/* <Box sx={{height: 100, width: 100, justifyContent: 'flex-start' }}> */}
+                {/* <Typography variant="h5" sx={{ color: "white", padding: 1, justifyContent: "flex-start" }} align="left">
                 Style Queen
-            </Typography>
-            <Typography variant="h5" sx={{ color: "white", padding: 1 }} align="left">
+                </Typography>
+                <Typography variant="h5" sx={{ color: "white", padding: 1 }} align="left">
                 Wide Fashion & Beauty
-            </Typography>
-            {/* </Box> */}
+            </Typography> */}
+                {/* </Box> */}
 
-            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 0 }}>
-                <CardActions >
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
-                        <ChevronLeftIcon className={classes1.root1} />
-                    </IconButton>
-                </CardActions>
-                <CardContent>
-                    <h2 >Sign In Here</h2>
-                    <StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        variant="dot"
-                    >
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="/src/static/images/avatar/female.png.jpg"
-                            sx={{ width: 56, height: 56, borderWidth: 5, borderColor: "#121212" }}
-                            position='sticky'
-                        /></StyledBadge>
+                <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 5, position: "relative" }}>
+                    <CardActions >
+                        <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
+                            <ChevronLeftIcon className={classes1.root1} />
+                        </IconButton>
+                    </CardActions>
+                    <CardContent>
+                        <h2 >Sign In Here</h2>
+                        <StyledBadge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            variant="dot"
+                        >
+                            <Avatar
+                                alt="Remy Sharp"
+                                src="/src/static/images/avatar/female.png.jpg"
+                                sx={{ width: 56, height: 56, borderWidth: 5, borderColor: "#121212" }}
+                                position='sticky'
+                            /></StyledBadge>
 
-                    <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            '& .MuiTextField-root': { m: 1, width: '40ch' },
-                            '& .MuiButton-root': { textColor: '#121212' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <Grid container spacing={1}>
-                            <Grid item xs={12}>
-                                <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
-                                {/* <TextField
+                        <Box
+                            component="form"
+                            sx={{
+                                marginTop: 5,
+                                '& .MuiTextField-root': { m: 1, width: '40ch' },
+                                '& .MuiButton-root': { textColor: '#121212' },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}>
+                                    <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
+                                    {/* <TextField
                                     className={classes1.root5}
                                     sx={{
                                         color: 'action.home',
@@ -239,7 +242,7 @@ const Login = props => {
                                     label="Enter Your Email Address"
                                     placeholder="xyz@abc.com"
                                     // {...register('email', {
-                                    //     required: true, pattern: {
+                                        //     required: true, pattern: {
                                     //         value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i,
                                     //         message: "Invalid Email Address",
                                     //     },
@@ -247,119 +250,120 @@ const Login = props => {
                                     error={!!errors?.email}
                                     helpertext={errors?.email ? errors.email.message : null}
                                 /> */}
-                                <TextField
-                                    sx={{ marginTop: 1 }}
-                                    className={classes1.allfield}
-                                    required
-                                    id="username"
-                                    label="Enter Your UserName"
-                                    placeholder="xyz_abc123"
-                                    onChange={handleChange}
+                                    <TextField
+                                        sx={{ marginTop: 1 }}
+                                        className={classes1.allfield}
+                                        required
+                                        id="username"
+                                        label="Enter Your UserName"
+                                        placeholder="xyz_abc123"
+                                        onChange={handleChange}
 
-                                    {...register('username', { required: true, maxLength: 20, minLength: 4 })}
-                                    error={!!errors?.username}
-                                    helpertext={errors?.username ? errors.username.message : null}
-                                />
+                                        {...register('username', { required: true, maxLength: 20, minLength: 4 })}
+                                        error={!!errors?.username}
+                                        helpertext={errors?.username ? errors.username.message : null}
+                                    />
 
-                            </Grid>
+                                </Grid>
 
 
-                            {/* <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 <FormControl required sx={{ m: 1, width: '40ch' }} >
-                                    <InputLabel id="roll-id">Roll</InputLabel>
-                                    <Select
-                                        sx={{ textAlign: 'left' }}
-                                        labelId="demo-simple-select-label"
-                                        id="roll"
-                                        label="Roll"
-                                        defaultValue=""
-                                        onChange={handleChange}
-                                        {...register('roll', { required: true })}
-                                        error={!!errors?.roll}
-                                        helpertext={errors?.roll ? errors.roll.message : null}
-                                    >
-                                        {Rolls.map((option) => (
+                                <InputLabel id="roll-id">Roll</InputLabel>
+                                <Select
+                                sx={{ textAlign: 'left' }}
+                                labelId="demo-simple-select-label"
+                                id="roll"
+                                label="Roll"
+                                defaultValue=""
+                                onChange={handleChange}
+                                {...register('roll', { required: true })}
+                                error={!!errors?.roll}
+                                helpertext={errors?.roll ? errors.roll.message : null}
+                                >
+                                {Rolls.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
+                                            {option.label}
                                             </MenuItem>
-                                        ))}
-                                    </Select>
+                                            ))}
+                                            </Select>
                                     <FormHelperText>Please select your roll in system.</FormHelperText>
                                 </FormControl>
                             </Grid> */}
-                            <Grid item xs={12} >
-                                <img width="23" src={key} className={classes.Image} alt="key" ></img>
-                                <TextField
-                                    autoComplete="true"
-                                    required
-                                    sx={{ marginTop: 1 }}
-                                    className={classes1.allfield}
-                                    label="Enter Password"
-                                    placeholder='*******'
-                                    id="password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    onChange={handleChange}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    className={classes1.root1}
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                    {...register('password', {
-                                        required: true,
-                                        pattern: {
-                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
-                                            message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                <Grid item xs={12} >
+                                    <img width="23" src={key} className={classes.custom} alt="key" ></img>
+                                    <TextField
+                                        autoComplete="true"
+                                        required
+                                        sx={{ marginTop: 1 }}
+                                        className={classes1.allfield}
+                                        label="Enter Password"
+                                        placeholder='*******'
+                                        id="password"
+                                        type={values.showPassword ? 'text' : 'password'}
+                                        onChange={handleChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        className={classes1.root1}
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        {...register('password', {
+                                            required: true,
+                                            pattern: {
+                                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
+                                                message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                            }
                                         }
-                                    }
-                                    )}
-                                    error={!!errors?.password}
-                                    helpertext={errors?.password ? errors.password.message : null}
-                                />
+                                        )}
+                                        error={!!errors?.password}
+                                        helpertext={errors?.password ? errors.password.message : null}
+                                    />
 
-                            </Grid>
-                            <Grid item xs={12} className={classes.button}>
-                                <Button
-                                    className={classes1.root4}
-                                    variant="contained"
-                                    type="submit"
-                                    // onClick={onSubmit}
-                                    sx={{
-                                        marginTop: 0.5,
-                                        marginRight: -38.5,
-                                        color: 'black',
-                                    }}>
-                                    Sign In</Button>
-                            </Grid>
+                                </Grid>
+                                <Grid item xs={12} className={classes.button}>
+                                    <Button
+                                        className={classes1.root4}
+                                        variant="contained"
+                                        type="submit"
+                                        // onClick={onSubmit}
+                                        sx={{
+                                            marginTop: 0.5,
+                                            marginRight: -38.5,
+                                            color: 'black',
+                                        }}>
+                                        Sign In</Button>
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.register}>
-                                <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -9, color: 'black', }}>
-                                    Don't You Have An Account?
-                                    <Link to={"/Registration"} className={classes1.root3}> Sign Up  </Link>
-                                </Typography>
-                                <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -26, color: 'black', }}>
-                                    <Link to={"/Registration"} className={classes1.root3}>Forgot Password?
-                                    </Link>
-                                </Typography>
+                                <Grid item xs={12} className={classes.register}>
+                                    <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -9, color: 'black', }}>
+                                        Don't You Have An Account?
+                                        <Link to={"/Registration"} className={classes1.root3}> Sign Up  </Link>
+                                    </Typography>
+                                    <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -26, color: 'black', }}>
+                                        <Link to={"/Registration"} className={classes1.root3}>Forgot Password?
+                                        </Link>
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Box>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={changePasswordHandler} sx={{ color: 'black' }}>Change Password</Button>
-                </CardActions>
-            </Card>
-        </div>
+                        </Box>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" onClick={changePasswordHandler} sx={{ color: 'black' }} className={classes1.root3}>Change Password</Button>
+                    </CardActions>
+                </Card>
+            </div>
+        </>
 
     );
 

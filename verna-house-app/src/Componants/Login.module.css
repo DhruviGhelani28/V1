@@ -38,18 +38,16 @@
 } 
 .loginBack{
  background-image:   
-    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/31087d27a14357e5875cc8ae/pexels-photo-3894515.jpeg),
-    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/e566dee78e6b5524bd450ea0/pexels-photo-3894519.jpeg),
-    url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/b3309f6094e9555197a00076/pexels-photo-3894538.jpeg);
-    background-repeat: no-repeat, no-repeat; 
-    background-position: right ,center, left; 
-    background-size: 35.2% 100vh, 33.33% 100vh, 33.33% 100vh;
-    min-height: 500px;
-   
+    url("../static/images/loginback.jpg");
+    background-repeat: no-repeat; 
+    background-position: cover; 
+    background-size:cover;
+    
+    
 }
 .registerBack{
     background-image:
-        url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/ed393553372b5fedbb31d038/pexelsphoto1002638.jpeg);
+        url("../static/images/registerback.jpg");
     background-repeat: no-repeat; 
     background-position: cover; 
     background-size: cover; 
@@ -79,11 +77,13 @@
   /* background: #b24592; */
   background: linear-gradient(to right, #424242 25%, #212121 80%);
 }
-.Image { 
-    filter: grayscale(100%);
+.custom {
     margin-top: 25px;
-    /* color : 'white'; */
- }
-
+    filter:  brightness(0) invert(1);
+}
+.login{
+    padding: 1;
+    /* height: auto; */
+}
 
 

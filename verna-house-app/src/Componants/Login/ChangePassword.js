@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-// import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import key from "../../static/images/key.png";
 import classes from '../Login.module.css';
 import Button from '@mui/material/Button';
@@ -15,9 +15,41 @@ import Badge from '@mui/material/Badge';
 import { Container } from "reactstrap";
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { makeStyles } from "@material-ui/core/styles";
 import { useNavigate } from "react-router-dom";
 import CardActions from '@mui/material/CardActions';
+
+const useStyles = makeStyles({
+    root: {
+        background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
+        color: 'action.home',
+        maxWidth: 500,
+        maxHeight: 4000,
+        paddingTop: 1,
+        marginTop: 30,
+        margin: "center",
+    },
+    root1: {
+        color: '#fff',
+        '&:hover': {
+            color: '#EC255A',
+        }
+    },
+    root3: {
+        color: '#EC255A',
+        '&:hover': {
+            color: '#fff',
+        }
+    },
+    allfield:
+    {
+        width: '40ch',
+        marginTop: '10ch',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
+        color: '#fff',
+    },
+
+});
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -49,6 +81,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const ChangePassword = props => {
+
+    const classes1 = useStyles();
     const navigate = useNavigate()
 
     const goBackHandler = () => {
@@ -58,16 +92,16 @@ const ChangePassword = props => {
 
     return (
         <Container align='center'>
-            <Card variant="outlined" sx={{ maxWidth: 500, maxHeight: 5000, borderRadius: 5, borderColor: 'primary.main', paddingTop: 0, marginTop: 3 }} >
-                
+            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5 }}>
+
                 <CardContent >
                     <CardActions>
-                    <IconButton sx={{ marginLeft: 0 }} onClick={goBackHandler} color='primary'>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </CardActions>
-                    <Typography  variant="h4" component='div' fontSize='26px'>Set Your Password</Typography>
-                    <StyledBadge
+                        <IconButton sx={{ marginLeft: 0 }} onClick={goBackHandler} color='primary'>
+                            <ChevronLeftIcon className={classes1.root1} />
+                        </IconButton>
+                    </CardActions>
+                    <Typography variant="h4" component='div' fontSize='26px'>Set Your Password</Typography>
+                    {/* <StyledBadge
                         overlap="circular"
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         variant="dot">
@@ -76,12 +110,13 @@ const ChangePassword = props => {
                             src="/static/images/avatar/1.jpg"
                             sx={{ width: 56, height: 56 }}
                             position='sticky'/>
-                    </StyledBadge>
+                    </StyledBadge> */}
+                    <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 0, marginRight: -0.3, fontSize: 60 }} />
 
                     <Box
                         component="form"
                         sx={{
-                            marginTop: 5,
+                            marginTop: 3,
                             '& .MuiTextField-root': { m: 1, width: '40ch' },
                         }}
                         noValidate
@@ -89,7 +124,7 @@ const ChangePassword = props => {
                     >
 
                         <div>
-                            <img width="23" src={key} className={classes.marginTop} alt="oldKey"></img>
+                            <img width="23" src={key} className={classes.custom} alt="oldKey"></img>
                             <TextField
                                 required
                                 id="old-password"
@@ -100,7 +135,7 @@ const ChangePassword = props => {
                             />
                         </div>
                         <div>
-                            <img width="23" src={key} className={classes.marginTop} alt="newKey"></img>
+                            <img width="23" src={key} className={classes.custom} alt="newKey"></img>
                             <TextField
                                 required
                                 id="new-password"
@@ -111,7 +146,7 @@ const ChangePassword = props => {
                             />
                         </div>
                         <div>
-                            <img width="23" src={key} className={classes.marginTop} alt="confirmKey"></img>
+                            <img width="23" src={key} className={classes.custom} alt="confirmKey"></img>
                             <TextField
                                 required
                                 id="confirm-password"

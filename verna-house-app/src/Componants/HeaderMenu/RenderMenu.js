@@ -21,7 +21,7 @@ const RenderMenu = (props) => {
     // const [anchorEl, setAnchorEl] = React.useState(props.anchorEl)
     const accountHandler = () => {
         props.setAnchorEl(null)
-        navigate("/Account")
+        navigate("/Account/Tasks")
     }
 
 

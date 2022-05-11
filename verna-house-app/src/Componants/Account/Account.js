@@ -33,7 +33,7 @@ const Account = props => {
     const changeHandler = (event, newValue) => {
         setValue(newValue)
     }
-    
+
     // const [open, setOpen] = React.useState(false);
     // const handleClose = () => {
     //     setOpen(false);
@@ -41,21 +41,21 @@ const Account = props => {
     // const handleToggle = () => {
     //     setOpen(!open);
     // };
-  //onClick={tasksHandler}
+    //onClick={tasksHandler}
     return (
         <React.Fragment>
             <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={changeHandler} aria-label="lab API tabs example">
-                            <Tab label="tasks" value="1" />
+                            <Tab label="Tasks" value="1" />
                             <Tab label="Item Two" value="2" />
                             <Tab label="Item Three" value="3" />
                         </TabList>
                     </Box>
                     <TabPanel value="1" >
                         <Tasks> {props.children} </Tasks>
-                       
+
                     </TabPanel>
                     <TabPanel value="2">
                         {/* <Bills>{props.children}</Bills> */}

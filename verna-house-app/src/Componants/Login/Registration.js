@@ -49,7 +49,7 @@ import { Pattern } from '@mui/icons-material';
 
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
@@ -69,12 +69,12 @@ const useStyles = makeStyles({
     root3: {
         color: '#EC255A',
         '&:hover': {
-            color: '#121212',
+            color: '#fff',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -84,7 +84,9 @@ const useStyles = makeStyles({
     allfield:
     {
         width: '40ch',
-        marginTop: '10ch'
+        marginTop: '10ch',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
+        color: '#fff'
     }
 });
 
@@ -216,8 +218,8 @@ const Registration = props => {
             {/* <Container align="center" > */}
             <Card variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 20%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -396,8 +398,9 @@ const Registration = props => {
                                 ))}
                             </Select>
 
-                            <FormHelperText>Please select your role in system.</FormHelperText>
+                           
                         </FormControl>
+                        <FormHelperText sx={{marginLeft: 7, color:"white"}}>Please select your role in system.</FormHelperText>
 
                         <div className={classes.button}>
                             <Button
