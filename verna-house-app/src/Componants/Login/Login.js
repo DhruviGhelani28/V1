@@ -5,7 +5,7 @@ import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
+import video from "../../static/vedio/vedio2.mp4"
 import Grid from '@mui/material/Grid';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -34,9 +34,11 @@ const useStyles = makeStyles({
         color: 'action.home',
         maxWidth: 500,
         maxHeight: 4000,
-        paddingTop: 1,
+        padding: 1,
         marginTop: 30,
-        margin: "center",
+        
+        // margin: "center",
+        position: "relative"
     },
     root1: {
         color: '#fff',
@@ -192,8 +194,11 @@ const Login = props => {
                 Wide Fashion & Beauty
             </Typography> */}
                 {/* </Box> */}
+                <video loop autoPlay muted preload="auto" className={classes.loginback}>
+                    <source src={video} type="video/mp4" />
+                </video>
 
-                <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 5, position: "relative" }}>
+                <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 5 }}>
                     <CardActions >
                         <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
                             <ChevronLeftIcon className={classes1.root1} />

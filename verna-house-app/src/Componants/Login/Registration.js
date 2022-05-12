@@ -224,8 +224,8 @@ const Registration = props => {
                     borderRadius: 5,
                     color: 'action.home',
                     paddingTop: 3,
-                    // m: 1,
-                    // marginTop: 1 ,
+                    marginTop: 4,
+                    marginBottom: 5,
                     transition: "all 0.5s ease",
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}

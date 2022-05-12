@@ -2,64 +2,60 @@ import React from "react";
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import classes from ".././Login.module.css"
+import classes from ".././Login.module.css";
+import { CardMedia, Grid, Card } from "@mui/material";
+import image1 from '../../static/images/studio.jpg';
+import image2 from '../../static/images/film4.jpeg';
+import image3 from '../../static/images/connect-people.jpg';
+// import RandomIcon from '@mui/icons-material/RandomIcon';
+// import image4 from '../../static/images/film2.jpeg';
+import Carousel from 'react-material-ui-carousel'
+import { Paper, Button } from '@mui/material';
+import Home from '@mui/icons-material/Home';
+// function Item(props) {
+//     return (
+//         <Paper>
+//             {/* <h2>{props.item.title}</h2> */}
+//             {/* <Grid container>
+//                 <Grid item xs={12} key={props.i}> */}
+
+//             <img
+//                 src={`${props.item.img}`}
+//                 alt={props.item.title}
+//                 loading="lazy"
+//             />
+//             {/* </Grid> */}
+//             {/* // </Grid> */}
+
+//             <Button className="CheckButton">
+//                 Check it out!
+//             </Button>
+//         </Paper>
+//     )
+// }
+
 const itemData = [
     {
-        img: 'https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/31087d27a14357e5875cc8ae/pexels-photo-3894515.jpeg',
+        img: `${image1}`,
         title: 'Bed',
     },
     {
-        img: 'https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/e566dee78e6b5524bd450ea0/pexels-photo-3894519.jpeg',
+        img: `${image2}`,
         title: 'Books',
     },
     {
-        img: 'https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/b3309f6094e9555197a00076/pexels-photo-3894538.jpeg',
+        img: `${image3}`,
         title: 'Sink',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-        title: 'Kitchen',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1588436706487-9d55d73a39e3',
-        title: 'Blinds',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1574180045827-681f8a1a9622',
-        title: 'Chairs',
-    },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1530731141654-5993c3016c77',
-    //     title: 'Laptop',
-    // },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1481277542470-605612bd2d61',
-    //     title: 'Doors',
-    // },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7',
-    //     title: 'Coffee',
-    // },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee',
-    //     title: 'Storage',
-    // },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62',
-    //     title: 'Candle',
-    // },
-    // {
-    //     img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4',
-    //     title: 'Coffee table',
-    // },
+    }
 ];
 
 const About = (props) => {
     return (
-        <div className={classes.aboutBack} theme={props.theme}>
-            <Box sx={{ paddingLeft: 2, paddingTop: 1, marginTop: 0 }} >
-                About Us nligfgherigdnvuhnhfiourhbndkhr wrupoufhdn
-                <Box sx={{ marginTop: 100 }}>
+
+        <Box>
+            {/* About Us nligfgherigdnvuhnhfiourhbndkhr wrupoufhdn */}
+            {/* className={classes.aboutBack} */}
+            {/* <Box sx={{ marginTop: 100 }}>
                     <ImageList variant="masonry" cols={5} gap={1}>
                         {itemData.map((item) => (
                             <ImageListItem key={item.img}>
@@ -72,10 +68,83 @@ const About = (props) => {
                             </ImageListItem>
                         ))}
                     </ImageList>
-                </Box>
-                
-            </Box>
-        </div>
+                </Box> */}
+            {/* <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {itemData.map((item, index) => (
+                            <div class="carousel-item active" key={index}>
+                                <img class="d-block w-100" src={item.img} alt="First slide" />
+                            </div>
+                        ))}
+                        {/* <div class="carousel-item active">
+                            <img class="d-block w-100" src="..." alt="First slide"/>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Second slide"/>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Third slide"/>
+                        </div> 
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                {/* </div>
+                <div class="carousel-item">
+                    <img src="..." alt="..."/>
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>...</h5>
+                            <p>...</p>
+                        </div>
+                </div> */}
+            <div className={classes.carousle}>
+                <Carousel
+
+                    // IndicatorIcon={<Home />}
+                    indicatorIconButtonProps={{
+                        style: {
+                            padding: '5px',    // 1
+                            color: 'black'       // 3
+                        }
+                    }}
+                    activeIndicatorIconButtonProps={{
+                        style: {
+                            backgroundColor: 'white' // 2
+                        }
+                    }}
+                    indicatorContainerProps={{
+                        style: {
+                            textAlign: 'center' // 4
+                        }
+
+                    }}
+
+                >
+                    {
+                        itemData.map((item, i) =>
+                            <Card sx={{ width: '100%', height: "30%", borderRadius: 1, borderColor: "#121212", borderWidth: 0.1 }} key={i}>
+                                <CardMedia
+
+                                    src={item.img}
+                                    component="img"
+                                    alt={item.title}
+                                    autoPlay
+                                    playing='true'
+                                    muted
+
+                                // width='100%'
+                                />
+                            </Card>
+                        )
+                    }
+                </Carousel>
+            </div>
+        </Box>
     );
 
 };

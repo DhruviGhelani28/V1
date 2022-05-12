@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 // import image2 from ".../static/images/2.jpeg"
 // import image3 from ".../static/images/3.jpeg"
 import Typography from '@mui/material/Typography';
+import video from "../../static/vedio/vedio1.mp4"
 // import Image from "@mui/material/Image";
 import { styled, useTheme } from '@mui/material/styles';
 import React, { Fragment } from 'react';
@@ -14,6 +15,15 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
 import images from "../ImageSlider/MainPageSliderImages";
+import video1 from '../../static/vedio/vedio1.mp4';
+import video4 from '../../static/vedio/vedio4.mp4';
+import video3 from '../../static/vedio/vedio3.mp4';
+import { Card } from "@mui/material";
+import { CardMedia } from "@mui/material";
+import { CardActionArea } from "@mui/material";
+import { CardContent } from "@mui/material";
+import ReactPlayer from 'react-player';
+import Carousel from "react-material-ui-carousel";
 // import "react-carousel-animated/dist/style.css";
 
 // const itemData = [
@@ -47,11 +57,65 @@ import images from "../ImageSlider/MainPageSliderImages";
 //     }),
 // );
 
+const items = [
+    {
+        video: `${video1}`,
+        title: 'Bed',
+    },
+    {
+        video: `${video4}`,
+        title: 'Books',
+    },
+    {
+        video: `${video3}`,
+        title: 'Sink',
+    }
+];
+
 const Main1 = () => {
+
     return (
         <Fragment>
-          
-            
+            <div className={classes.carouslemain}>
+                <Carousel
+                    // IndicatorIcon={<Home />}
+                    indicatorIconButtonProps={{
+                        style: {
+                            padding: '5px',    // 1
+                            color: 'black'       // 3
+                        }
+                    }}
+                    activeIndicatorIconButtonProps={{
+                        style: {
+                            backgroundColor: 'white' // 2
+                        }
+                    }}
+                    indicatorContainerProps={{
+                        style: {
+                            textAlign: 'center' // 4
+                        }
+
+                    }}
+                >
+                    {
+                        items.map((item, i) =>
+
+                            <Card raised={true} sx={{ marginTop: 0.3, width: '100%',height: '30%', borderColor: "#121212", borderWidth: 0.1, borderRadius: 1.5, marginLeft: .3, marginRight: 1, elevation: 24 }} key={i}>
+                                <CardMedia
+                                    component='video'
+                                    type="vedio/mp4"
+                                    src={item.video}
+                                    autoPlay
+                                    playing='true'
+                                    muted
+                                >
+                                </CardMedia>
+                            </Card>
+                        )
+                    }
+                </Carousel>
+            </div>
+            {/* <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' playing className={classes.media} /> */}
         </Fragment>
     )
 };
@@ -101,4 +165,9 @@ export default Main1;
                     loading="lazy">
                 </Image> 
             </ImageList> */}
+
+
+{/* <video loop autoPlay muted preload="auto">
+                           <source src="https://www.youtube.com/watch?v=abcdef" type="video/mp4" />
+                        </video> */}
 

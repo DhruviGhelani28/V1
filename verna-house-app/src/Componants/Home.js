@@ -111,10 +111,10 @@ const Home = props => {
 
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
                 {data === null &&
-                    <Box sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.login}>
+                    <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.homeback} >
 
                         <Routes>
-                            <Route path="/" element={<Main1 />} exact></Route>
+                            {/* <Route path="/Main1" element={<Main1 />} exact></Route> */}
                             <Route path="/About" element={<About />} exact />
                             <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
                             <Route path="/Registration" element={<Registration />} exact />
@@ -124,15 +124,15 @@ const Home = props => {
                             <Route path="/WorkerForm" element={<WorkerForm />} exact />
                             <Route path="/ModelForm" element={<ModelForm />} exact />
                         </Routes>
-                    </Box>
+                    </Main>
                 }
                 {data !== null &&
                     <>
                         <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
-                        <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} >
+                        <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 1 }} className={classes1.homeback}>
 
                             <Routes>
-                                <Route path="/" element={<Main1 />} exact></Route>
+                                <Route path="/Main1" element={<Main1 />} exact></Route>
                                 <Route path="/About" element={<About />} exact />
                                 <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
                                 <Route path="/Registration" element={<Registration />} exact />
