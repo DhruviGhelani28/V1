@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import classes from ".././Login.module.css";
-import { CardMedia, Grid, Card } from "@mui/material";
+import { CardMedia, Grid, Card, Container } from "@mui/material";
 import image1 from '../../static/images/studio.jpg';
 import image2 from '../../static/images/film4.jpeg';
 import image3 from '../../static/images/connect-people.jpg';
@@ -52,7 +52,7 @@ const itemData = [
 const About = (props) => {
     return (
 
-        <Box>
+        <Container className={classes.mainback} sx={{ marginTop: 0, padding: 1 }}>
             {/* About Us nligfgherigdnvuhnhfiourhbndkhr wrupoufhdn */}
             {/* className={classes.aboutBack} */}
             {/* <Box sx={{ marginTop: 100 }}>
@@ -102,7 +102,7 @@ const About = (props) => {
                             <p>...</p>
                         </div>
                 </div> */}
-            <div className={classes.carousle}>
+            <Box sx={{ width: '100%', height: '23%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} className={classes.carousle}>
                 <Carousel
 
                     // IndicatorIcon={<Home />}
@@ -127,15 +127,17 @@ const About = (props) => {
                 >
                     {
                         itemData.map((item, i) =>
-                            <Card sx={{ width: '100%', height: "30%", borderRadius: 1, borderColor: "#121212", borderWidth: 0.1 }} key={i}>
+                            <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, display: 'flex', elevation: 24 }} key={i}>
                                 <CardMedia
 
                                     src={item.img}
                                     component="img"
                                     alt={item.title}
-                                    autoPlay
+                                    //autoPlay
+                                    loop
                                     playing='true'
                                     muted
+                                // loading="lazy"
 
                                 // width='100%'
                                 />
@@ -143,8 +145,8 @@ const About = (props) => {
                         )
                     }
                 </Carousel>
-            </div>
-        </Box>
+            </Box>
+        </Container>
     );
 
 };

@@ -133,7 +133,7 @@ const AppBarHeader = props => {
     const classes = useStyles();
     const navigate = useNavigate()
     const homeHandler = () => {
-        navigate("/Main1")
+        navigate("/")
     }
     const aboutHandler = () => {
         navigate("/About")

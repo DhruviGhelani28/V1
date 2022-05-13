@@ -218,16 +218,16 @@ const Registration = props => {
             {/* <Container align="center" > */}
             <Card variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 20%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    maxWidth: 500, maxHeight: 7000, background: 'linear-gradient(45deg, #2F3031 20%, #575758 50%, #2F3031 30%,#575758 50%)',
                     borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
-                    paddingTop: 3,
-                    marginTop: 4,
+                    paddingTop: 0,
+                    marginTop: 2,
                     marginBottom: 5,
-                    transition: "all 0.5s ease",
-                    "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+                    // transition: "all 0.5s ease",
+                    // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
@@ -398,9 +398,9 @@ const Registration = props => {
                                 ))}
                             </Select>
 
-                           
+
                         </FormControl>
-                        <FormHelperText sx={{marginLeft: 7, color:"white"}}>Please select your role in system.</FormHelperText>
+                        <FormHelperText sx={{ marginLeft: 7, color: "white" }}>Please select your role in system.</FormHelperText>
 
                         <div className={classes.button}>
                             <Button

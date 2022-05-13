@@ -3,6 +3,7 @@
 import classes from "../Login.module.css";
 
 import Box from '@mui/material/Box';
+import { Container } from "@mui/material";
 // import image1 from ".../static/images/1.jpeg"
 // import image2 from ".../static/images/2.jpeg"
 // import image3 from ".../static/images/3.jpeg"
@@ -11,6 +12,7 @@ import video from "../../static/vedio/vedio1.mp4"
 // import Image from "@mui/material/Image";
 import { styled, useTheme } from '@mui/material/styles';
 import React, { Fragment } from 'react';
+import { Paper } from "@mui/material";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
@@ -24,6 +26,7 @@ import { CardActionArea } from "@mui/material";
 import { CardContent } from "@mui/material";
 import ReactPlayer from 'react-player';
 import Carousel from "react-material-ui-carousel";
+import Footer from '../Footer/Footer';
 // import "react-carousel-animated/dist/style.css";
 
 // const itemData = [
@@ -59,7 +62,7 @@ import Carousel from "react-material-ui-carousel";
 
 const items = [
     {
-        video: `${video1}`,
+        video: `${video3}`,
         title: 'Bed',
     },
     {
@@ -67,7 +70,7 @@ const items = [
         title: 'Books',
     },
     {
-        video: `${video3}`,
+        video: `${video1}`,
         title: 'Sink',
     }
 ];
@@ -75,47 +78,59 @@ const items = [
 const Main1 = () => {
 
     return (
-        <Fragment>
-            <div className={classes.carouslemain}>
-                <Carousel
-                    // IndicatorIcon={<Home />}
-                    indicatorIconButtonProps={{
-                        style: {
-                            padding: '5px',    // 1
-                            color: 'black'       // 3
-                        }
-                    }}
-                    activeIndicatorIconButtonProps={{
-                        style: {
-                            backgroundColor: 'white' // 2
-                        }
-                    }}
-                    indicatorContainerProps={{
-                        style: {
-                            textAlign: 'center' // 4
-                        }
+        <Fragment >
+            <Container className={classes.mainback} sx={{ marginTop: 0, padding: 1}}>
+                <Box sx={{ width: '100%', height: '23%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
+                    <Carousel
+                        // IndicatorIcon={<Home />}
+                        indicatorIconButtonProps={{
+                            style: {
+                                padding: '5px',    // 1
+                                color: 'black'       // 3
+                            }
+                        }}
 
-                    }}
-                >
-                    {
-                        items.map((item, i) =>
+                        activeIndicatorIconButtonProps={{
+                            style: {
+                                backgroundColor: 'white' // 2
+                            }
+                        }}
+                        indicatorContainerProps={{
+                            style: {
+                                textAlign: 'center' // 4
+                            }
 
-                            <Card raised={true} sx={{ marginTop: 0.3, width: '100%',height: '30%', borderColor: "#121212", borderWidth: 0.1, borderRadius: 1.5, marginLeft: .3, marginRight: 1, elevation: 24 }} key={i}>
-                                <CardMedia
-                                    component='video'
-                                    type="vedio/mp4"
-                                    src={item.video}
-                                    autoPlay
-                                    playing='true'
-                                    muted
-                                >
-                                </CardMedia>
-                            </Card>
-                        )
-                    }
-                </Carousel>
-            </div>
-            {/* <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' playing className={classes.media} /> */}
+                        }}
+                    >
+                        {
+                            items.map((item, i) =>
+
+                                <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, display: 'flex', elevation: 24 }} key={i} className={classes.carouslemain}>
+                                    <CardMedia
+                                        component='video'
+                                        type="vedio/mp4"
+                                        src={item.video}
+                                        autoPlay
+                                        loop
+                                        // playing='true'
+                                        muted
+                                    // loading="lazy"
+                                    >
+                                    </CardMedia>
+                                </Card>
+                            )
+                        }
+                    </Carousel>
+                </Box>
+
+                <Box className={classes.box}>
+                    <Typography component='div' style={{ color: "black" }}>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </Typography>
+                </Box>
+
+                {/* <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' playing className={classes.media} /> */}
+            </Container>
         </Fragment>
     )
 };

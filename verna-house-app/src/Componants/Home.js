@@ -37,6 +37,7 @@ import ModelForm from "./Models/ModelForm";
 import GarmentForm from "./Garments/GarmentForm";
 import GadgetForm from "./Gadgets/GadgetForm";
 import Tasks from "./Tasks/Tasks";
+import Footer from "./Footer/Footer";
 
 
 
@@ -110,11 +111,13 @@ const Home = props => {
                 <CssBaseline />
 
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
+                {/* <Main1/> */}
+                
                 {data === null &&
                     <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.homeback} >
 
                         <Routes>
-                            {/* <Route path="/Main1" element={<Main1 />} exact></Route> */}
+                            <Route path="/" element={<Main1/>} exact></Route> 
                             <Route path="/About" element={<About />} exact />
                             <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
                             <Route path="/Registration" element={<Registration />} exact />
@@ -129,13 +132,13 @@ const Home = props => {
                 {data !== null &&
                     <>
                         <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
-                        <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 1 }} className={classes1.homeback}>
+                    <Main className={classes1.homeback} sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1}}>
 
                             <Routes>
-                                <Route path="/Main1" element={<Main1 />} exact></Route>
+                                <Route path="/" element={<Main1 />} exact></Route>
                                 <Route path="/About" element={<About />} exact />
                                 <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
-                                <Route path="/Registration" element={<Registration />} exact />
+                                <Route path="/Registration" element={<Registration  />} exact />
                                 {isLoggedIn &&
                                     <Route path="/Account/Tasks" element={<Account />} exact />}
                                 {role !== "Supplier" &&
@@ -173,13 +176,14 @@ const Home = props => {
                                 <Route path="/Models" element={<Models />} exact />
 
 
-                                {/* <Route path="/Settings" element={<Settings />} exact /> */}
+                                {/* <Route path="/Settings" element={<Settings />} exact />  */}
                                 <Route path="/ChangePassword" element={<ChangePassword />} exact />
                                 <Route path="/Tasks" element={<Tasks />} exact />
                                 <Route path="/TaskForm" element={<TaskForm />} exact />
                             </Routes>
                         </Main>
                     </>}
+                <Footer/>
             </Box>
         </React.Fragment >
 
