@@ -28,15 +28,15 @@ urlpatterns = [
     path('PhotoPosters/',PhotoPosterView.getPhotoPosters),
     path('Models/', ModelView.getModels),
 
-    # path('Suppliers/', Supplier.getSuppliers),
-    # path('Agencies/', Agency.getAgencies),
-    # path('Customers/', Customer.getCustomers),
-    # path('Workers/', Worker.getWorkers),
+    path('Suppliers/', SupplierView.getSuppliers),
+    path('Agencies/', AgencyView.getAgencies),
+    path('Customers/', CustomerView.getCustomers),
+    path('Workers/', WorkerView.getWorkers),
 
-    # path('Users/Suppliers/<str:pk>', Supplier.getSupplier),
-    # path('Users/Agencies/<str:pk>', Agency.getAgency),
-    # path('Users/Customers/<str:pk>', Customer.getCustomer),
-    # path('Users/Workers/<str:pk>', Worker.getWorker),
+    path('Users/Suppliers/<str:pk>', SupplierView.getSupplier),
+    path('Users/Agencies/<str:pk>', AgencyView.getAgency),
+    path('Users/Customers/<str:pk>', CustomerView.getCustomer),
+    path('Users/Workers/<str:pk>', WorkerView.getWorker),
 
     # path('Users/Suppliers/<str:pk>/Tasks/', Supplier.getSupplierTasks),
     # path('Users/Agencies/<str:pk>/Tasks/', Agency.getAgencyTasks),

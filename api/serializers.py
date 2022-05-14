@@ -22,7 +22,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     # first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
     # last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
-    roll = serializers.CharField(required=True, help_text="Enter Your Roll.")
+    role = serializers.CharField(required=True, help_text="Enter Your Roll.")
     password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Password.")
     confPassword = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Confirm Password.")
 
@@ -79,7 +79,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             first_name = validated_data['first_name'],
             last_name =validated_data['last_name'],
-            roll = validated_data['roll'],
+            role = validated_data['role'],
             password = make_password(validated_data.get('password')),
             confPassword = make_password(validated_data.get('confPassword')),
         )
@@ -90,14 +90,14 @@ class AgencyProfileSerializer(serializers.ModelSerializer):
     agency = UserSerializer(read_only =True)
     class Meta:
         model = Agency
-        fields = ['id','agency','name','email','username','roll','mobileNo','agencyName','agencyAddress','profile_image','location','social_website']
+        fields = ['id','agency','name','email','username','mobileNo','agencyName','agencyAddress','profile_image','location','social_website']
 
     def create(self, validated_data):
         agencyProfile = Agency.objects.create(
             name = validated_data['name'],
             email = validated_data['email'],
             username = validated_data['username'],
-            roll = validated_data['roll'],
+            # role = validated_data['role'],
             mobileNo = validated_data['mobileNo'],
             agencyName = validated_data['agencyName'],
             agencyAddress = validated_data['agencyAddress'],
@@ -112,14 +112,14 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
     customer = UserRegistrationSerializer(read_only =True) 
     class Meta:
         model = Customer
-        fields = ['id','user','name','email','username','roll','mobileNo','companyName','companyAddress','profile_image','location','social_website']
+        fields = ['id','user','name','email','username','mobileNo','companyName','companyAddress','profile_image','location','social_website']
 
     def create(self, validated_data):
         customerProfile = Customer.objects.create(
             name = validated_data['name'],
             email = validated_data['email'],
             username = validated_data['username'],
-            roll = validated_data['roll'],
+            # role = validated_data['role'],
             mobileNo = validated_data['mobileNo'],
             customerName = validated_data['customerName'],
             customerAddress = validated_data['customerAddress'],
@@ -141,7 +141,7 @@ class SupplierProfileSerializer(serializers.ModelSerializer):
             name = validated_data['name'],
             email = validated_data['email'],
             username = validated_data['username'],
-            roll = validated_data['roll'],
+            # role = validated_data['role'],
             mobileNo = validated_data['mobileNo'],
             organizationName = validated_data['organizationName'],
             organizationAddress = validated_data['organizationAddress'],
@@ -163,7 +163,7 @@ class WorkerProfileSerializer(serializers.ModelSerializer):
             name = validated_data['name'],
             email = validated_data['email'],
             username = validated_data['username'],
-            role = validated_data['role'],
+            # role = validated_data['role'],
             mobileNo = validated_data['mobileNo'],
             address = validated_data['address'],
             short_intro = validated_data['short_intro'],
@@ -292,10 +292,10 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required = True, help_text = "Enter username")
     password = serializers.CharField(required = True, help_text = "Enter password", style={'input':'password'}) 
-    roll = serializers.CharField(required=True,help_text = "Enter roll")
+    role = serializers.CharField(required=True,help_text = "Enter role")
     class Meta:
         model= User
-        fields = ['email','roll','password']
+        fields = ['email','role','password']
     def validate(self, attrs):
         user = authenticate(**attrs)
         if user:

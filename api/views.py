@@ -353,6 +353,8 @@ class SupplierView(APIView):
     @permission_classes([IsAuthenticated])
     def getSuppliers(request):
         user = request.user.profile
+        # user = Profile.objects.get( username = user.username)
+        print("user:: ", user)
         if user.role != 'Supplier':
             suppliers = Profile.objects.filter(role="Supplier")
             serializer = SupplierProfileSerializer(suppliers, many=True)

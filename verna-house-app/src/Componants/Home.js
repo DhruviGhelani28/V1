@@ -38,6 +38,7 @@ import GarmentForm from "./Garments/GarmentForm";
 import GadgetForm from "./Gadgets/GadgetForm";
 import Tasks from "./Tasks/Tasks";
 import Footer from "./Footer/Footer";
+import { Directions } from "@mui/icons-material";
 
 
 
@@ -71,16 +72,17 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         }),
     }),
 );
-
+// let role = '';
 const Home = props => {
     const classes = useStyles();
 
     const drawerWidth = 200;
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    let role = ""
+
     const data = JSON.parse(localStorage.getItem("userInfo"))
 
+    console.log("data::", data['role'])
     const handleDrawerOpen = () => {
         if (data !== null) {
             setOpen(true);
@@ -91,33 +93,34 @@ const Home = props => {
         setOpen(false);
     };
 
-    console.log(role)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    useEffect(() => {
 
-        // role = data["role"]
+    let [role, setRole] = useState(" ")
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
         if (data !== null) {
-            role = data["role"]
+            console.log(isLoggedIn, role)
             setIsLoggedIn(true)
+            setRole(data['role'])
         }
     }, [])
 
-    console.log(data)
-    // console.log(role)
+
+    console.log('role::', role != 'Admin')
     return (
 
         <React.Fragment>
-            <Box sx={{ display: 'flex' }} >
+            <Box sx={{ display: 'flex' , WebkitFlexDirection: 'column'}} >
                 <CssBaseline />
 
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
                 {/* <Main1/> */}
-                
-                {data === null &&
+
+                {role === '' &&
                     <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.homeback} >
 
                         <Routes>
-                            <Route path="/" element={<Main1/>} exact></Route> 
+                            <Route path="/" element={<Main1 />} exact></Route>
                             <Route path="/About" element={<About />} exact />
                             <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
                             <Route path="/Registration" element={<Registration />} exact />
@@ -129,16 +132,16 @@ const Home = props => {
                         </Routes>
                     </Main>
                 }
-                {data !== null &&
+                {role !== '' &&
                     <>
                         <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
-                    <Main className={classes1.homeback} sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1}}>
+                        <Main className={classes1.homeback} sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }}>
 
                             <Routes>
                                 <Route path="/" element={<Main1 />} exact></Route>
                                 <Route path="/About" element={<About />} exact />
                                 <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
-                                <Route path="/Registration" element={<Registration  />} exact />
+                                <Route path="/Registration" element={<Registration />} exact />
                                 {isLoggedIn &&
                                     <Route path="/Account/Tasks" element={<Account />} exact />}
                                 {role !== "Supplier" &&
@@ -147,7 +150,7 @@ const Home = props => {
                                     <Route path="/Customers" element={<Customers />} exact />}
                                 {role !== "Worker" &&
                                     <Route path="/Workers" element={<Workers />} exact />}
-                                {role !== "Agency" &&
+                                {role != "Agency" &&
                                     <Route path="/Agencies" element={<Agencies />} exact />}
                                 {role === "Supplier" && <>
                                     <Route path="/Garments" element={<Garments />} exact />

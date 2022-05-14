@@ -3,9 +3,10 @@
     color : 'white';
 }
 .body{
-    min-height: 'fit-content';
+    /* min-height: 'fit-content'; */
     height: 100vh;
     width: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
 }
@@ -27,57 +28,39 @@
 }
 .appbar {
     height : 50px;
-    /* background : 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)'; */
     color : 'white';
 }
 /* .main{
     height : "100%";
     width : "100%";
 } */
-.mainBack {
-    /* background:  url(https://images02.nicepage.com/c461c07a441a5d220e8feb1a/dc8fb1e500cf5d99b9134449/26afbfd6f4b0f7d2c0352d2c78f559db.jpeg) ; */
-    /* background: #000; */
+.mainBack { 
     height: 100%;
     width: 100%;
     min-height: 100vh;
-    /* margin-top: 30px; */
     padding-top: 0px;
-    /* background-repeat: repeat;  */
     background-size:cover;  
     background-position: cover;
 } 
 .homeback{
-    /* background:linear-gradient(45deg,#434344 5%,#575758 20%); */
-    /* background-image: url('../static/images/body.jpg'); */
     background-color:rgba(185, 184, 184, 0.2);
-    /* background: rgba(255, 255, 255, 0.596); */
-    /* backdrop-filter: blur(10px); */
     min-height: 100vh;
     height: 100%;
     background-repeat: no-repeat; 
     background-position: cover; 
     background-size:cover;
-    /* z-index: -5; */
     position: relative;
     overflow: hidden;
-    /* justify-content: space-between; */
-    /* min-height: 100vh; */
 
 }
 .loginBack{
- /* background:    */
-    /* url("../static/vedio/vedio2.mp4"); */
     position: absolute;
     right: 0;
     width: 100%;
     min-height: 100vh;
-    /* padding-left: 10px; */
-    /* padding-top: 30px; */
-    /* padding-right: 10px; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* z-index: 2; */
 }
 .loginback{
     background-repeat: no-repeat; 
@@ -143,11 +126,11 @@
     width: 100%;
     min-height: 360px;
 }
-.carousle{
+/* .carousle{
   background: rgba(255, 255, 255, 0.596);
   overflow: hidden;
   border-radius: 7px;
-}
+} */
 .carouslemain{
     object-fit: cover;
     height: fit-content;
@@ -166,7 +149,7 @@
     line-height: 1.5;
     border-radius: 7px;
     width: 100%;
-    min-height: 40%;
+    min-height: 150px;
     /* box-shadow: 5px 3px 15px whitesmoke; */
     overflow: hidden;
 }

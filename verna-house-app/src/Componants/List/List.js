@@ -34,26 +34,22 @@ const useStyles = makeStyles({
 
 const List = props => {
     const classes = useStyles();
+    const data = JSON.parse(localStorage.getItem("userInfo"))
 
+    console.log("data::", data['role'])
+    let [role, setRole] = useState(" ")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    // const data = JSON.parse(localStorage.getItem("userInfo"))
-    // const role = data["role"]
-    const role = "Admin"
-    // const data = JSON.parse(localStorage.getItem("userInfo"))
-    // let role="";
-    // console.log(role)
-    // const [isLoggedIn, setIsLoggedIn] = useState(false)
-    // useEffect((data) => {
-    //     if (data != null) {
-    //         setIsLoggedIn(true)
-    //     }
-    //     if (isLoggedIn == true) {
-    //         role = data["role"]
-    //     }
-    // }, [])
-    // console.log(data)
-    // console.log(role)
 
+    useEffect(() => {
+        if (data !== null) {
+            console.log(isLoggedIn, role)
+            setIsLoggedIn(true)
+            setRole(data['role'])
+        }
+    }, [])
+
+
+    console.log('role::', role != 'Admin')
     let list = []
     const iconlist = [<SegmentIcon />, <GroupsIcon />, <PeopleIcon />, <GroupIcon />, <PeopleAltIcon />, <img width="25" src={Garments} alt="Garments"></img>, <ConstructionIcon />, <PhotoAlbumIcon />, <WcIcon />, <SettingsIcon />]
 

@@ -27,6 +27,7 @@ import { CardContent } from "@mui/material";
 import ReactPlayer from 'react-player';
 import Carousel from "react-material-ui-carousel";
 import Footer from '../Footer/Footer';
+import { Visibility } from "@mui/icons-material";
 // import "react-carousel-animated/dist/style.css";
 
 // const itemData = [
@@ -79,8 +80,8 @@ const Main1 = () => {
 
     return (
         <Fragment >
-            <Container className={classes.mainback} sx={{ marginTop: 0, padding: 1}}>
-                <Box sx={{ width: '100%', height: '23%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
+            <Container className={classes.mainback} sx={{ marginTop: 0, padding: 1 }}>
+                <Box sx={{ width: '100%', height: '20%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
                     <Carousel
                         // IndicatorIcon={<Home />}
                         indicatorIconButtonProps={{
@@ -89,10 +90,10 @@ const Main1 = () => {
                                 color: 'black'       // 3
                             }
                         }}
-
                         activeIndicatorIconButtonProps={{
                             style: {
-                                backgroundColor: 'white' // 2
+                                backgroundColor: 'white',
+                                Visibility: true // 2
                             }
                         }}
                         indicatorContainerProps={{
@@ -100,16 +101,15 @@ const Main1 = () => {
                                 textAlign: 'center' // 4
                             }
 
-                        }}
-                    >
+                        }}>
                         {
                             items.map((item, i) =>
-
                                 <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, display: 'flex', elevation: 24 }} key={i} className={classes.carouslemain}>
                                     <CardMedia
                                         component='video'
                                         type="vedio/mp4"
                                         src={item.video}
+                                        // height='100%'
                                         autoPlay
                                         loop
                                         // playing='true'
@@ -123,8 +123,8 @@ const Main1 = () => {
                     </Carousel>
                 </Box>
 
-                <Box className={classes.box}>
-                    <Typography component='div' style={{ color: "black" }}>
+                <Box className={classes.box} >
+                    <Typography component='div' style={{ color: "black", fontSize: '18px', fontFamily: 'sans-serif' }} data-aos="fade-up">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     </Typography>
                 </Box>

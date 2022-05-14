@@ -2,8 +2,10 @@ import React from "react";
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import styled, { keyframes } from 'styled-components';
+import TextAnimation from "../Text/TextAnimation";
 import classes from ".././Login.module.css";
-import { CardMedia, Grid, Card, Container } from "@mui/material";
+import { CardMedia, Grid, Card, Container, Typography } from "@mui/material";
 import image1 from '../../static/images/studio.jpg';
 import image2 from '../../static/images/film4.jpeg';
 import image3 from '../../static/images/connect-people.jpg';
@@ -49,6 +51,49 @@ const itemData = [
     }
 ];
 
+// const ContentWrapper = styled.div`
+//     max-width: 1234px;
+//     margin: 0 auto;
+//     padding: 200px 30px;
+//     display: grid;
+//     grid-template-columns: 360px auto;
+
+//     @media (max-width: 450px){
+//         grid-template-columns: auto;
+//         gap: 60px;
+//         padding: 150px 20px 250px;
+// }`
+// const TextWrapper = styled.div`
+//     max-width: 360px;
+//     display: grid;
+//     gap: 30px;
+//     >*{
+//         opacity:0;
+//         animation: ${animation} 1s forwards;
+
+//         :nth-child(1){
+//             animation-delay:0s;
+//         }
+//         :nth-child(2){
+//             animation-delay:0.2s;
+//         }
+//         :nth-child(3){
+//             animation-delay:0.4s;
+//         }
+// }`
+
+// const Title = styled.h6`
+// color: ${themes.dark.text1};
+// background: linear-gradient(100deg, #730040 0%, #301cbe 100%);
+// background-clip: text;
+// -webkit-background-clip: text;
+// color: transparent;
+
+//     span{
+
+//     }
+
+// `
 const About = (props) => {
     return (
 
@@ -146,8 +191,21 @@ const About = (props) => {
                     }
                 </Carousel>
             </Box>
+            <Box sx={{ backdropFilter: `blur(8px)`, marginTop: 0 }}>
+                <Typography sx={{ color: 'black', fontFamily: 'sans-serif', fontSize: '18px' }} data-aos="fade-left" data-aos-offset="200">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                </Typography>
+                <Typography sx={{ color: 'black' }} data-aos="fade-right" data-aos-offset="200">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                </Typography>
+                <Typography sx={{ color: 'black' }} data-aos="fade-left" data-aos-offset="200">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                </Typography>
+
+            </Box>
         </Container>
     );
 
 };
 export default About;
+
