@@ -80,10 +80,9 @@ const Main1 = () => {
 
     return (
         <Fragment >
-            <Container className={classes.mainback} sx={{ marginTop: 0, padding: 1 }}>
+            <Container className={classes.mainback} sx={{ marginTop: 0, padding: 0 }}>
                 <Box sx={{ width: '100%', height: '20%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
                     <Carousel
-                        // IndicatorIcon={<Home />}
                         indicatorIconButtonProps={{
                             style: {
                                 padding: '5px',    // 1
@@ -104,17 +103,16 @@ const Main1 = () => {
                         }}>
                         {
                             items.map((item, i) =>
-                                <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, display: 'flex', elevation: 24 }} key={i} className={classes.carouslemain}>
+                                <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, elevation: 24 }} key={i} className={classes.carouslemain}>
                                     <CardMedia
                                         component='video'
                                         type="vedio/mp4"
                                         src={item.video}
-                                        // height='100%'
                                         autoPlay
                                         loop
-                                        // playing='true'
+                                        playing='true'
                                         muted
-                                    // loading="lazy"
+                                        loading="lazy"
                                     >
                                     </CardMedia>
                                 </Card>

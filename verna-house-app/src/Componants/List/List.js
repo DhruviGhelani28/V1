@@ -36,7 +36,7 @@ const List = props => {
     const classes = useStyles();
     const data = JSON.parse(localStorage.getItem("userInfo"))
 
-    console.log("data::", data['role'])
+    // console.log("data::", data['role'])
     let [role, setRole] = useState(" ")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 

@@ -109,10 +109,10 @@ class AgencyProfileSerializer(serializers.ModelSerializer):
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
-    customer = UserRegistrationSerializer(read_only =True) 
+    # customer = UserRegistrationSerializer(read_only =True) 
     class Meta:
         model = Customer
-        fields = ['id','user','name','email','username','mobileNo','companyName','companyAddress','profile_image','location','social_website']
+        fields = ['id','customer','name','email','username','mobileNo','companyName','companyAddress','profile_image','location','social_website']
 
     def create(self, validated_data):
         customerProfile = Customer.objects.create(
@@ -158,20 +158,24 @@ class WorkerProfileSerializer(serializers.ModelSerializer):
         model = Worker
         fields = '__all__'
 
-    def create(self, validated_data):
-        workerProfile = Agency.objects.create(
-            name = validated_data['name'],
-            email = validated_data['email'],
-            username = validated_data['username'],
-            # role = validated_data['role'],
-            mobileNo = validated_data['mobileNo'],
-            address = validated_data['address'],
-            short_intro = validated_data['short_intro'],
-            profile_image = validated_data['profile_image'],
-            location = validated_data['location'],   
-        )
-        return workerProfile
+    # def create(self, validated_data):
+    #     workerProfile = Agency.objects.create(
+    #         name = validated_data['name'],
+    #         email = validated_data['email'],
+    #         username = validated_data['username'],
+    #         # role = validated_data['role'],
+    #         mobileNo = validated_data['mobileNo'],
+    #         address = validated_data['address'],
+    #         short_intro = validated_data['short_intro'],
+    #         profile_image = validated_data['profile_image'],
+    #         location = validated_data['location'],   
+    #     )
+    #     return workerProfile
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Profile
+        fields = "__all__"
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

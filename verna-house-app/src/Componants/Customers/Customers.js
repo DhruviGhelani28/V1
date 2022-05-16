@@ -204,9 +204,9 @@ const Customers = props => {
         () => dispatch(getCustomers())
         , [dispatch])
     console.log(customers.getCustomers)
-    const length = customers.getCustomers.length
-    console.log(length)
-    const rows = customers.getCustomers
+    // const length = customers.getCustomers.length
+    // console.log(length)
+    // const rows = customers.getCustomers
 
     // const [open, setOpen] = React.useState(false);
     // const handleClose = () => {
@@ -497,24 +497,24 @@ const Customers = props => {
                                     component="img"
                                     alt="green iguana"
                                     height="250"
-                                    image={`http://127.0.0.1:8000${value.photoimage}`}
+                                    // image={`http://127.0.0.1:8000${value.photoimage}`}
                                 // "../..//static/PhotoPoster/contemplative-reptile.jpg"
                                 />
                                 <CardContent sx={{ marginTop: 0, marginBottom: 0, paddingBottom: 0 }}>
                                     <Typography gutterBottom variant="h6" component="div" color="text.primary">
-                                        Category:       {value.category}
+                                        {/* Category:       {value.category} */}
                                     </Typography>
                                     <Typography variant="body2" color="text.primary">
-                                        Name:           {value.name}
+                                        {/* Name:           {value.name} */}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14 }} color="text.primary" align="left">
-                                        Price:          {value.price}
+                                        {/* Price:          {value.price} */}
                                     </Typography>
                                     <Typography color="text.primary">
-                                        OrderStatus:    {value.orderStatus.name}
+                                        {/* OrderStatus:    {value.orderStatus.name} */}
                                     </Typography>
                                     <Typography color="text.primary">
-                                        TimeDuration:   {value.timeDuration.split("")[0]} Days
+                                        {/* TimeDuration:   {value.timeDuration.split("")[0]} Days */}
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{ marginTop: 0, marginBottom: 0, justifyContent: "flex-end", paddingBottom: 0.3 }}>

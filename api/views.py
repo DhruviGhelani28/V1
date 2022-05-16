@@ -531,9 +531,12 @@ class WorkerView(APIView):
     @permission_classes([IsAuthenticated])
     def getWorkers(request):
         user = request.user.profile
-        workers = Profile.objects.filter(role="Worker")
-        serializer = WorkerProfileSerializer(workers, many=True)
-        return Response(serializer.data)
+        if user.role != 'Worker' :
+            # profiles = Profile.objects.filter(role="Worker")
+            workers = Worker.objects.all()
+            serializer = WorkerProfileSerializer(workers, many=True)
+            print(serializer.data)
+            return Response(serializer.data)
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated, IsAdminUser])

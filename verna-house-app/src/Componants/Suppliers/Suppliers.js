@@ -12,7 +12,7 @@ import CancelIcon from '@mui/icons-material/Close';
 import { useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import { getSuppliers } from "../../Store/Supplier/SupplierAction"
-
+import { Backdrop } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from '@mui/x-data-grid';
 import Grid from '@mui/material/Grid';
@@ -23,15 +23,17 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { GridActionsCell, GridActionsCellItem } from '@mui/x-data-grid';
+import { GridRowModes } from '@mui/x-data-grid';
 import Alert from '@mui/material/Alert';
-
-import {
-    useGridApiRef,
-    DataGridPro,
-    GridToolbarContainer,
-    GridActionsCellItem,
-} from '@mui/x-data-grid-pro';
+import SupplierForm from "./SupplierForm";
 
 function isOverflown(element) {
     return (
@@ -152,56 +154,49 @@ renderCellExpand.propTypes = {
     value: PropTypes.string,
 };
 
-const useFakeMutation = () => {
-    return React.useCallback(
-        (user) =>
-            new Promise((resolve, reject) =>
-                setTimeout(() => {
-                    if (user.name?.trim() === '') {
-                        reject();
-                    } else {
-                        resolve(user);
-                    }
-                }, 200),
-            ),
-        [],
-    );
-};
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
 
-function computeMutation(newRow, oldRow) {
-    if (newRow.name !== oldRow.name) {
-        return `Name from '${oldRow.name}' to '${newRow.name}'`;
-    }
-    if (newRow.username !== oldRow.username) {
-        return `userName from '${oldRow.username}' to '${newRow.username}'`;
-    }
-    if (newRow.email !== oldRow.email) {
-        return `Email from '${oldRow.email || ''}' to '${newRow.email || ''}'`;
-    }
-    if (newRow.mobileNo !== oldRow.mobileNo) {
-        return `MobileNo from '${oldRow.mobileNo || ''}' to '${newRow.mobileNo || ''}'`;
-    }
-    return null;
-}
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 function Suppliers() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
     const dispatch = useDispatch()
     const suppliers = useSelector((state) => state.suppliers);
-    const { loading, details, error } = suppliers;
+    const [rows, setRows] = React.useState([]);
     useEffect(() => {
         dispatch(getSuppliers())
     }, [dispatch])
 
     console.log(suppliers.getSuppliers)
-    const length = suppliers.getSuppliers.length
-    console.log(length)
-    const rows = suppliers.getSuppliers
-     // console.log(loading)
-   // console.log(details)
-   // console.log(error)
 
-    const apiRef = useGridApiRef();
+    useEffect(() => {
+        setRows(suppliers.getSuppliers)
+
+    }, [suppliers.getSuppliers])
+    console.log(rows)
+    const [rowModesModel, setRowModesModel] = React.useState({});
 
     const handleRowEditStart = (params, event) => {
         event.defaultMuiPrevented = true;
@@ -211,28 +206,27 @@ function Suppliers() {
         event.defaultMuiPrevented = true;
     };
 
-    const handleEditClick = (id) => (event) => {
-        event.stopPropagation();
-        apiRef.current.startRowEditMode({ id });
+    const handleEditClick = (id) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
 
-    const handleSaveClick = (id) => async (event) => {
-        event.stopPropagation();
-        await apiRef.current.stopRowEditMode({ id });
+    const handleSaveClick = (id) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     };
 
-    const handleDeleteClick = (id) => (event) => {
-        event.stopPropagation();
-        apiRef.current.updateRows([{ id, _action: 'delete' }]);
+    const handleDeleteClick = (id) => () => {
+        setRows(rows.filter((row) => row.id !== id));
     };
 
-    const handleCancelClick = (id) => async (event) => {
-        event.stopPropagation();
-        await apiRef.current.stopRowEditMode({ id, ignoreModifications: true });
+    const handleCancelClick = (id) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
 
-        const row = apiRef.current.getRow(id);
-        if (row.isNew) {
-            apiRef.current.updateRows([{ id, _action: 'delete' }]);
+        const editedRow = rows.find((row) => row.id === id);
+        if (editedRow.isNew) {
+            setRows(rows.filter((row) => row.id !== id));
         }
     };
 
@@ -243,12 +237,6 @@ function Suppliers() {
     const columns = [
 
         { field: 'id', headerName: 'ID', width: 90 },
-        // {
-        //     field: 'name',
-        //     headerName: 'First Name',
-        //     width: 150,
-        //     editable: true,
-        // },
         {
             field: 'name',
             headerName: 'Full name',
@@ -256,8 +244,8 @@ function Suppliers() {
             sortable: false,
             width: 160,
             editable: true,
-            valueGetter: (params) =>
-                `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+            // valueGetter: (params) =>
+            //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
         },
         {
             field: 'username',
@@ -279,7 +267,7 @@ function Suppliers() {
             sortable: false,
             width: 100,
             editable: true,
-            resizable: true
+            // resizable: true
         },
         {
             field: 'organizationName',
@@ -320,168 +308,66 @@ function Suppliers() {
             editable: true,
         },
         {
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Actions',
+            field: "Action",
+            headerName: 'Action',
             width: 100,
-            cellClassName: 'actions',
-            getActions: ({ id }) => {
-                const isInEditMode = apiRef.current.getRowMode(id) === 'edit';
+            renderCell: (row) => (
+                <>
+                    <Button variant="contained" style={{ width: '10px' }} onClick={() => { console.log(row.id) }}>Edit</Button>
+                </>
+            )
 
-                if (isInEditMode) {
-                    return [
-                        <GridActionsCellItem
-                            icon={<SaveIcon />}
-                            label="Save"
-                            onClick={handleSaveClick(id)}
-                            color="primary"
-                        />,
-                        <GridActionsCellItem
-                            icon={<CancelIcon />}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(id)}
-                            color="inherit"
-                        />,
-                    ];
-                }
-
-                return [
-                    <GridActionsCellItem
-                        icon={<EditIcon />}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
-                    <GridActionsCellItem
-                        icon={<DeleteIcon />}
-                        label="Delete"
-                        onClick={handleDeleteClick(id)}
-                        color="inherit"
-                    />,
-                ];
-            },
-        },
+        }
     ];
-
-    const mutateRow = useFakeMutation();
-    const noButtonRef = React.useRef(null);
-    const [promiseArguments, setPromiseArguments] = React.useState(null);
-
-    const [snackbar, setSnackbar] = React.useState(null);
-
-    const handleCloseSnackbar = () => setSnackbar(null);
-
-    const processRowUpdate = React.useCallback(
-        (newRow, oldRow) =>
-            new Promise((resolve, reject) => {
-                const mutation = computeMutation(newRow, oldRow);
-                if (mutation) {
-                    // Save the arguments to resolve or reject the promise later
-                    setPromiseArguments({ resolve, reject, newRow, oldRow });
-                } else {
-                    resolve(oldRow); // Nothing was changed
-                }
-            }),
-        [],
-    );
-
-    const handleNo = () => {
-        const { oldRow, resolve } = promiseArguments;
-        resolve(oldRow); // Resolve with the old row to not update the internal state
-        setPromiseArguments(null);
-    };
-
-    const handleYes = async () => {
-        const { newRow, oldRow, reject, resolve } = promiseArguments;
-
-        try {
-            // Make the HTTP request to save in the backend
-            const response = await mutateRow(newRow);
-            setSnackbar({ children: 'User successfully saved', severity: 'success' });
-            resolve(response);
-            setPromiseArguments(null);
-        } catch (error) {
-            setSnackbar({ children: "Name can't be empty", severity: 'error' });
-            reject(oldRow);
-            setPromiseArguments(null);
-        }
-    };
-
-    const handleEntered = () => {
-        // The `autoFocus` is not used because, if used, the same Enter that saves
-        // the cell triggers "No". Instead, we manually focus the "No" button once
-        // the dialog is fully open.
-        // noButtonRef.current?.focus();
-    };
-
-    const renderConfirmDialog = () => {
-        if (!promiseArguments) {
-            return null;
-        }
-
-        const { newRow, oldRow } = promiseArguments;
-        const mutation = computeMutation(newRow, oldRow);
-
-        return (
-            <Dialog
-                maxWidth="xs"
-                TransitionProps={{ onEntered: handleEntered }}
-                open={!!promiseArguments}
-            >
-                <DialogTitle>Are you sure?</DialogTitle>
-                <DialogContent dividers>
-                    {`Pressing 'Yes' will change ${mutation}.`}
-                </DialogContent>
-                <DialogActions>
-                    <Button ref={noButtonRef} onClick={handleNo}>
-                        No
-                    </Button>
-                    <Button onClick={handleYes}>Yes</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    };
-
-
     return (
         <Box
             sx={{
-                height: 500,
+                height: "100%",
                 width: '100%',
-                // '& .actions': {
-                //     color: 'text.secondary',
-                // },
-                // '& .textPrimary': {
-                //     color: 'text.primary',
-                // },
+                paddingRight: 0.5,
             }}
         >
             <h2>Suppliers:</h2>
-            {renderConfirmDialog()}
+            <Paper sx={{ overflow: 'hidden', width: '100%', paddingLeft: 0.1, paddingRight: 0.1, elevation: 24 }}>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: "100%" }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow sx={{ width: '100%' }}>
+                                {columns && columns.map((column, index) => (
+                                    <StyledTableCell
+                                        key={index}
+                                        // align={column.align}
+                                        style={{ Width: column.width }}
+                                    >
+                                        {column.headerName}
+                                    </StyledTableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows && rows.map(
+                                (row, index) => (
+                                    <StyledTableRow hover key={index}>
+                                        {columns && columns.map((column, index) => {
+                                            const value = row[column.field];
+                                            return (
+                                                <>
+                                                    <StyledTableCell key={index} onClick={handleToggle} >
+                                                        {value}
+                                                    </StyledTableCell>
 
-            <DataGridPro
-                rows={rows}
-                columns={columns}
-                apiRef={apiRef}
-                editMode="row"
-                onRowEditStart={handleRowEditStart}
-                onRowEditStop={handleRowEditStop}
-                processRowUpdate={processRowUpdate}
-                // components={{
-                //     Toolbar: EditToolbar,
-                // }}
-                // componentsProps={{
-                //     toolbar: { apiRef },
-                // }}
-                experimentalFeatures={{ newEditingApi: true }}
-            />
-            {!!snackbar && (
-                <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
-                    <Alert {...snackbar} onClose={handleCloseSnackbar} />
-                </Snackbar>
-            )}
+                                                </>
+                                            )
+                                        })}
+                                    </StyledTableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+
+
+
         </Box>
     );
 }

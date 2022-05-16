@@ -59,7 +59,7 @@ const SupplierForm = props => {
     const goBackHandler = () => {
         navigate("/Registration")
     }
-
+    
     let a = { "fullname" : state.fullname, "username" :  state.username, "email" :  state.email }
     console.log(JSON.stringify(a), typeof(a))
     const [values, setValues] = React.useState({

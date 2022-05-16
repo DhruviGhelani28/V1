@@ -149,7 +149,7 @@ const About = (props) => {
                 </div> */}
             <Box sx={{ width: '100%', height: '23%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} className={classes.carousle}>
                 <Carousel
-
+                    
                     // IndicatorIcon={<Home />}
                     indicatorIconButtonProps={{
                         style: {
@@ -168,23 +168,22 @@ const About = (props) => {
                         }
 
                     }}
+                    navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                        style: {
+                            backgroundColor: 'white',
+                            color: 'black',
+                            visibility: 'true',
+                        }
+                    }} 
 
                 >
                     {
                         itemData.map((item, i) =>
-                            <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, display: 'flex', elevation: 24 }} key={i}>
+                            <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, elevation: 24 }} key={i} className={classes.carouslemain}>
                                 <CardMedia
-
                                     src={item.img}
                                     component="img"
                                     alt={item.title}
-                                    //autoPlay
-                                    loop
-                                    playing='true'
-                                    muted
-                                // loading="lazy"
-
-                                // width='100%'
                                 />
                             </Card>
                         )

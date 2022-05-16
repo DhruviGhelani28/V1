@@ -13,14 +13,37 @@ const FooterContainer = styled.div`
 //   background: #6cf;
 
 `;
+
+const Footer1 = styled('footer', { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open, drawerwidth }) => ({
+        // flexGrow: 1,
+        // paddingLeft: 10,
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        ...(open && {
+            marginLeft: drawerwidth,
+            width: `calc(100% - ${drawerwidth}px)`,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            // marginLeft: 0,
+        }),
+    }),
+);
+
+
 const Footer = (props) => {
     return (
         <React.Fragment>
 
             {/* // <FooterContainer > */}
-            <footer style={{ width: '100%', height: 0, marginLeft: 0.1, marginRight: 0.1, bottom: 0, verticalAlign: 'bottom', padding: 0, marginBottom: '5px' }}>
+            <Footer1 position='fixed' style={{ bottom: 0, verticalAlign: 'bottom', paddingLeft: 0, marginBottom: '5px' }} open={props.open} drawerwidth={props.drawerwidth} theme={props.theme}>
 
-                <Box sx={{ background: 'linear-gradient(45deg,#434344 5%,#575758 20%)', width: '100%', height: 'fit-content', color: 'white', padding: 0 }}>
+                <Box sx={{ background: 'linear-gradient(45deg,#434344 5%,#575758 20%)', px: { xs: 1, sm: 6 }, py: { xs: 3, sm: 6 }, width: '100%', height: 'fit-content', color: 'white', padding: 0 }}>
                     <Container >
                         <Grid container spacing={5}>
                             <Grid item xs={12} sm={4} >
@@ -60,7 +83,7 @@ const Footer = (props) => {
 
                     </Container>
                 </Box>
-            </footer>
+            </Footer1>
             {/* // </FooterContainer>  */}
         </React.Fragment>
     );

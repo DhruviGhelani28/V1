@@ -188,7 +188,6 @@ const AppBarHeader = props => {
                             ...(props.open && { display: 'none' }),
                         }}
                         aria-haspopup="true"
-                        
                         onClick={props.onOpen}
                     >
                         <MenuIcon />

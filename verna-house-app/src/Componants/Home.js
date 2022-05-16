@@ -55,20 +55,24 @@ const useStyles = makeStyles({
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open, drawerwidth }) => ({
-        flexGrow: 1,
-        padding: 0,
+        // flexGrow: 1,
+        paddingLeft: '50px',
+        // paddingRight: 5,
+        marginTop: 8.1,
+        marginLeft:20,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: drawerwidth,
-        width: `calc(100% - ${drawerwidth}px)`,
         ...(open && {
+            paddingLeft: '10px',
+            marginLeft: drawerwidth,
+            width: `calc(100% - ${drawerwidth}px)`,
             transition: theme.transitions.create(['width', 'margin'], {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-            marginLeft: 0,
+            // marginLeft: 0,
         }),
     }),
 );
@@ -82,7 +86,7 @@ const Home = props => {
 
     const data = JSON.parse(localStorage.getItem("userInfo"))
 
-    console.log("data::", data['role'])
+    // console.log("data::", data['role'])
     const handleDrawerOpen = () => {
         if (data !== null) {
             setOpen(true);
@@ -103,21 +107,19 @@ const Home = props => {
             setIsLoggedIn(true)
             setRole(data['role'])
         }
-    }, [])
+    }, [data])
 
 
-    console.log('role::', role != 'Admin')
+    console.log('role::', role !== 'Admin')
     return (
 
         <React.Fragment>
-            <Box sx={{ display: 'flex' , WebkitFlexDirection: 'column'}} >
+            <Box sx={{}}>
                 <CssBaseline />
 
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
-                {/* <Main1/> */}
-
-                {role === '' &&
-                    <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }} className={classes1.homeback} >
+                {role === ' ' &&
+                    <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1, display: 'flex' }} className={classes1.homeback} >
 
                         <Routes>
                             <Route path="/" element={<Main1 />} exact></Route>
@@ -132,10 +134,10 @@ const Home = props => {
                         </Routes>
                     </Main>
                 }
-                {role !== '' &&
+                {role !== ' ' &&
                     <>
                         <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
-                        <Main className={classes1.homeback} sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1 }}>
+                        <Main className={classes1.homeback} sx={{ marginTop: 8.1, marginRight: 0 }} drawerwidth={drawerWidth} open={open} theme={theme}>
 
                             <Routes>
                                 <Route path="/" element={<Main1 />} exact></Route>
@@ -150,7 +152,7 @@ const Home = props => {
                                     <Route path="/Customers" element={<Customers />} exact />}
                                 {role !== "Worker" &&
                                     <Route path="/Workers" element={<Workers />} exact />}
-                                {role != "Agency" &&
+                                {role !== "Agency" &&
                                     <Route path="/Agencies" element={<Agencies />} exact />}
                                 {role === "Supplier" && <>
                                     <Route path="/Garments" element={<Garments />} exact />
@@ -186,7 +188,7 @@ const Home = props => {
                             </Routes>
                         </Main>
                     </>}
-                <Footer/>
+                <Footer sx={{ display: 'flex' }} drawerwidth={drawerWidth} open={open} theme={theme} />
             </Box>
         </React.Fragment >
 
