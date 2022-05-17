@@ -46,16 +46,16 @@ urlpatterns = [
     path('Users/Suppliers/<str:pk>/Tasks/<str:pk1>/', SupplierView.getSupplierTask),
     path('Users/Agencies/<str:pk>/Tasks/<str:pk1>/', AgencyView.getAgencyTask),
     path('Users/Customers/<str:pk>/Tasks/<str:pk1>/', CustomerView.getCustomerTask),
-    path('Users/Workers/<str:pk>/Tasks/<str:pk1>/', WorkerView.getWorkerTask),
+    # path('Users/Workers/<str:pk>/Tasks/<str:pk1>/', WorkerView.getWorkerTask),
 
     path('Users/Suppliers/<str:pk>/Bills/', SupplierView.getSupplierBills),
     path('Users/Agencies/<str:pk>/Bills/', AgencyView.getAgencyBills),
     path('Users/Customers/<str:pk>/Bills/', CustomerView.getCustomerBills),
-    path('Users/Workers/<str:pk>/Bills/', WorkerView.getWorkerBills),
+    # path('Users/Workers/<str:pk>/Bills/', WorkerView.getWorkerBills),
 
     path('Users/Suppliers/<str:pk>/Bills/<str:pk1>/', SupplierView.getSupplierBill),
     path('Users/Agencies/<str:pk>/Bills/<str:pk1>/', AgencyView.getAgencyBill),
     path('Users/Customers/<str:pk>/Bills/<str:pk1>/', CustomerView.getCustomerBill),
-    path('Users/Workers/<str:pk>/Bills/<str:pk1>/', WorkerView.getWorkerBill),
+    # path('Users/Workers/<str:pk>/Bills/<str:pk1>/', WorkerView.getWorkerBill),
 
 ]

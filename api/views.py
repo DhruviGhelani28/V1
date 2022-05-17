@@ -539,16 +539,19 @@ class WorkerView(APIView):
             return Response(serializer.data)
 
     @api_view(['GET'])
-    @permission_classes([IsAuthenticated, IsAdminUser])
+    @permission_classes([IsAuthenticated])
     def getWorker(request, pk):
         user = request.user.profile
         if user.role != "Worker":
             worker = Worker.objects.get(id=pk)
             serializer = WorkerProfileSerializer(worker, many=False)
+
+            print("\n\n\n get worker call:---", worker, "\n\nid:---", pk)
             return Response(serializer.data)
+        
 
     @api_view(['GET'])
-    @permission_classes([IsAuthenticated, IsAdminUser])
+    @permission_classes([IsAuthenticated])
     def getWorkerTasks(request, pk):
         user = request.user
         worker = Worker.objects.get(id=pk)
@@ -556,36 +559,36 @@ class WorkerView(APIView):
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
 
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated])
-    def getWorkerBills(request, pk):
-        user = request.user
-        worker = Worker.objects.get(id=pk)
-        bills = Billing.objects.filter(owner = worker)
-        serializer = BillingSerializer(bills, many=True)
-        return Response(serializer.data)
+    # @api_view(['GET'])
+    # @permission_classes([IsAuthenticated])
+    # def getWorkerBills(request, pk):
+    #     user = request.user
+    #     worker = Worker.objects.get(id=pk)
+    #     bills = Billing.objects.filter(owner = worker)
+    #     serializer = BillingSerializer(bills, many=True)
+    #     return Response(serializer.data)
 
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated, IsAdminUser])
-    def getWorkerTask(request, pk, pk1):
-        user = request.user
-        worker = Worker.objects.get(id=pk)
-        task = Task.objects.get(id=pk1, owner=worker)
-        serializer = TaskSerializer(task, many=True)
-        return Response(serializer.data)
+    # @api_view(['GET'])
+    # @permission_classes([IsAuthenticated, IsAdminUser])
+    # def getWorkerTask(request, pk, pk1):
+    #     user = request.user
+    #     worker = Worker.objects.get(id=pk)
+    #     task = Task.objects.get(id=pk1, owner=worker)
+    #     serializer = TaskSerializer(task, many=True)
+    #     return Response(serializer.data)
 
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated, IsAdminUser])
-    def getWorkerBill(request, pk, pk1):
-        user = request.user
-        worker = Worker.objects.get(id=pk)
-        bill = Billing.objects.get(id=pk1, owner=worker)
-        serializer = BillingSerializer(bill, many=True)
-        return Response(serializer.data)
+    # @api_view(['GET'])
+    # @permission_classes([IsAuthenticated, IsAdminUser])
+    # def getWorkerBill(request, pk, pk1):
+    #     user = request.user
+    #     worker = Worker.objects.get(id=pk)
+    #     bill = Billing.objects.get(id=pk1, owner=worker)
+    #     serializer = BillingSerializer(bill, many=True)
+    #     return Response(serializer.data)
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    """" This is for model viewse calss of taks """
+    """" This is for model viewse class of tasks """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]

@@ -13,14 +13,14 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InputAdornment from '@mui/material/InputAdornment';
 import { makeStyles } from "@material-ui/core/styles";
 import { getRegisterData } from '../../Store/Register/RegisterAction';
-// import { getSuppliers } from '../../Store/Supplier/SupplierAction';
+import { getWorker } from '../../Store/Worker/WorkerAction';
 import UploadButton from '../UploadButton';
 // import PhotoCamera from '@mui/icons-material/PhotoCamera';
 // import userEvent from '@testing-library/user-event';
@@ -49,49 +49,50 @@ const useStyles = makeStyles({
     }
 });
 
-const WorkerForm = props => {
+const EditProfileWorker = props => {
     const navigate = useNavigate()
-    const state = useLocation().state
-    const dispatch = useDispatch()
-    console.log(state)
-    const classes1 = useStyles();
-    const goBackHandler = () => {
-        navigate("/Registration")
-    }
 
-    // const a = [state.fullname, state.username, state.email]
-    const [values, setValues] = React.useState({
-        mobileNo: "",
-        shortIntro: '',
-        address: '',
-        profileImage: '',
-        location: '',
-        // scocialWebsite: "",
-    });
+    const dispatch = useDispatch()
+
+    // dispatch(getWorker({ data: (props.workerId) }))
+    // dispatch(getWorker({ id: props.workerId }))
+    // useEffect((props) => {
+    //     dispatch(getWorker({ id: props.workerId }))
+    // },[])
+    console.log("workerId : ---", (props.workerId))
+    const worker = useSelector((state) => state.worker)
+    console.log(worker.getWorker)
+    const data = worker.getWorker
+
+    const classes1 = useStyles();
+    const [values, setValues] = React.useState(data);
+    console.log(values)
 
     const handleChange = (prop) => (event) => {
 
         console.log(prop)
         setValues({ ...values, [prop]: event.target.value });
-        if (prop == "profileImage") {
+        if (prop == "profile_image") {
             console.log(event.target.files[0])
-            setValues({ ...values, profileImage: event.target.files[0].name });
+            setValues({ ...values, profile_image: event.target.files[0].name });
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
 
-        // const data1 = a.push(data)
         console.log(values)
-        const data1 = { ...state, ...values }
+        const data1 = { ...values }
         // console.log(JSON.stringify(data, null, 2));
         // console.log(values, typeof(values))
         // console.log(data1)
         dispatch(getRegisterData({ data: data1 }));
-        console.log("user registered worker created")
-        navigate("/Login")
+        console.log("worker edited successfully")
+        navigate("/Workers")
     }
-
+    useEffect(() => {
+        const body = document.querySelector("body");
+        body.style.overflow = props.open ? "hidden" : "auto";
+    }, [props.open])
     return (
         <Container align="center">
             <Card
@@ -112,7 +113,7 @@ const WorkerForm = props => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
+                    <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </CardActions>
@@ -121,14 +122,65 @@ const WorkerForm = props => {
 
                     <div className={classes1.root5}>
                         <TextField
+                            sx={{ marginTop: 2 }}
+                            className={classes1.allfield}
+                            required
+
+                            id="fullname"
+                            label="Enter Your Name"
+                            placeholder="xyz abc"
+                            inputprops={{ tabIndex: "1" }}
+                            {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
+                            error={!!errors?.fullname}
+                            helpertext={errors?.fullname ? errors.fullname.message : null}
+                            value={values['name'] ? values['name'] : ''}
+                            onChange={handleChange('name')}
+                        />
+
+                        <TextField
+                            sx={{ marginTop: 1 }}
+                            className={classes1.allfield}
+                            required
+
+                            id="email"
+                            label="Enter Your Email Address"
+                            placeholder="xyz@abc.com"
+                            inputprops={{ tabIndex: "2" }}
+                            {...register('email', {
+                                required: true, pattern: {
+                                    value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i,
+                                    message: "Invalid Email Address",
+                                },
+                            })}
+                            error={!!errors?.email}
+                            helpertext={errors?.email ? errors.email.message : null}
+                            value={values.email}
+                            onChange={handleChange('email')}
+                        />
+                        <TextField
+                            sx={{ marginTop: 1 }}
+                            className={classes1.allfield}
+                            required
+
+                            id="username"
+                            label="Enter Your UserName"
+                            placeholder="xyz_abc123"
+                            inputprops={{ tabIndex: "3" }}
+                            {...register('username', { required: true, maxLength: 20, minLength: 4 })}
+                            error={!!errors?.username}
+                            helpertext={errors?.username ? errors.username.message : null}
+                            value={values.username}
+                            onChange={handleChange('username')}
+                        />
+                        {/* <TextField
                             disabled
 
                             id="rol"
                             label="Role"
-                            defaultValue={state.role}
+                            value={worker.getWorker.role}
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                        />
+                        /> */}
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
@@ -154,8 +206,8 @@ const WorkerForm = props => {
                             {...register('shortIntro', { required: true, maxLength: 50 })}
                             error={!!errors?.shortIntro}
                             helpertext={errors?.shortIntro ? errors.shortIntro.message : null}
-                            value={values.shortIntro}
-                            onChange={handleChange('shortIntro')}
+                            value={values.short_intro}
+                            onChange={handleChange('short_intro')}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -184,8 +236,8 @@ const WorkerForm = props => {
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
                             helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            value={values.profileImage}
-                            onChange={handleChange('profileImage')}>
+                            value={values.profile_image}
+                            onChange={handleChange('profile_image')}>
                         </TextField>
                         <TextField
                             className={classes1.allfield}
@@ -203,20 +255,20 @@ const WorkerForm = props => {
                             value={values.location}
                             onChange={handleChange('location')}
                         />
-                        {/* <TextField
+                        <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            multiline
-                            required
-                            size='medium'
-                            id="socialWebsite"
-                            label="Social Website"
-                            placeholder="http://xyz.com"
-                            onChange={handleChange}
-                            {...register('socialWebsite', { required: false })}
-                            error={!!errors?.socialWebsite}
-                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
-                        /> */}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+
+                            id="workerid"
+                            label="workerid"
+
+                            {...register('workerid', { required: true, maxLength: 10 })}
+                            error={!!errors?.workerid}
+                            helpertext={errors?.workerid ? errors.workerid.message : null}
+                            value={values.worker}
+                            onChange={handleChange('worker')}
+                        />
                         <div className={classes.button}>
                             <Button
                                 variant="contained"
@@ -230,14 +282,14 @@ const WorkerForm = props => {
                                 Submit</Button>
                         </div>
                     </div>
-                    {/* </Box> */}
+
                 </CardContent>
             </Card>
         </Container>
     );
 
 };
-export default WorkerForm;
+export default EditProfileWorker;
 
 {/* <TextField
                                 disabled

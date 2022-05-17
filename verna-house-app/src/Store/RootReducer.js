@@ -1,5 +1,5 @@
 import { SupplierReducer, SupplierCreateReducer } from "./Supplier/SupplierReducer";
-import WorkerReducer from "./Worker/WorkerReducer";
+import { getWorkerReducer , editWorkerReducer} from "./Worker/WorkerReducer";
 import AgencyReducer from "./Agency/AgencyReducer";
 import CustomerReducer from "./Customer/CustomerReducer";
 import { TaskReducer, AddTaskReducer } from "./Task/TaskReducer";
@@ -15,17 +15,26 @@ const RootReducers = combineReducers(
         userLogin: userLoginReducer,
         // users : usersReducer,
         suppliers: SupplierReducer,
-        supplierData : SupplierCreateReducer,
-        workers: WorkerReducer,
+        supplierData: SupplierCreateReducer,
+        
+        workers: getWorkerReducer,
+        worker: editWorkerReducer,
+        
         agencies: AgencyReducer,
+
         customers: CustomerReducer,
+
         tasks: TaskReducer,
         addTask: AddTaskReducer,
+
         gadgets: GadgetReducer,
         addGadget: AddGadgetReducer,
+
         garments: GarmentReducer,
         addGarment: AddGarmentReducer,
+
         photoposters: PhotoPosterReducer,
+
         models: ModelReducer,
     }
 )

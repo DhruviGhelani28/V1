@@ -1,4 +1,3 @@
-import { List } from "@mui/material";
 
 export const UserActionType = {
     USER_LOGIN_REQUEST: "USER_LOGIN_REQUEST",
@@ -52,4 +51,7 @@ export const UserActionType = {
 
     LIST_MODEL_SUCCESS: "LIST_MODEL_SUCCESS",
     LIST_MODEL_FAIL: "LIST_MODEL_FAIL",
+
+    GET_WORKER_SUCCESS: 'GET_WORKER_SUCCESS',
+    GET_WORKER_FAIL: 'GET_WORKER_FAIL',
 }

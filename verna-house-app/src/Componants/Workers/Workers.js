@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import Paper from '@mui/material/Paper';
-
+import { Backdrop, Grid } from "@mui/material";
 import { getWorkers } from "../../Store/Worker/WorkerAction";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
@@ -20,153 +20,67 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { DataGrid } from '@mui/x-data-grid';
-
-
+import { Modal } from "@mui/material";
+import { CardMedia, CardContent } from "@mui/material";
 import Alert from '@mui/material/Alert';
-
-import {
-    useGridApiRef,
-    DataGridPro,
-    GridToolbarContainer,
-    GridActionsCellItem,
-} from '@mui/x-data-grid-pro';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import EditProfileWorker from "../Profile/EditProfileWorker";
+import { getWorker } from "../../Store/Worker/WorkerAction";
 import { IconButton } from "@mui/material";
-
-function isOverflown(element) {
-    return (
-        element.scrollHeight > element.clientHeight ||
-        element.scrollWidth > element.clientWidth
-    );
-}
-
-const GridCellExpand = React.memo(function GridCellExpand(props) {
-    const { width, value } = props;
-    const wrapper = React.useRef(null);
-    const cellDiv = React.useRef(null);
-    const cellValue = React.useRef(null);
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showFullCell, setShowFullCell] = React.useState(false);
-    const [showPopper, setShowPopper] = React.useState(false);
-
-    const handleMouseEnter = () => {
-        const isCurrentlyOverflown = isOverflown(cellValue.current);
-        setShowPopper(isCurrentlyOverflown);
-        setAnchorEl(cellDiv.current);
-        setShowFullCell(true);
-    };
-
-    const handleMouseLeave = () => {
-        setShowFullCell(false);
-    };
-
-    React.useEffect(() => {
-        if (!showFullCell) {
-            return undefined;
-        }
-
-        function handleKeyDown(nativeEvent) {
-            // IE11, Edge (prior to using Bink?) use 'Esc'
-            if (nativeEvent.key === 'Escape' || nativeEvent.key === 'Esc') {
-                setShowFullCell(false);
-            }
-        }
-
-        document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [setShowFullCell, showFullCell]);
+import TaskForm from "../Tasks/TaskForm";
+import { Navigate } from "react-router-dom";
 
 
-    return (
-        <Box
-            ref={wrapper}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            sx={{
-                alignItems: 'center',
-                lineHeight: '24px',
-                width: 1,
-                height: 1,
-                position: 'relative',
-                display: 'flex',
-            }}
-        >
-            <Box
-                ref={cellDiv}
-                sx={{
-                    height: 1,
-                    width,
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                }}
-            />
-            <Box
-                ref={cellValue}
-                sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-                {value}
-            </Box>
-            {showPopper && (
-                <Popper
-                    open={showFullCell && anchorEl !== null}
-                    anchorEl={anchorEl}
-                    style={{ width, marginLeft: -17 }}
-                >
-                    <Paper
-                        elevation={1}
-                        style={{ minHeight: wrapper.current.offsetHeight - 3 }}
-                    >
-                        <Typography variant="body2" style={{ padding: 8 }}>
-                            {value}
-                        </Typography>
-                    </Paper>
-                </Popper>
-            )}
-        </Box>
-    );
-});
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
 
-GridCellExpand.propTypes = {
-    value: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-};
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
 
-function renderCellExpand(params) {
-    return (
-        <GridCellExpand value={params.value || ''} width={params.colDef.computedWidth} />
-    );
-}
+}));
 
-renderCellExpand.propTypes = {
-    /**
-     * The column of the row that the current cell belongs to.
-     */
-    colDef: PropTypes.object.isRequired,
-    /**
-     * The cell value, but if the column has valueGetter, use getValue.
-     */
-    value: PropTypes.string,
-};
 
 const Workers = props => {
     const dispatch = useDispatch()
     const workers = useSelector((state) => state.workers);
     const { loading, details, error } = workers;
-
+    const data = JSON.parse(localStorage.getItem("userInfo"))
     useEffect(() => {
         dispatch(getWorkers())
     }, [dispatch])
-    // console.log(workers.getWorkers)
+    console.log(workers.getWorkers)
 
-
-    const length = workers.getWorkers.length
+    let role = data['role']
+    // const length = workers.getWorkers.length
 
     const rows = workers.getWorkers
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
 
-   
 
     const handleRowEditStart = (params, event) => {
         event.defaultMuiPrevented = true;
@@ -176,17 +90,21 @@ const Workers = props => {
         event.defaultMuiPrevented = true;
     };
 
-    const handleEditClick = (id) => (event) => {
+    const editHandler = (row) => (event) => {
         event.stopPropagation();
-        // apiRef.current.startRowEditMode({ id });
+        setOpen(true)
+        dispatch(getWorker({ id: row.id }))
+        console.log("edithandler call ")
+       
     };
+   
 
     const handleSaveClick = (id) => async (event) => {
         event.stopPropagation();
         // await apiRef.current.stopRowEditMode({ id });
     };
 
-    const handleDeleteClick = (id) => (event) => {
+    const deleteHandler = (row) => (event) => {
         event.stopPropagation();
         // apiRef.current.updateRows([{ id, _action: 'delete' }]);
     };
@@ -197,7 +115,7 @@ const Workers = props => {
 
         // const row = apiRef.current.getRow(id);
         // if (row.isNew) {
-            // apiRef.current.updateRows([{ id, _action: 'delete' }]);
+        // apiRef.current.updateRows([{ id, _action: 'delete' }]);
         // }
     };
 
@@ -208,110 +126,260 @@ const Workers = props => {
 
     const columns = [
 
-        { field: 'id', headerName: 'ID', width: 120 },
         {
+            field: 'id', headerName: 'ID', width: 150,
+            key: 0,
+            type: 'number'
+        },
+        {
+            key: 1,
             field: 'name',
             headerName: 'Full name',
             description: 'This column has a value getter and is not sortable.',
-            sortable: false,
             width: 160,
+            type: 'string',
             editable: true,
             valueGetter: (params) =>
-                `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+                `${params.row.name}`,
         },
         {
+            key: 2,
             field: 'username',
             headerName: 'UserName',
             width: 120,
+            type: 'string',
             editable: true,
         },
         {
+            key: 3,
             field: 'email',
             headerName: 'Email',
             type: 'string',
             width: 120,
             editable: true,
-            renderCell: renderCellExpand
+
         },
         {
+            key: 4,
             field: 'mobileNo',
             headerName: 'Mobile',
             type: 'number',
             sortable: false,
             width: 120,
             editable: true,
-            // resizable: true
+
         },
         {
+            key: 5,
             field: 'short_intro',
             headerName: 'Short Intro',
             type: 'string',
             width: 120,
             editable: true,
+
         },
         {
+            key: 6,
             field: 'address',
             headerName: 'Address',
             type: 'string',
             width: 120,
-            renderCell: renderCellExpand,
             editable: true,
         },
         {
+            key: 7,
             field: 'profileImage',
             headerName: 'Profile Image',
             type: 'image',
-            width: 120,
+            width: 150,
             editable: true,
-            renderCell: (params) => (<>{console.log(params)} <img src={`http://127.0.0.1:8000${params.row.profile_image
-                }`} style={{ height: 50, width: 120 }} /></>)
+            // renderCell: (params) => (
+            //     <>
+            //         {/* {console.log(params)} */}
+            //         <img
+            //             src={`http://127.0.0.1:8000${params.row.profile_image}`}
+            //             style={{
+            //                 height: 100, width: 100,
+            //                 // transition: "all 0.5s ease",
+            //                 // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+            //             }} />
+
+            //     </>
+            // ),
+            // valueGetter: (params) => (
+            //     <img
+            //         src={`http://127.0.0.1:8000${params.row.profile_image}`}
+            //         style={{
+            //             width: 100,
+            //             // transition: "all 0.5s ease",
+            //             // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+            //         }} />
+            // ),
+
         },
         {
+            key: 8,
             field: 'location',
             headerName: 'Location',
             type: 'string',
-            width: 120,
-            renderCell: renderCellExpand,
+            width: 80,
             editable: true,
         },
         {
-            field: 'social_website',
-            headerName: 'Social_website',
-            type: 'string',
-            width: 120,
-            renderCell: renderCellExpand,
+            key: 9,
+            field: 'worker',
+            headerName: 'Worker Id',
+            type: 'number',
+            width: 150,
             editable: true,
         },
-        {
-            field: "Action",
-            headerName: 'Action',
-            width: 100,
-            renderCell: (row) => (
-                <>
-                    <Button variant="contained" style={{ width: '10px' }} onClick={() => { console.log(row.id) }}>Edit</Button>
-                </>
-            )
-        }
+        // {
+        //     key: 10,
+        //     field: "Action",
+        //     headerName: 'Action',
+        //     width: 200,
+        //     renderCell: (row) => (
+        //     <>
+        //         <EditIcon onClick={editHandler(row)}>  </EditIcon>
+        //         <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
+        //         <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5 }}
+        //             onClick={handleToggle}
+        //         >View Details</Button>
+        //         <Modal
+        //             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        //             open={open}
+        //         >
+        //             {/* <TaskForm onClick={handleClose} open={open} ></TaskForm> */}
+        //         </Modal>
+        //     </>
+        // )
+        // }
     ];
 
-   
+
 
     return (
         <React.Fragment>
-            <Box
-                sx={{
-                    height: 500,
-                    width: '100%',
-                }}
-            >
-                <h2>Workers:</h2>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    editMode="row"
-                />
-            </Box>
-        </React.Fragment>
+            {role === 'Admin' &&
+                <Box
+                    sx={{
+                        height: 300,
+                        width: '100%',
+                    }}
+                >
+                    <h2>Workers:</h2>
+                    {/* <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        editMode="row"
+                    /> */}
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: "100%" }} aria-label="customized table">
+                            <TableHead>
+                                <TableRow sx={{ width: '100%', height: 50 }} key="header">
+                                    {columns && columns.map((column, index) => (
+                                        <StyledTableCell
+                                            key={index}
+                                            style={{ width: column.width }}
+                                        >
+                                            {column.headerName}
+                                        </StyledTableCell>
+                                    ))}
+                                    <StyledTableCell
+                                        key='action'
+                                        sx={{ width: 300 }}
+                                    >
+                                        Actions
+                                    </StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows && rows.map(
+                                    (row, index) => (
+                                        <StyledTableRow hover key={index}>
+                                            {columns && columns.map((column, index) => {
+
+                                                if (column.type === "string" || column.type === "number") {
+                                                    return (
+                                                        <StyledTableCell key={index} style={{ width: column.width }}>
+                                                            {row[column.field]}
+                                                        </StyledTableCell>
+                                                    )
+                                                }
+                                                else {
+                                                    return (
+                                                        <StyledTableCell key={index} style={{ padding: 0.1 }}>
+                                                            <img
+                                                                src={`http://127.0.0.1:8000${row.profile_image}`} style={{ height: 100, width: 100 }} />
+                                                        </StyledTableCell>
+                                                    )
+                                                }
+                                            }
+                                            )}
+                                            <StyledTableCell key={index} sx={{ width: 200 }}>
+
+                                                <EditIcon onClick={editHandler(row)}>  </EditIcon>
+                                                <Backdrop
+                                                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                    open={open}
+                                                >
+                                                    <EditProfileWorker onClick={handleClose} open={open} workerId={row.id}/>
+                                                    
+                                                </Backdrop>
+                                                <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
+                                                <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5, }}
+                                                
+                                                >View Details</Button>
+                                                {/* <Modal
+
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    aria-labelledby="modal-modal-title"
+                                                    aria-describedby="modal-modal-description"
+
+                                                >
+                                                    <TaskForm onClick={handleClose} open={open} ></TaskForm>
+                                                </Modal> */}
+                                            </StyledTableCell>
+                                        </StyledTableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+            }
+            {role !== 'Admin' &&
+                <Paper sx={{ width: '100%', height: '50%', backgroundColor: 'white', color: 'black', padding: 3 }}>
+                    <Grid container spacing={2}>
+                        {workers.getWorkers && workers.getWorkers.map((worker, index) => {
+                            return (
+                                <Grid item sx={2} key={index}>
+                                    <Paper sx={{ height: "15%", width: '15%', padding: 1, backgroundColor: 'white', color: 'black', borderRadius: '1px solid black' }} key={worker.id}>
+                                        <CardMedia
+                                            component="img"
+                                            alt="green iguana"
+                                            height="250"
+                                            image={`http://127.0.0.1:8000${worker.profile_image}`}
+
+                                        />
+                                        <CardContent sx={{ marginTop: 0, marginBottom: 0, paddingBottom: 0 }}>
+                                            <Typography gutterBottom variant="h6" component="div" color="text.primary">
+                                                Name:   {worker.name}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.primary">
+                                                Short_Intro:    {worker.shortIntro}
+                                            </Typography>
+                                        </CardContent>
+                                    </Paper>
+                                </Grid>
+                            )
+                        }
+                        )}
+
+                    </Grid>
+                </Paper>
+            }
+        </React.Fragment >
     );
 };
 export default Workers;
@@ -393,4 +461,123 @@ export default Workers;
 //             </DialogActions>
 //         </Dialog>
 //     );
+// };
+
+// function isOverflown(element) {
+//     return (
+//         element.scrollHeight > element.clientHeight ||
+//         element.scrollWidth > element.clientWidth
+//     );
+// }
+
+// const GridCellExpand = React.memo(function GridCellExpand(props) {
+//     const { width, value } = props;
+//     const wrapper = React.useRef(null);
+//     const cellDiv = React.useRef(null);
+//     const cellValue = React.useRef(null);
+//     const [anchorEl, setAnchorEl] = React.useState(null);
+//     const [showFullCell, setShowFullCell] = React.useState(false);
+//     const [showPopper, setShowPopper] = React.useState(false);
+
+//     const handleMouseEnter = () => {
+//         const isCurrentlyOverflown = isOverflown(cellValue.current);
+//         setShowPopper(isCurrentlyOverflown);
+//         setAnchorEl(cellDiv.current);
+//         setShowFullCell(true);
+//     };
+
+//     const handleMouseLeave = () => {
+//         setShowFullCell(false);
+//     };
+
+//     React.useEffect(() => {
+//         if (!showFullCell) {
+//             return undefined;
+//         }
+
+//         function handleKeyDown(nativeEvent) {
+//             // IE11, Edge (prior to using Bink?) use 'Esc'
+//             if (nativeEvent.key === 'Escape' || nativeEvent.key === 'Esc') {
+//                 setShowFullCell(false);
+//             }
+//         }
+
+//         document.addEventListener('keydown', handleKeyDown);
+
+//         return () => {
+//             document.removeEventListener('keydown', handleKeyDown);
+//         };
+//     }, [setShowFullCell, showFullCell]);
+
+
+//     return (
+//         <Box
+//             ref={wrapper}
+//             onMouseEnter={handleMouseEnter}
+//             onMouseLeave={handleMouseLeave}
+//             sx={{
+//                 alignItems: 'center',
+//                 lineHeight: '24px',
+//                 width: 1,
+//                 height: 1,
+//                 position: 'relative',
+//                 display: 'flex',
+//             }}
+//         >
+//             <Box
+//                 ref={cellDiv}
+//                 sx={{
+//                     height: 1,
+//                     width,
+//                     display: 'block',
+//                     position: 'absolute',
+//                     top: 0,
+//                 }}
+//             />
+//             <Box
+//                 ref={cellValue}
+//                 sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+//             >
+//                 {value}
+//             </Box>
+//             {showPopper && (
+//                 <Popper
+//                     open={showFullCell && anchorEl !== null}
+//                     anchorEl={anchorEl}
+//                     style={{ width, marginLeft: -17 }}
+//                 >
+//                     <Paper
+//                         elevation={1}
+//                         style={{ minHeight: wrapper.current.offsetHeight - 3 }}
+//                     >
+//                         <Typography variant="body2" style={{ padding: 8 }}>
+//                             {value}
+//                         </Typography>
+//                     </Paper>
+//                 </Popper>
+//             )}
+//         </Box>
+//     );
+// });
+
+// GridCellExpand.propTypes = {
+//     value: PropTypes.string.isRequired,
+//     width: PropTypes.number.isRequired,
+// };
+
+// function renderCellExpand(params) {
+//     return (
+//         <GridCellExpand value={params.value || ''} width={params.colDef.computedWidth} />
+//     );
+// }
+
+// renderCellExpand.propTypes = {
+//     /**
+//      * The column of the row that the current cell belongs to.
+//      */
+//     colDef: PropTypes.object.isRequired,
+//     /**
+//      * The cell value, but if the column has valueGetter, use getValue.
+//      */
+//     value: PropTypes.string,
 // };
