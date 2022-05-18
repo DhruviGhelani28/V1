@@ -40,10 +40,6 @@ import Tasks from "./Tasks/Tasks";
 import Footer from "./Footer/Footer";
 import { Directions } from "@mui/icons-material";
 
-
-
-
-
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
@@ -59,7 +55,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         paddingLeft: '50px',
         // paddingRight: 5,
         marginTop: 8.1,
-        marginLeft:20,
+        marginLeft: 20,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -103,14 +99,14 @@ const Home = props => {
 
     useEffect(() => {
         if (data !== null) {
-            console.log(isLoggedIn, role)
             setIsLoggedIn(true)
             setRole(data['role'])
+            console.log(isLoggedIn, role)
         }
     }, [data])
 
 
-    console.log('role::', role !== 'Admin')
+    // console.log('role::', role !== 'Admin')
     return (
 
         <React.Fragment>
@@ -119,7 +115,7 @@ const Home = props => {
 
                 <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
                 {role === ' ' &&
-                    <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1, display: 'flex' }} className={classes1.homeback} >
+                    <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1, display: 'flex', marginLeft: 0.1 }} className={classes1.homeback} >
 
                         <Routes>
                             <Route path="/" element={<Main1 />} exact></Route>

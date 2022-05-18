@@ -1,4 +1,4 @@
-import { GET_WORKERS_DATA, GET_WORKERS_FAIL } from "../Worker/WorkerAction";
+
 import { UserActionType } from '../Constants/UserActionType';
 
 const initialState = {
@@ -8,9 +8,9 @@ const initialState = {
 
 export const getWorkerReducer = (state = initialState.getWorkers, action) => {
     switch (action.type) {
-        case GET_WORKERS_DATA:
+        case UserActionType.GET_WORKERS_DATA:
             return { getWorkers: action.workers }
-        case GET_WORKERS_FAIL:
+        case UserActionType.GET_WORKERS_FAIL:
             return { getWorkers: action.workers }
         default: return state;
     }

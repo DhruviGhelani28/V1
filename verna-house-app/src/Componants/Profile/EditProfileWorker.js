@@ -51,14 +51,8 @@ const useStyles = makeStyles({
 
 const EditProfileWorker = props => {
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
-
-    // dispatch(getWorker({ data: (props.workerId) }))
-    // dispatch(getWorker({ id: props.workerId }))
-    // useEffect((props) => {
-    //     dispatch(getWorker({ id: props.workerId }))
-    // },[])
+    
     console.log("workerId : ---", (props.workerId))
     const worker = useSelector((state) => state.worker)
     console.log(worker.getWorker)

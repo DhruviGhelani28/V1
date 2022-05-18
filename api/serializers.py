@@ -136,20 +136,20 @@ class SupplierProfileSerializer(serializers.ModelSerializer):
         model = Supplier
         fields = '__all__'
 
-    def create(self, validated_data):
-        supplierProfile = Supplier.objects.create(
-            name = validated_data['name'],
-            email = validated_data['email'],
-            username = validated_data['username'],
-            # role = validated_data['role'],
-            mobileNo = validated_data['mobileNo'],
-            organizationName = validated_data['organizationName'],
-            organizationAddress = validated_data['organizationAddress'],
-            profile_image = validated_data['profile_image'],
-            location = validated_data['location'],
-            social_website = validated_data['social_website'],
-        )
-        return supplierProfile
+    # def create(self, validated_data):
+    #     supplierProfile = Supplier.objects.create(
+    #         name = validated_data['name'],
+    #         email = validated_data['email'],
+    #         username = validated_data['username'],
+    #         # role = validated_data['role'],
+    #         mobileNo = validated_data['mobileNo'],
+    #         organizationName = validated_data['organizationName'],
+    #         organizationAddress = validated_data['organizationAddress'],
+    #         profile_image = validated_data['profile_image'],
+    #         location = validated_data['location'],
+    #         social_website = validated_data['social_website'],
+    #     )
+    #     return supplierProfile
 
 
 class WorkerProfileSerializer(serializers.ModelSerializer):

@@ -58,6 +58,137 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 }));
 
+const columns = [
+
+    {
+        field: 'id', headerName: 'ID', width: 150,
+        key: 0,
+        type: 'number'
+    },
+    {
+        key: 1,
+        field: 'name',
+        headerName: 'Full name',
+        description: 'This column has a value getter and is not sortable.',
+        width: 160,
+        type: 'string',
+        editable: true,
+        valueGetter: (params) =>
+            `${params.row.name}`,
+    },
+    {
+        key: 2,
+        field: 'username',
+        headerName: 'UserName',
+        width: 120,
+        type: 'string',
+        editable: true,
+    },
+    {
+        key: 3,
+        field: 'email',
+        headerName: 'Email',
+        type: 'string',
+        width: 120,
+        editable: true,
+
+    },
+    {
+        key: 4,
+        field: 'mobileNo',
+        headerName: 'Mobile',
+        type: 'number',
+        sortable: false,
+        width: 120,
+        editable: true,
+
+    },
+    {
+        key: 5,
+        field: 'short_intro',
+        headerName: 'Short Intro',
+        type: 'string',
+        width: 120,
+        editable: true,
+
+    },
+    {
+        key: 6,
+        field: 'address',
+        headerName: 'Address',
+        type: 'string',
+        width: 120,
+        editable: true,
+    },
+    {
+        key: 7,
+        field: 'profileImage',
+        headerName: 'Profile Image',
+        type: 'image',
+        width: 150,
+        editable: true,
+        // renderCell: (params) => (
+        //     <>
+        //         {/* {console.log(params)} */}
+        //         <img
+        //             src={`http://127.0.0.1:8000${params.row.profile_image}`}
+        //             style={{
+        //                 height: 100, width: 100,
+        //                 // transition: "all 0.5s ease",
+        //                 // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+        //             }} />
+
+        //     </>
+        // ),
+        // valueGetter: (params) => (
+        //     <img
+        //         src={`http://127.0.0.1:8000${params.row.profile_image}`}
+        //         style={{
+        //             width: 100,
+        //             // transition: "all 0.5s ease",
+        //             // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
+        //         }} />
+        // ),
+
+    },
+    {
+        key: 8,
+        field: 'location',
+        headerName: 'Location',
+        type: 'string',
+        width: 80,
+        editable: true,
+    },
+    {
+        key: 9,
+        field: 'worker',
+        headerName: 'Worker Id',
+        type: 'number',
+        width: 150,
+        editable: true,
+    },
+    // {
+    //     key: 10,
+    //     field: "Action",
+    //     headerName: 'Action',
+    //     width: 200,
+    //     renderCell: (row) => (
+    //     <>
+    //         <EditIcon onClick={editHandler(row)}>  </EditIcon>
+    //         <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
+    //         <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5 }}
+    //             onClick={handleToggle}
+    //         >View Details</Button>
+    //         <Modal
+    //             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    //             open={open}
+    //         >
+    //             {/* <TaskForm onClick={handleClose} open={open} ></TaskForm> */}
+    //         </Modal>
+    //     </>
+    // )
+    // }
+];
 
 const Workers = props => {
     const dispatch = useDispatch()
@@ -95,9 +226,9 @@ const Workers = props => {
         setOpen(true)
         dispatch(getWorker({ id: row.id }))
         console.log("edithandler call ")
-       
+
     };
-   
+
 
     const handleSaveClick = (id) => async (event) => {
         event.stopPropagation();
@@ -122,141 +253,6 @@ const Workers = props => {
     // const processRowUpdate = async (newRow) => {
     //     return { ...newRow, isNew: false };
     // };
-
-
-    const columns = [
-
-        {
-            field: 'id', headerName: 'ID', width: 150,
-            key: 0,
-            type: 'number'
-        },
-        {
-            key: 1,
-            field: 'name',
-            headerName: 'Full name',
-            description: 'This column has a value getter and is not sortable.',
-            width: 160,
-            type: 'string',
-            editable: true,
-            valueGetter: (params) =>
-                `${params.row.name}`,
-        },
-        {
-            key: 2,
-            field: 'username',
-            headerName: 'UserName',
-            width: 120,
-            type: 'string',
-            editable: true,
-        },
-        {
-            key: 3,
-            field: 'email',
-            headerName: 'Email',
-            type: 'string',
-            width: 120,
-            editable: true,
-
-        },
-        {
-            key: 4,
-            field: 'mobileNo',
-            headerName: 'Mobile',
-            type: 'number',
-            sortable: false,
-            width: 120,
-            editable: true,
-
-        },
-        {
-            key: 5,
-            field: 'short_intro',
-            headerName: 'Short Intro',
-            type: 'string',
-            width: 120,
-            editable: true,
-
-        },
-        {
-            key: 6,
-            field: 'address',
-            headerName: 'Address',
-            type: 'string',
-            width: 120,
-            editable: true,
-        },
-        {
-            key: 7,
-            field: 'profileImage',
-            headerName: 'Profile Image',
-            type: 'image',
-            width: 150,
-            editable: true,
-            // renderCell: (params) => (
-            //     <>
-            //         {/* {console.log(params)} */}
-            //         <img
-            //             src={`http://127.0.0.1:8000${params.row.profile_image}`}
-            //             style={{
-            //                 height: 100, width: 100,
-            //                 // transition: "all 0.5s ease",
-            //                 // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
-            //             }} />
-
-            //     </>
-            // ),
-            // valueGetter: (params) => (
-            //     <img
-            //         src={`http://127.0.0.1:8000${params.row.profile_image}`}
-            //         style={{
-            //             width: 100,
-            //             // transition: "all 0.5s ease",
-            //             // "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
-            //         }} />
-            // ),
-
-        },
-        {
-            key: 8,
-            field: 'location',
-            headerName: 'Location',
-            type: 'string',
-            width: 80,
-            editable: true,
-        },
-        {
-            key: 9,
-            field: 'worker',
-            headerName: 'Worker Id',
-            type: 'number',
-            width: 150,
-            editable: true,
-        },
-        // {
-        //     key: 10,
-        //     field: "Action",
-        //     headerName: 'Action',
-        //     width: 200,
-        //     renderCell: (row) => (
-        //     <>
-        //         <EditIcon onClick={editHandler(row)}>  </EditIcon>
-        //         <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
-        //         <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5 }}
-        //             onClick={handleToggle}
-        //         >View Details</Button>
-        //         <Modal
-        //             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        //             open={open}
-        //         >
-        //             {/* <TaskForm onClick={handleClose} open={open} ></TaskForm> */}
-        //         </Modal>
-        //     </>
-        // )
-        // }
-    ];
-
-
 
     return (
         <React.Fragment>
@@ -323,12 +319,12 @@ const Workers = props => {
                                                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                                                     open={open}
                                                 >
-                                                    <EditProfileWorker onClick={handleClose} open={open} workerId={row.id}/>
-                                                    
+                                                    <EditProfileWorker onClick={handleClose} open={open} workerId={row.id} />
+
                                                 </Backdrop>
                                                 <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
                                                 <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5, }}
-                                                
+
                                                 >View Details</Button>
                                                 {/* <Modal
 

@@ -3,9 +3,7 @@
 import axios from "axios";
 import { UserActionType } from '../Constants/UserActionType';
 
-const baseUrl = "http://localhost:8000";
-export const GET_WORKERS_DATA = "GET_WORKER_DATA ";
-export const GET_WORKERS_FAIL = "GET_WORKER_FAIL";
+const BaseUrl = "http://localhost:8000";
 
 export const getWorkers = () => async (dispatch) => {
     console.log("Workers dispatch");
@@ -18,15 +16,15 @@ export const getWorkers = () => async (dispatch) => {
                 "Authorization": `Bearer ${token}`
             }
         };
-        const response = await axios.get(`${baseUrl}/api/Workers/`, config);
+        const response = await axios.get(`${BaseUrl}/api/Workers/`, config);
         console.log("workers call")
-        dispatch({ type: GET_WORKERS_DATA, workers: response.data });
+        dispatch({ type: UserActionType.GET_WORKERS_DATA, workers: response.data });
 
 
     } catch (error) {
         const worker_error = "You are not authorised person to list the workers.";
         dispatch({
-            type: GET_WORKERS_FAIL, workers: worker_error,
+            type: UserActionType.GET_WORKERS_FAIL, workers: worker_error,
         });
         // console.log("You are not authorised person to list the suppliers.");
     }
@@ -44,10 +42,9 @@ export const getWorker = (id) => async (dispatch, getState) => {
                 "Authorization": `Bearer ${token}`
             }
         };
-        const response = await axios.get(`${baseUrl}/api/Users/Workers/${id['id']}`, config);
+        const response = await axios.get(`${BaseUrl}/api/Users/Workers/${id['id']}`, config);
         console.log("edit worker call---", response.data)
         dispatch({ type: UserActionType.GET_WORKER_SUCCESS, worker: response.data });
-
 
     } catch (error) {
         const worker_error = "You are not authorised person to edit the worker.";

@@ -12,6 +12,55 @@ const theme = createTheme({
     primary: {
       main: "#fff",
     },
+    common: {
+      // black: '#fff',
+      // white: '#000',
+    }
+  },
+  components: {
+    // Name of the component
+    MuiTextField: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some 
+          // multiline: true,
+          border: '0.3px solid white',
+          borderRadius: 4,
+          color: '#fff',
+          varient: 'outlined',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          color: '#fff',
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          multiline: true,
+          color: '#fff',
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          border: '0.3px solid white',
+          borderRadius: 4,
+          color: '#fff',
+          varient: 'outlined',
+          multiline: true,
+        },
+      },
+    },
   },
 });
 
@@ -21,7 +70,7 @@ function App() {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <Router>
-          <Home className={classes.body}/>
+          <Home className={classes.body} />
           {/* <Routes>
             <Route path="/" element={<Home />} exact></Route>
           </Routes> */}

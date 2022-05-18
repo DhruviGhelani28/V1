@@ -356,19 +356,20 @@ class SupplierView(APIView):
         # user = Profile.objects.get( username = user.username)
         print("user:: ", user)
         if user.role != 'Supplier':
-            suppliers = Profile.objects.filter(role="Supplier")
+            suppliers = Supplier.objects.all()
             serializer = SupplierProfileSerializer(suppliers, many=True)
             return Response(serializer.data)
         else:
             return Response({'message' : 'Sorry, You can\'t view Suppliers List because you are not owner nor permitted user'})
 
     @api_view(['GET'])
-    @permission_classes([IsAuthenticated, IsAdminUser])
+    @permission_classes([IsAuthenticated])
     def getSupplier(request, pk):
         user = request.user.profile
         if user.role != "Supplier":
             supplier = Supplier.objects.get(id=pk)
             serializer = SupplierProfileSerializer(supplier, many=False)
+            print("supplier:---", supplier, "pk:--",pk )
             return Response(serializer.data)
 
 
@@ -415,7 +416,7 @@ class AgencyView(APIView):
     def getAgencies(request):
         user = request.user.profile
         if user.role != 'Agency':
-            agencies = Profile.objects.filter(role="Agency")
+            agencies = Agency.objects.all()
             serializer = AgencyProfileSerializer(agencies, many=True)
             return Response(serializer.data)
         else:
@@ -474,7 +475,7 @@ class CustomerView(APIView):
     def getCustomers(request):
         user = request.user.profile
         if user.role != 'Customer':
-            customers = Profile.objects.filter(role="Customer")
+            customers = Customer.objects.all()
             serializer = CustomerProfileSerializer(customers, many=True)
             return Response(serializer.data)
         else:
@@ -605,9 +606,10 @@ class ModelView(APIView):
     @permission_classes([IsAuthenticated])
     def getModels(request):
         user = request.user.profile
-        models = Actor.objects.all()
-        serializer = ActorProfileSerializer(models, many=True)
-        return Response(serializer.data)
+        if user.role != 'Model':
+            models = Actor.objects.all()
+            serializer = ActorProfileSerializer(models, many=True)
+            return Response(serializer.data)
 
     # @api_view(['POST'])
     # @permission_classes([IsAuthenticated])

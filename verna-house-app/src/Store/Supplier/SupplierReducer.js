@@ -1,22 +1,35 @@
-import { SUPPLIER_CREATE_SUCCESS, GET_SUPPLIERS_FAIL, GET_SUPPLIERS_SUCCESS, SUPPLIER_CREATE_FAIL} from "./SupplierAction";
-
+import { SUPPLIER_CREATE_SUCCESS, SUPPLIER_CREATE_FAIL } from "./SupplierAction";
+import { UserActionType } from "../Constants/UserActionType";
 const initialState = {
     getSuppliers: [],
-    getSupplierData:[]
-,}
+    getSupplier: {},
+    getSupplierData: []
+    ,
+}
 
-export const SupplierReducer = (state = initialState.getSuppliers, action) => {
+export const getSupplierReducer = (state = initialState.getSuppliers, action) => {
     switch (action.type) {
-        case GET_SUPPLIERS_SUCCESS:
+        case UserActionType.GET_SUPPLIERS_SUCCESS:
             return { getSuppliers: action.suppliers }
-        case GET_SUPPLIERS_FAIL:
+        case UserActionType.GET_SUPPLIERS_FAIL:
             return { getSuppliers: action.suppliers }
         default: return state;
     }
 
 };
 
-export const SupplierCreateReducer = (state =initialState.getSupplierData, action) => {
+export const editSupplierReducer = (state = initialState.getSupplier, action) => {
+    switch (action.type) {
+        case UserActionType.GET_SUPPLIER_SUCCESS:
+            return { getSupplier: action.supplier };
+        case UserActionType.GET_SUPPLIER_FAIL:
+            return { getSupplier: action.supplier };
+        default: return state;
+    }
+
+};
+
+export const SupplierCreateReducer = (state = initialState.getSupplierData, action) => {
     switch (action.type) {
         // case USER_REGISTER_REQUEST:
         //     return { loading: true };
