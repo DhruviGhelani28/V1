@@ -197,7 +197,7 @@ const EditProfileSupplier = (props) => {
                     </Grid>
                     <Grid item xs={6}>
                         {/* <img src={`http://localhost:8000/images/profiles/04b5d219-c12f-40e4-a4cc-2881a03b2525.jpeg`}></img> */}
-                        <TextField
+                        {/* <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             id="profileImage"
@@ -213,7 +213,25 @@ const EditProfileSupplier = (props) => {
                             // gfgdgdg={`http://localhost:8000/images/profiles/04b5d219-c12f-40e4-a4cc-2881a03b2525.jpeg`}
                             onChange={handleChange('profileImage')}
                         >
-                        </TextField>
+                        </TextField> */}
+                        {/* <TextField
+                            className={classes1.allfield}
+                            sx={{ marginTop: 1 }}
+                            id="profileImage"
+                            placeholder='Upload File'
+                            type="file"
+                            accept="image/*"
+                            label={data?.profile_image || ''}
+                            {...register('profileImage', { required: true })}
+                            error={!!errors?.profileImage}
+                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            onChange={handleChange('profileImage')}
+                        > */}
+                        {/* </TextField><label>{data?.profile_image || ''}</label> */}
+                        <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
+                            <input type={'file'} onChange={handleChange('profile_image')} />
+                            <label>{data?.profile_image || ''}</label>
+                        </label>
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
@@ -256,7 +274,7 @@ const EditProfileSupplier = (props) => {
                                 <Button
                                     variant="contained"
                                     className={classes1.root4}
-                                    // onClick={handleSubmit(onSubmit)}
+                                    onClick={handleSubmit(onSubmit)}
                                     sx={{
                                         marginTop: 0.5,
                                         color: 'black',
