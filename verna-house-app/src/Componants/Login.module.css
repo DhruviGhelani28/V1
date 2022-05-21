@@ -132,8 +132,8 @@
   border-radius: 7px;
 } */
 .carouslemain{
-    object-fit: cover;
-    height: fit-content;
+    /* object-fit: cover; */
+    /* height: fit-content; */
    
 }
 

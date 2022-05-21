@@ -147,9 +147,9 @@ const About = (props) => {
                             <p>...</p>
                         </div>
                 </div> */}
-            <Box sx={{ width: '100%', height: '23%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} className={classes.carousle}>
+            <Box sx={{ width: '100%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} className={classes.carousle}>
                 <Carousel
-                    
+
                     // IndicatorIcon={<Home />}
                     indicatorIconButtonProps={{
                         style: {
@@ -174,7 +174,7 @@ const About = (props) => {
                             color: 'black',
                             visibility: 'true',
                         }
-                    }} 
+                    }}
 
                 >
                     {
@@ -184,13 +184,15 @@ const About = (props) => {
                                     src={item.img}
                                     component="img"
                                     alt={item.title}
+                                    width="100%"
+                                    height='550vh'
                                 />
                             </Card>
                         )
                     }
                 </Carousel>
             </Box>
-            <Box sx={{ backdropFilter: `blur(8px)`, marginTop: 0 }}>
+            <Box sx={{ backdropFilter: `blur(8px)`, marginTop: 3 }}>
                 <Typography sx={{ color: 'black', fontFamily: 'sans-serif', fontSize: '18px' }} data-aos="fade-left" data-aos-offset="200">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
                 </Typography>

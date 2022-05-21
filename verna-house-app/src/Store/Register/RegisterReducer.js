@@ -3,7 +3,7 @@ import { UserActionType } from "../Constants/UserActionType";
 const initialState = {
     registerDate: {},
     loginData: {},
-    users:{}
+    users: {}
 }
 
 export const userLoginReducer = (state = initialState.loginData, action) => {
@@ -36,15 +36,14 @@ export const userRegisterReducer = (state = initialState.registerDate, action) =
     }
 };
 
-// export const usersReducer = (state = initialState.users, action) => {
-//     switch (action.type) {
-//         // case UserActionType.USER_REGISTER_REQUEST:
-//         //     return { loading: true };
-//         case UserActionType.GET_USERS_SUCCESS:
-//             return { loading: false, users: action.payload };
-//         case UserActionType.GET_USERS_FAIL:
-//             return { loading: false, error: action.payload };
-//         default:
-//             return state;
-//     }
-// };
+export const usersReducer = (state = initialState.users, action) => {
+    switch (action.type) {
+
+        case UserActionType.USER_LIST_SUCCESS:
+            return { loading: false, users: action.payload };
+        case UserActionType.USER_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};

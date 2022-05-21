@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open, drawerwidth }) => ({
-        // flexGrow: 1,
+
         paddingLeft: '50px',
         // paddingRight: 5,
         marginTop: 8.1,

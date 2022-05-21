@@ -25,7 +25,7 @@ const theme = createTheme({
         root: {
           // Some 
           // multiline: true,
-          border: '0.3px solid white',
+          // border: '0.3px solid white',
           borderRadius: 4,
           color: '#fff',
           varient: 'outlined',
@@ -49,13 +49,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // multiline: true,
+          color: '#fff',
+        },
+      },
+    },
     MuiFormControl: {
       styleOverrides: {
         // Name of the slot
         root: {
-          border: '0.3px solid white',
+          // border: '0.3px solid white',
           borderRadius: 4,
           color: '#fff',
+
           varient: 'outlined',
           multiline: true,
         },

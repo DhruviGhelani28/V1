@@ -81,7 +81,7 @@ const Main1 = () => {
     return (
         <Fragment >
             <Container className={classes.mainback} sx={{ marginTop: 0, padding: 0 }}>
-                <Box sx={{ width: '100%', height: '20%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
+                <Box sx={{ width: '100%', border: '1px solid black', marginTop: 3, paddingTop: 4, paddingRight: 4, paddingLeft: 4, marginRight: 4, paddingBottom: 1, background: 'linear-gradient(45deg,#434344 5%,#575758 20%)' }} >
                     <Carousel
                         indicatorIconButtonProps={{
                             style: {
@@ -91,8 +91,7 @@ const Main1 = () => {
                         }}
                         activeIndicatorIconButtonProps={{
                             style: {
-                                backgroundColor: 'white',
-                                Visibility: true // 2
+                                backgroundColor: 'white' // 2
                             }
                         }}
                         indicatorContainerProps={{
@@ -100,10 +99,19 @@ const Main1 = () => {
                                 textAlign: 'center' // 4
                             }
 
-                        }}>
+                        }}
+                        navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                            style: {
+                                backgroundColor: 'white',
+                                color: 'black',
+                                visibility: 'true',
+                            }
+                        }}
+
+                    >
                         {
                             items.map((item, i) =>
-                                <Card sx={{ width: '100%', borderRadius: 1, borderColor: "#121212", borderWidth: 0.1, elevation: 24 }} key={i} className={classes.carouslemain}>
+                                <Card sx={{ borderRadius: 1, borderColor: "#121212", backgroundColor: "black", borderWidth: 0.1, elevation: 24 }} key={i} className={classes.carouslemain}>
                                     <CardMedia
                                         component='video'
                                         type="vedio/mp4"
@@ -113,6 +121,8 @@ const Main1 = () => {
                                         playing='true'
                                         muted
                                         loading="lazy"
+                                        width="100%"
+                                        height='520vh'
                                     >
                                     </CardMedia>
                                 </Card>

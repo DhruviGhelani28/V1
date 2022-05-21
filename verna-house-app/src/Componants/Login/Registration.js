@@ -410,19 +410,19 @@ const Registration = props => {
                                 sx={{
                                     marginTop: 0.5,
                                     marginRight: -34,
-                                    color: 'black',
+                                    color: '#bdbdbd',
                                 }}>
                                 Next</Button>
                         </div>
                         <div className={classes.register}>
-                            <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -13.5, color: 'black' }}>
+                            <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -13.5, color: '#bdbdbd' }}>
                                 Do You Have An Account?
                                 <Link to={"/Login"} className={classes1.root3}> Sign In  </Link>
                             </Typography>
-                            <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -27, color: 'black' }}>
+                            {/* <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -27, color: 'black' }}>
                                 <Link to={"/Registration"} className={classes1.root3}>Forgot Password?
                                 </Link>
-                            </Typography>
+                            </Typography> */}
                         </div>
                     </div>
 
