@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginData, getUsers } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
+import { useSelect } from "@mui/base";
 
 
 
@@ -109,12 +110,16 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const Login = props => {
-    const users = useSelector((state) => state.users)
+    // const users = useSelector((state) => state.users)
+    const login = useSelector((state) => state.userLogin)
+    const errorData = login.loginData
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUsers())
-    }, [dispatch])
-    console.log(users.users)
+    // useEffect(() => {
+    //     dispatch(getUsers())
+    // }, [dispatch])
+    // console.log(users.users)
+
+
 
     const [alert, setAlert] = React.useState(false);
     const alertClick = () => {
@@ -132,6 +137,7 @@ const Login = props => {
     const navigate = useNavigate();
     const classes1 = useStyles();
     const logindata = JSON.parse(localStorage.getItem("userInfo"))
+    const [count, setCount] = useState(0)
     const [values, setValues] = useState({
         username: "",
         password: "",
@@ -143,99 +149,107 @@ const Login = props => {
             ...values,
             [name]: value,
         });
+
+        if (name === 'password') {
+            setCount((count) => count + 1)
+            if (count >= 8) {
+                dispatch(getLoginData(values));
+            }
+
+        }
     };
 
+
     const onSubmit = (data) => {
+        // dispatch(getLoginData(data));
         console.log(JSON.stringify(data, null, 2));
-        users.map((value, index) => (
-            console.log("sss", value);
 
-        if (value.username === data.username && value.check_password(data.password)) {
-            dispatch(getLoginData(data));
-            navigate("/Account/MyTasks");
-
+        console.log(login.loginData)
+        if (errorData && (errorData[0] === 406 || errorData[0] === 400)) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ) {
+            alertClick(true);
 
         }
         else {
-            alertClick(true)
 
+            dispatch(getLoginData(data));
+
+            navigate("/Account/MyTasks");
         }
 
-        ));
-
+        // 
 
     };
 
-const goBackHandler = () => {
-    navigate("/Home")
-}
-const changePasswordHandler = () => {
-    if (logindata !== null) {
-        navigate("/ChangePassword")
+    const goBackHandler = () => {
+        navigate("/Home")
+    }
+    const changePasswordHandler = () => {
+        if (logindata !== null) {
+            navigate("/ChangePassword")
+        }
+
     }
 
-}
+    const handleClickShowPassword = () => {
+        setValues({
+            ...values,
+            showPassword: !values.showPassword,
+        });
+    };
 
-const handleClickShowPassword = () => {
-    setValues({
-        ...values,
-        showPassword: !values.showPassword,
-    });
-};
-
-const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-};
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
 
-const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-return (
-    <>
-        <div className={classes.loginBack} theme={props.theme}>
+    return (
+        <>
+            <div className={classes.loginBack} theme={props.theme}>
 
-            <video loop autoPlay muted preload="auto" className={classes.loginback}>
-                <source src={video} type="video/mp4" />
-            </video>
-            <Snackbar open={alert} autoHideDuration={6000} onClose={alertClose}>
-                <Alert onClose={alertClose} severity="success" sx={{ width: '100%' }}>
-                    Enter Valid Credentials
-                </Alert>
-            </Snackbar>
-            <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 5 }}>
-                <CardActions >
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
-                        <ChevronLeftIcon className={classes1.root1} />
-                    </IconButton>
-                </CardActions>
-                <CardContent>
-                    <h3 style={{ color: '#bdbdbd' }}>Sign In Here</h3>
-                    <StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        variant="dot"
-                    >
-                        <Avatar
-                            alt="User"
-                            sx={{ width: 56, height: 56, borderWidth: 5, borderColor: "#121212" }}
-                            position='sticky'
-                        /></StyledBadge>
+                <video loop autoPlay muted preload="auto" className={classes.loginback}>
+                    <source src={video} type="video/mp4" />
+                </video>
+                <Snackbar open={alert} autoHideDuration={6000} onClose={alertClose}>
+                    <Alert onClose={alertClose} severity="error" sx={{ width: '100%' }}>
+                        Enter Valid Credentials
+                    </Alert>
+                </Snackbar>
+                <Card variant="outlined" className={classes1.root} sx={{ borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 5 }}>
+                    <CardActions >
+                        <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
+                            <ChevronLeftIcon className={classes1.root1} />
+                        </IconButton>
+                    </CardActions>
+                    <CardContent>
+                        <h3 style={{ color: '#bdbdbd' }}>Sign In Here</h3>
+                        <StyledBadge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            variant="dot"
+                        >
+                            <Avatar
+                                alt="User"
+                                sx={{ width: 56, height: 56, borderWidth: 5, borderColor: "#121212" }}
+                                position='sticky'
+                            /></StyledBadge>
 
-                    <Box
-                        component="form"
-                        sx={{
-                            marginTop: 5,
-                            '& .MuiTextField-root': { m: 1, width: '40ch' },
-                            '& .MuiButton-root': { textColor: '#121212' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <Grid container spacing={1}>
-                            <Grid item xs={12}>
-                                <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
-                                {/* <TextField
+                        <Box
+                            component="form"
+                            sx={{
+                                marginTop: 5,
+                                '& .MuiTextField-root': { m: 1, width: '40ch' },
+                                '& .MuiButton-root': { textColor: '#121212' },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}>
+                                    <AccountCircle sx={{ color: 'white', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
+                                    {/* <TextField
                                     className={classes1.root5}
                                     sx={{
                                         color: 'action.home',
@@ -258,23 +272,24 @@ return (
                                     error={!!errors?.email}
                                     helpertext={errors?.email ? errors.email.message : null}
                                 /> */}
-                                <TextField
-                                    sx={{ marginTop: 1 }}
-                                    className={classes1.allfield}
-                                    required
-                                    id="username"
-                                    label="Enter Your UserName"
-                                    placeholder="xyz_abc123"
-                                    {...register('username', { required: true, maxLength: 20, minLength: 4, message: 'Enter Valid Username' })}
-                                    error={!!errors?.username}
-                                    value={values?.username}
-                                    onChange={handleChange}
-                                />
-                                <Typography sx={{ color: 'white' }}>{errors?.username ? 'Enter Valid Username' : null}</Typography>
-                            </Grid>
+                                    <TextField
+                                        sx={{ marginTop: 1 }}
+                                        className={classes1.allfield}
+                                        required
+                                        id="username"
+                                        label="Enter Your UserName"
+                                        placeholder="xyz_abc123"
+                                        {...register('username', { required: true, maxLength: 20, minLength: 4, message: 'Enter Valid Username' })}
+                                        error={!!errors?.username}
+                                        value={values?.username}
+                                        onChange={handleChange}
+
+                                    />
+                                    <Typography sx={{ color: 'white' }}>{errors?.username ? 'Enter Valid Username' : null}</Typography>
+                                </Grid>
 
 
-                            {/* <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                 <PeopleIcon sx={{ color: 'action.home', mr: 1, my: 0.5, position: 'relative', marginTop: 3, marginRight: -0.3 }} />
                                 <FormControl required sx={{ m: 1, width: '40ch' }} >
                                 <InputLabel id="roll-id">Roll</InputLabel>
@@ -298,81 +313,81 @@ return (
                                     <FormHelperText>Please select your roll in system.</FormHelperText>
                                 </FormControl>
                             </Grid> */}
-                            <Grid item xs={12} >
-                                <img width="23" src={key} className={classes.custom} alt="key" ></img>
-                                <TextField
-                                    autoComplete="true"
-                                    required
-                                    sx={{ marginTop: 1 }}
-                                    className={classes1.allfield}
-                                    label="Enter Password"
-                                    placeholder='*******'
-                                    id="password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    className={classes1.root1}
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                    {...register('password', {
-                                        required: true,
-                                        pattern: {
-                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
-                                            // message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                <Grid item xs={12} >
+                                    <img width="23" src={key} className={classes.custom} alt="key" ></img>
+                                    <TextField
+                                        autoComplete="true"
+                                        required
+                                        sx={{ marginTop: 1 }}
+                                        className={classes1.allfield}
+                                        label="Enter Password"
+                                        placeholder='*******'
+                                        id="password"
+                                        type={values.showPassword ? 'text' : 'password'}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        className={classes1.root1}
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {values.showPassword ? <VisibilityOff className={classes1.root1} /> : <Visibility className={classes1.root1} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        {...register('password', {
+                                            required: true,
+                                            pattern: {
+                                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i,
+                                                // message: "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer ",
+                                            }
                                         }
-                                    }
-                                    )}
-                                    error={!!errors?.password}
-                                    onChange={handleChange}
-                                />
-                                <Typography sx={{ color: 'white', fontSize: 12 }}>{errors?.password ? "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer " : null}</Typography>
-                            </Grid>
+                                        )}
+                                        error={!!errors?.password}
+                                        onChange={handleChange}
+                                    />
+                                    <Typography sx={{ color: 'white', fontSize: 12 }}>{errors?.password ? "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer " : null}</Typography>
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.button}>
-                                <Button
-                                    className={classes1.root4}
-                                    variant="contained"
-                                    type="submit"
-                                    // onClick={onSubmit}
-                                    sx={{
-                                        marginTop: 0.5,
-                                        marginRight: -38.5,
-                                        color: '#bdbdbd',
-                                    }}>
-                                    Sign In</Button>
-                            </Grid>
+                                <Grid item xs={12} className={classes.button}>
+                                    <Button
+                                        className={classes1.root4}
+                                        variant="contained"
+                                        type="submit"
+                                        // onClick={onSubmit}
+                                        sx={{
+                                            marginTop: 0.5,
+                                            marginRight: -38.5,
+                                            color: '#bdbdbd',
+                                        }}>
+                                        Sign In</Button>
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.register}>
-                                <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -9, color: '#bdbdbd', }}>
-                                    Don't You Have An Account?
-                                    <Link to={"/Registration"} className={classes1.root3}> Sign Up  </Link>
-                                </Typography>
-                                <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -26, color: 'black', }}>
-                                    <Link to={"/Registration"} className={classes1.root3}>Forgot Password?
-                                    </Link>
-                                </Typography>
+                                <Grid item xs={12} className={classes.register}>
+                                    <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -9, color: '#bdbdbd', }}>
+                                        Don't You Have An Account?
+                                        <Link to={"/Registration"} className={classes1.root3}> Sign Up  </Link>
+                                    </Typography>
+                                    <Typography variant="body1" sx={{ marginTop: 0.5, marginLeft: -26, color: 'black', }}>
+                                        <Link to={"/Registration"} className={classes1.root3}>Forgot Password?
+                                        </Link>
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Box>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={changePasswordHandler} sx={{ color: '#bdbdbd' }} className={classes1.root3}>Change Password</Button>
-                </CardActions>
-            </Card>
-        </div>
-    </>
+                        </Box>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" onClick={changePasswordHandler} sx={{ color: '#bdbdbd' }} className={classes1.root3}>Change Password</Button>
+                    </CardActions>
+                </Card>
+            </div>
+        </>
 
-);
+    );
 
 };
 export default Login;

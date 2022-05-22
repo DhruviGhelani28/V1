@@ -10,9 +10,18 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import status, viewsets
+from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObtainPairSerializer
+from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.views import TokenViewBase
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 # Create your views here.
 
@@ -56,6 +65,39 @@ def getRoutes(request):
         {'GET' : 'api/Users/Workers/workerId/Bills/billId'},
     ]
     return Response(routes)
+
+
+class TokenObtainPairView(TokenViewBase):
+    """
+    Takes a set of user credentials and returns an access and refresh JSON web
+    token pair to prove the authentication of those credentials.
+    """
+    serializer_class = TokenObtainPairSerializer
+    @api_view(['POST'])
+    def post(request):
+        serializer =  TokenObtainPairSerializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        except AuthenticationFailed as e:
+            # raise InvalidUser(e.args[0])
+            return Response({InvalidUser.default_detail, InvalidUser.status_code}, status= status.HTTP_200_OK)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+    
+    # res = self.post()
+    
+    # return res
+
+
+        
+
+class InvalidUser(AuthenticationFailed):
+    status_code = status.HTTP_406_NOT_ACCEPTABLE
+    default_detail = ("Credentials is invalid or didn't match")
+    default_code = 'user_credentials_not_valid'
+    # return Response({default_detail : "Credentials is invalid or didn't match", default_code : 'user_credentials_not_valid'})
+
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])

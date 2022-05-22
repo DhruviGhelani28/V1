@@ -12,7 +12,7 @@ from rest_framework import serializers, exceptions
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'password']
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """User registration serializer class"""
@@ -309,3 +309,23 @@ class LoginSerializer(serializers.ModelSerializer):
             raise exceptions.AuthenticationFailed('Account is not active')
         raise exceptions.AuthenticationFailed()
 
+
+# class EmailTokenObtainSerializer(TokenObtainSerializer):
+#     username_field = User.EMAIL_FIELD
+
+
+# class CustomTokenObtainPairSerializer(EmailTokenObtainSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         return RefreshToken.for_user(user)
+
+#     def validate(self, attrs):
+#         data = super().validate(attrs)
+
+#         refresh = self.get_token(self.user)
+
+#         data["refresh"] = str(refresh)
+#         data["access"] = str(refresh.access_token)
+
+# class EmailTokenObtainPairView(TokenObtainPairView):
+#     serializer_class = CustomTokenObtainPairSerializer

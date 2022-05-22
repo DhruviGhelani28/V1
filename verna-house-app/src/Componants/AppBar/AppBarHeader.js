@@ -143,6 +143,7 @@ const AppBarHeader = props => {
     }
     const logoutHandler = () => {
         localStorage.removeItem("userInfo")
+        props.setLogout(true)
         navigate("/")
     }
     const messHandler = () => {

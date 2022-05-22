@@ -39,26 +39,34 @@ export const getLoginData = (values) => async (dispatch) => {
     try {
 
         console.log("axs", values);
-        const { data } = await axios.post(`${BaseUrl}/api/users/token/`, values);
-        console.log("assas", data)
-        const username = values.username
-        const token = data['access']
-        const config = {
-            headers: {
-                "content-type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-        };
+        const response = await axios.post(`${BaseUrl}/api/users/token/`, values);
 
-        // const { data } = await axios.get(`${BaseUrl}/api/users/`, values);
-        const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
-        dispatch({
-            type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
-        });
-        const role = login['data']
-        console.log("login call", login)
+        if (response.data && (response.data[0] === 406 || response.data[0] === 400)) {
 
-        localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
+            dispatch({
+                type: UserActionType.USER_LOGIN_SUCCESS, payload: response.data,
+            });
+        }
+        else {
+            const username = values.username
+            const token = response.data['access']
+            const config = {
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            };
+
+            // const { data } = await axios.get(`${BaseUrl}/api/users/`, values);
+            const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
+            dispatch({
+                type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
+            });
+            const role = login['data']
+            console.log("login call", login)
+
+            localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
+        }
     } catch (error) {
         const login_error = error.response.data.non_field_errors[0];
         dispatch({
@@ -81,8 +89,9 @@ export const getUsers = () => async (dispatch) => {
                 "content-type": "application/json",
             },
         };
-        console.log("users call");
+
         const { data } = await axios.get(`${BaseUrl}/api/Users/`, config);
+        console.log("users call");
         console.log(data)
         dispatch({
             type: UserActionType.USER_LIST_SUCCESS, payload: data,

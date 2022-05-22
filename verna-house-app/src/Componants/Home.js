@@ -79,7 +79,7 @@ const Home = props => {
     const drawerWidth = 200;
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    const [logout, setLogout] = React.useState(false)
     const data = JSON.parse(localStorage.getItem("userInfo"))
 
     // console.log("data::", data['role'])
@@ -104,7 +104,9 @@ const Home = props => {
             console.log(isLoggedIn, role)
         }
     }, [data])
+    useEffect(() => {
 
+    }, [logout])
 
     // console.log('role::', role !== 'Admin')
     return (
@@ -113,7 +115,7 @@ const Home = props => {
             <Box sx={{}}>
                 <CssBaseline />
 
-                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} />
+                <AppBarHeader drawerwidth={drawerWidth} open={open} onOpen={handleDrawerOpen} sx={{ display: "flex" }} theme={theme} setLogout={(val) => setLogout(val)} />
                 {role === ' ' &&
                     <Main sx={{ paddingLeft: 0.1, marginTop: 8.1, marginRight: 0, paddingRight: 0.1, display: 'flex', marginLeft: 0.1 }} className={classes1.homeback} >
 
@@ -127,6 +129,7 @@ const Home = props => {
                             <Route path="/AgencyForm" element={<AgencyForm />} exact />
                             <Route path="/WorkerForm" element={<WorkerForm />} exact />
                             <Route path="/ModelForm" element={<ModelForm />} exact />
+                            {/* <Route path="/Logout" element={<Logout setLogout={(val) => setLogout(val)} />} exact /> */}
                         </Routes>
                     </Main>
                 }
