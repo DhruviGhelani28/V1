@@ -1,4 +1,4 @@
-import { getSupplierReducer, SupplierCreateReducer, editSupplierReducer } from "./Supplier/SupplierReducer";
+import { getSuppliersReducer, SupplierCreateReducer, editSupplierReducer, getSupplierReducer } from "./Supplier/SupplierReducer";
 import { getWorkerReducer, editWorkerReducer } from "./Worker/WorkerReducer";
 import AgencyReducer from "./Agency/AgencyReducer";
 import CustomerReducer from "./Customer/CustomerReducer";
@@ -14,9 +14,11 @@ const RootReducers = combineReducers(
         userRegister: userRegisterReducer,
         userLogin: userLoginReducer,
         users: usersReducer,
-        suppliers: getSupplierReducer,
-        supplierData: SupplierCreateReducer,
-        supplier: editSupplierReducer,
+
+        suppliers: getSuppliersReducer,
+        // supplierData: SupplierCreateReducer,
+        supplier: getSupplierReducer,
+        esupplier : editSupplierReducer,
 
         workers: getWorkerReducer,
         worker: editWorkerReducer,

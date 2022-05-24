@@ -34,14 +34,14 @@ export const getRegisterData = (values) => async (dispatch) => {
 };
 
 export const getLoginData = (values) => async (dispatch) => {
-    console.log("Login dispatch")
+    console.log("Login dispatch", values, typeof (values))
     // localStorage.removeItem("userInfo");
     try {
 
         console.log("axs", values);
         const response = await axios.post(`${BaseUrl}/api/users/token/`, values);
-
-        if (response.data && (response.data[0] === 406 || response.data[0] === 400)) {
+        console.log(response)
+        if (response.data.status === 406) {
 
             dispatch({
                 type: UserActionType.USER_LOGIN_SUCCESS, payload: response.data,

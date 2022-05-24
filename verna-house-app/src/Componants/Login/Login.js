@@ -163,18 +163,18 @@ const Login = props => {
     const onSubmit = (data) => {
         // dispatch(getLoginData(data));
         console.log(JSON.stringify(data, null, 2));
-
+        const errorData = login.loginData
         console.log(login.loginData)
-        if (errorData && (errorData[0] === 406 || errorData[0] === 400)) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ) {
-            alertClick(true);
+        // if (errorData[0] === 406) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ) {
+        //     alertClick(true);
 
-        }
-        else {
+        // }
+        // else {
 
-            dispatch(getLoginData(data));
+        dispatch(getLoginData(data));
 
-            navigate("/Account/MyTasks");
-        }
+        navigate("/Account/MyTasks");
+        // }
 
         // 
 

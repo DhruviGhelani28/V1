@@ -1,6 +1,8 @@
 
+from django.core.files import File
 from urllib import request, response
-
+import pathlib
+import os
 import datetime
 from pytest import console_main
 from .models import *
@@ -17,11 +19,12 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-
+import glob
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.views import TokenViewBase
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+
 
 # Create your views here.
 
@@ -81,9 +84,9 @@ class TokenObtainPairView(TokenViewBase):
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
         except AuthenticationFailed as e:
             # raise InvalidUser(e.args[0])
-            return Response({InvalidUser.default_detail, InvalidUser.status_code}, status= status.HTTP_200_OK)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
+            return Response({InvalidUser.default_detail, InvalidUser.status_code})
+        # except TokenError as e:
+        #     raise InvalidToken(e.args[0])
     
     # res = self.post()
     
@@ -411,9 +414,45 @@ class SupplierView(APIView):
         if user.role != "Supplier":
             supplier = Supplier.objects.get(id=pk)
             serializer = SupplierProfileSerializer(supplier, many=False)
-            print("supplier:---", supplier, "pk:--",pk )
+            # print("supplier:---", supplier, "pk:--",pk )
             return Response(serializer.data)
 
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def editSupplier(request, pk):
+        # print("=-=-here-=-=")
+        # print(request.data)
+        data = request.data
+        # data = list(request.data.items())
+        print(type(data['profileImage']),data['profileImage'])
+        print("data",type(data['mobileNo']))
+        supplier = Supplier.objects.get(id=pk)
+        print("=-=-supp",supplier)
+        filename= os.path.basename(data['profileImage'])
+        
+        supplier.username = data['username'],
+        supplier.email = data['email'],
+        supplier.name = data['fullname'],
+        supplier.mobileNo = data['mobileNo'],
+        supplier.organisationName = data['organizationName'],
+        supplier.organisationAddress =  data['organizationAddress'],
+        # supplier.profile_image = `./{data['profileImage']}`,
+        supplier.location = data['location'],
+        supplier.social_website =  data['socialWebsite'],
+        # print(os.path.abspath(f"{filename}"))
+        # print(os.path.relpath("./src/static"))
+        # p = pathlib.Path(filename)
+        # print(os.path.abspath(p))
+
+        # with open(os.path.abspath(p),"rb") as file:
+        #     supplier.profile_image.save(filename,File(file),save=False)
+
+        supplier.save()
+
+        serializer = SupplierProfileSerializer(supplier, many=False)
+        print("supplier:---", supplier, "pk:--",pk )
+        print("=-=-seri",serializer.data)
+        return Response(serializer.data)
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated, IsAdminUser])

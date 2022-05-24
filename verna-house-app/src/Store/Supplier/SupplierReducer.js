@@ -3,11 +3,11 @@ import { UserActionType } from "../Constants/UserActionType";
 const initialState = {
     getSuppliers: [],
     getSupplier: {},
-    getSupplierData: []
-    ,
+    // getSupplierData: []
+    editSupplier: {},
 }
 
-export const getSupplierReducer = (state = initialState.getSuppliers, action) => {
+export const getSuppliersReducer = (state = initialState.getSuppliers, action) => {
     switch (action.type) {
         case UserActionType.GET_SUPPLIERS_SUCCESS:
             return { getSuppliers: action.suppliers }
@@ -18,7 +18,7 @@ export const getSupplierReducer = (state = initialState.getSuppliers, action) =>
 
 };
 
-export const editSupplierReducer = (state = initialState.getSupplier, action) => {
+export const getSupplierReducer = (state = initialState.getSupplier, action) => {
     switch (action.type) {
         case UserActionType.GET_SUPPLIER_SUCCESS:
             return { getSupplier: action.supplier };
@@ -29,15 +29,25 @@ export const editSupplierReducer = (state = initialState.getSupplier, action) =>
 
 };
 
-export const SupplierCreateReducer = (state = initialState.getSupplierData, action) => {
+export const editSupplierReducer = (state = initialState.editSupplier, action) => {
     switch (action.type) {
-        // case USER_REGISTER_REQUEST:
-        //     return { loading: true };
-        case SUPPLIER_CREATE_SUCCESS:
-            return { loading: false, userInfo: action.payload };
-        case SUPPLIER_CREATE_FAIL:
-            return { loading: false, error: action.payload };
-        default:
-            return state;
+        case UserActionType.EDIT_SUPPLIER_SUCCESS:
+            return { editSupplier: action.supplier };
+        case UserActionType.EDIT_SUPPLIER_FAIL:
+            return { editSupplier: action.supplier };
+        default: return state;
     }
+
 };
+// export const SupplierCreateReducer = (state = initialState.getSupplierData, action) => {
+//     switch (action.type) {
+//         // case USER_REGISTER_REQUEST:
+//         //     return { loading: true };
+//         case SUPPLIER_CREATE_SUCCESS:
+//             return { loading: false, userInfo: action.payload };
+//         case SUPPLIER_CREATE_FAIL:
+//             return { loading: false, error: action.payload };
+//         default:
+//             return state;
+//     }
+// };

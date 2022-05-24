@@ -30,7 +30,7 @@ export const getSuppliers = () => async (dispatch) => {
 }
 
 export const getSupplier = (id) => async (dispatch) => {
-    console.log("supplier dispatch edit param:--", id['id'])
+    console.log("supplier dispatch get param:--", id['id'])
     try {
         const token = JSON.parse(localStorage.getItem('userInfo')).token
         const config = {
@@ -40,7 +40,7 @@ export const getSupplier = (id) => async (dispatch) => {
             }
         }
         const response = await axios.get(`${BaseUrl}/api/Users/Suppliers/${id['id']}`, config)
-        console.log("edit supplier call response data:--", response.data)
+        console.log("get supplier call response data:--", response.data)
         dispatch({ type: UserActionType.GET_SUPPLIER_SUCCESS, supplier: response.data });
 
     }
@@ -52,31 +52,54 @@ export const getSupplier = (id) => async (dispatch) => {
     }
 }
 
-export const getSupplierData = (values) => async (dispatch) => {
-    console.log("supplier dispatch")
+// export const getSupplierData = (values) => async (dispatch) => {
+//     console.log("supplier dispatch")
+//     try {
+//         // dispatch({
+//         //     type: UserActionType.USER_REGISTER_REQUEST
+//         // });
+//         const config = {
+//             headers: {
+//                 "content-type": "application/json",
+//             },
+//         };
+//         console.log("suppllierData save successfully");
+//         const { data } = await axios.post(`${BaseUrl}/api/supplierCreate/`, values, config);
+
+//         dispatch({
+//             type: SUPPLIER_CREATE_SUCCESS, payload: data,
+//         })
+//     } catch (error) {
+//         console.log(error.response.data);
+//         const username = error.response.data.username;
+//         // const password = error.response.data.;
+//         const email = error.response.data.email;
+//         dispatch({
+//             type: SUPPLIER_CREATE_FAIL, payload: { username, email },
+//         });
+//     }
+// };
+
+export const editSupplier = (values, id) => async (dispatch) => {
+    console.log("supplier dispatch edit param:--", typeof (values['values']), values, id)
+    let data = values['values']
     try {
-        // dispatch({
-        //     type: UserActionType.USER_REGISTER_REQUEST
-        // });
+        const token = JSON.parse(localStorage.getItem('userInfo')).token
         const config = {
             headers: {
-                "content-type": "application/json",
-            },
-        };
-        console.log("suppllierData save successfully");
-        const { data } = await axios.post(`${BaseUrl}/api/supplierCreate/`, values, config);
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        }
+        const response = await axios.put(`${BaseUrl}/api/Users/Suppliers/Edit/${id}`, data, config)
+        console.log("edit supplier call response data:--", response.data)
+        dispatch({ type: UserActionType.EDIT_SUPPLIER_SUCCESS, supplier: response.data });
 
+    }
+    catch (error) {
+        const supplier_error = "You are not authorised person to edit the supplier.";
         dispatch({
-            type: SUPPLIER_CREATE_SUCCESS, payload: data,
-        })
-    } catch (error) {
-        console.log(error.response.data);
-        const username = error.response.data.username;
-        // const password = error.response.data.;
-        const email = error.response.data.email;
-        dispatch({
-            type: SUPPLIER_CREATE_FAIL, payload: { username, email },
+            type: UserActionType.EDIT_SUPPLIER_FAIL, supplier: supplier_error,
         });
     }
-};
-
+}

@@ -159,6 +159,7 @@ function Suppliers() {
     const dispatch = useDispatch()
     const suppliers = useSelector((state) => state.suppliers);
     const [rows, setRows] = React.useState([]);
+    const [reload, setReload] = React.useState(false)
     useEffect(() => {
         dispatch(getSuppliers())
     }, [dispatch])
@@ -168,19 +169,10 @@ function Suppliers() {
     useEffect(() => {
         setRows(suppliers.getSuppliers)
 
-    }, [suppliers.getSuppliers])
+    }, [suppliers.getSuppliers, reload])
 
     // const rows = suppliers.getSuppliers
-    console.log(rows)
-    // const [rowModesModel, setRowModesModel] = React.useState({});
-
-    // const handleRowEditStart = (params, event) => {
-    //     event.defaultMuiPrevented = true;
-    // };
-
-    // const handleRowEditStop = (params, event) => {
-    //     event.defaultMuiPrevented = true;
-    // };
+    console.log(rows)// const [rowModesModel, setRowModesModel] = React.useState({});
 
     const editHandler = (id) => {
         // handleOpen();
@@ -254,7 +246,7 @@ function Suppliers() {
                                                 <Dialog open={open} onClose={handleClose} sx={{ padding: 0.5, width: 900 }}>
                                                     <DialogTitle>Edit Supplier : {row.id}</DialogTitle>
                                                     <DialogContent dividers sx={{ padding: 0.1 }}>
-                                                        <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} />
+                                                        <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} setReload={setReload}/>
                                                     </DialogContent>
                                                     {/* <DialogActions>
                                                     <Button onClick={handleClose} sx={{ border: '1px solid black' }}>Cancel</Button>

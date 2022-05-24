@@ -5,6 +5,7 @@ import { getSupplier } from "../../Store/Supplier/SupplierAction";
 import { Card, Grid, TextField, Button } from "@mui/material";
 import { useForm } from 'react-hook-form';
 import classes from "../Login.module.css";
+import { editSupplier } from "../../Store/Supplier/SupplierAction";
 const useStyles = makeStyles({
     root1: {
         color: '#121212',
@@ -36,50 +37,56 @@ const EditProfileSupplier = (props) => {
     console.log(supplierId)
     const supplier = useSelector((state) => state.supplier)
 
-    const [data, setData] = useState({})
-
     useEffect(() => {
         dispatch(getSupplier({ id: supplierId }))
-    }, [])
-
-    useEffect(() => {
-        setData(supplier.getSupplier)
-    }, [supplier.getSupplier])
+    }, [dispatch])
 
     console.log(supplier.getSupplier)
-    console.log(data)
-    // useEffect(() => {
 
-    // },[data])
+    const [values, setValues] = React.useState({
+        fullname: '',
+        email: '',
+        username: '',
+        mobileNo: '',
+        organizationName: '',
+        organizationAddress: '',
+        profileImage: ``,
+        location: '',
+        socialWebsite: '',
+    });
 
-    // const [values, setValues] = React.useState({
-    //     name: data.name,
-    //     email: data.email,
-    //     username: data.username,
-    //     mobileNo: data.mobileNo,
-    //     organizationName: data.organisationName,
-    //     organizationAddress: data.organisationAddress,
-    //     profileImage: `${data.profile_image}`,
-    //     location: data.location,
-    //     socialWebsite: data.social_website,
-    // });
-    // console.log(values)
+    useEffect(() => {
+        setValues({
+            fullname: supplier.getSupplier?.name,
+            email: supplier.getSupplier?.email,
+            username: supplier.getSupplier?.username,
+            mobileNo: supplier.getSupplier?.mobileNo,
+            organizationName: supplier.getSupplier?.organisationName,
+            organizationAddress: supplier.getSupplier?.organisationAddress,
+            profileImage: `${supplier.getSupplier?.profile_image}`,
+            location: supplier.getSupplier?.location,
+            socialWebsite: supplier.getSupplier?.social_website,
+        });
+    }, [supplier])
+
+
+
+    console.log(values)
     const handleChange = (prop) => (event) => {
         console.log(prop)
-        setData({ ...data, [prop]: event.target.value });
-        if (prop == "profile_image") {
-            console.log(event.target.files[0])
-            setData({ ...data, profile_image: event.target.files[0].name });
+        setValues({ ...values, [prop]: event.target.value });
+        if (prop == "profileImage") {
+            console.log(event.target.files)
+            // let path = { window.location.origin + `./${event.target.files[0].name}` }   
+            // console.log(path)
+            setValues({ ...values, profileImage: event.target.files[0].name });
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        // const val = values
-        // const data1 = { ...state, ...val }
-
-        // dispatch(getRegisterData({ data: data1 }));
-        // console.log("user registered supplier created")
-        // navigate("/Login")
+    const onSubmit = () => {
+        console.log(values)
+        dispatch(editSupplier({ values: values }, supplierId))
+        props.setReload(true)
     }
 
 
@@ -101,7 +108,7 @@ const EditProfileSupplier = (props) => {
                             {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.fullname}
                             helpertext={errors?.fullname ? errors.fullname.message : null}
-                            value={data?.name || ""}
+                            value={values?.fullname}
                             onChange={handleChange('fullname')}
                         />
                     </Grid>
@@ -123,7 +130,7 @@ const EditProfileSupplier = (props) => {
                             })}
                             error={!!errors?.email}
                             helpertext={errors?.email ? errors.email.message : null}
-                            value={data?.email || ''}
+                            value={values?.email}
                             onChange={handleChange('email')}
                         />
                     </Grid>
@@ -140,7 +147,7 @@ const EditProfileSupplier = (props) => {
                             {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.username}
                             helpertext={errors?.username ? errors.username.message : null}
-                            value={data?.username || ''}
+                            value={values?.username}
                             onChange={handleChange('username')}
                         />
                     </Grid>
@@ -157,7 +164,7 @@ const EditProfileSupplier = (props) => {
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
                             helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            value={data?.mobileNo || ''}
+                            value={values?.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
                     </Grid>
@@ -174,7 +181,7 @@ const EditProfileSupplier = (props) => {
                             {...register('organizationName', { required: true, maxLength: 20 })}
                             error={!!errors?.organizationName}
                             helpertext={errors?.organizationName ? errors.organizationName.message : null}
-                            value={data?.organisationName || ''}
+                            value={values?.organizationName}
                             onChange={handleChange('organizationName')}
                         />
                     </Grid>
@@ -191,7 +198,7 @@ const EditProfileSupplier = (props) => {
                             {...register('organizationAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.organizationAddress}
                             helpertext={errors?.organizationAddress ? errors.organizationAddress.message : null}
-                            value={data?.organisationAddress || ''}
+                            value={values?.organizationAddress}
                             onChange={handleChange('organizationAddress')}
                         />
                     </Grid>
@@ -208,7 +215,7 @@ const EditProfileSupplier = (props) => {
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
                             helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            // value={data?.profile_image ? `http://127.0.0.1:8000${data?.profile_image}` : ''}
+                            // value={values?.profile_image ? `http://127.0.0.1:8000${values?.profile_image}` : ''}
                             // ref={register}
                             // gfgdgdg={`http://localhost:8000/images/profiles/04b5d219-c12f-40e4-a4cc-2881a03b2525.jpeg`}
                             onChange={handleChange('profileImage')}
@@ -221,16 +228,16 @@ const EditProfileSupplier = (props) => {
                             placeholder='Upload File'
                             type="file"
                             accept="image/*"
-                            label={data?.profile_image || ''}
+                            label={values?.profile_image || ''}
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
                             helpertext={errors?.profileImage ? errors.profileImage.message : null}
                             onChange={handleChange('profileImage')}
                         > */}
-                        {/* </TextField><label>{data?.profile_image || ''}</label> */}
+                        {/* </TextField><label>{values?.profile_image || ''}</label> */}
                         <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
-                            <input type={'file'} onChange={handleChange('profile_image')} />
-                            <label>{data?.profile_image || ''}</label>
+                            <input type={'file'} onChange={handleChange('profileImage')} />
+                            <label>{values?.profileImage}</label>
                         </label>
                     </Grid>
                     <Grid item xs={6}>
@@ -246,7 +253,7 @@ const EditProfileSupplier = (props) => {
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
                             helpertext={errors?.location ? errors.location.message : null}
-                            value={data?.location || ''}
+                            value={values?.location}
                             onChange={handleChange('location')}
                         />
                     </Grid>
@@ -263,7 +270,7 @@ const EditProfileSupplier = (props) => {
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
                             helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
-                            value={data?.social_website || ''}
+                            value={values?.socialWebsite}
                             onChange={handleChange('socialWebsite')}
                         />
                     </Grid>

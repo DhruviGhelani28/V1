@@ -58,4 +58,9 @@ urlpatterns = [
     path('Users/Customers/<str:pk>/Bills/<str:pk1>/', CustomerView.getCustomerBill),
     # path('Users/Workers/<str:pk>/Bills/<str:pk1>/', WorkerView.getWorkerBill),
 
+    path('Users/Suppliers/Edit/<str:pk>', SupplierView.editSupplier),
+    # path('Users/Agencies/Edit/<str:pk>', AgencyView.editAgency),
+    # path('Users/Customers/Edit/<str:pk>', CustomerView.editCustomer),
+    # path('Users/Workers/Edit/<str:pk>', WorkerView.editWorker),
+
 ]
