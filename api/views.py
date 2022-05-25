@@ -79,12 +79,11 @@ class TokenObtainPairView(TokenViewBase):
     @api_view(['POST'])
     def post(request):
         serializer =  TokenObtainPairSerializer(data=request.data)
-        try:
-            serializer.is_valid(raise_exception=True)
+        if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        except AuthenticationFailed as e:
+        if(serializer.errors):
             # raise InvalidUser(e.args[0])
-            return Response({InvalidUser.default_detail, InvalidUser.status_code})
+            return Response(serializer.data)
         # except TokenError as e:
         #     raise InvalidToken(e.args[0])
     

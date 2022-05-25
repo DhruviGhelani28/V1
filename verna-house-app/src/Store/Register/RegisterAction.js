@@ -38,9 +38,9 @@ export const getLoginData = (values) => async (dispatch) => {
     // localStorage.removeItem("userInfo");
     try {
 
-        console.log("axs", values);
+
         const response = await axios.post(`${BaseUrl}/api/users/token/`, values);
-        console.log(response)
+        console.log("fdhdyhtyh", response)
         if (response.data.status === 406) {
 
             dispatch({
@@ -68,7 +68,7 @@ export const getLoginData = (values) => async (dispatch) => {
             localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
         }
     } catch (error) {
-        const login_error = error.response.data.non_field_errors[0];
+        const login_error = error.response.data.non_field_errors;
         dispatch({
             type: UserActionType.USER_LOGIN_FAIL, payload: { login_error },
         });

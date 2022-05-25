@@ -136,6 +136,7 @@ const Login = props => {
 
     const navigate = useNavigate();
     const classes1 = useStyles();
+    const [showPassword, setShowPassword] = useState(false)
     const logindata = JSON.parse(localStorage.getItem("userInfo"))
     const [count, setCount] = useState(0)
     const [values, setValues] = useState({
@@ -143,16 +144,14 @@ const Login = props => {
         password: "",
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value,
-        });
+    const handleChange = (prop) => (event) => {
+        console.log(prop)
+        setValues({ ...values, [prop]: event.target.value });
 
-        if (name === 'password') {
+        if (prop === 'password') {
             setCount((count) => count + 1)
-            if (count >= 8) {
+            console.log(values)
+            if (count > 9) {
                 dispatch(getLoginData(values));
             }
 
@@ -191,10 +190,9 @@ const Login = props => {
     }
 
     const handleClickShowPassword = () => {
-        setValues({
-            ...values,
-            showPassword: !values.showPassword,
-        });
+        setShowPassword(true)
+
+
     };
 
     const handleMouseDownPassword = (event) => {
@@ -282,7 +280,7 @@ const Login = props => {
                                         {...register('username', { required: true, maxLength: 20, minLength: 4, message: 'Enter Valid Username' })}
                                         error={!!errors?.username}
                                         value={values?.username}
-                                        onChange={handleChange}
+                                        onChange={handleChange('username')}
 
                                     />
                                     <Typography sx={{ color: 'white' }}>{errors?.username ? 'Enter Valid Username' : null}</Typography>
@@ -323,7 +321,7 @@ const Login = props => {
                                         label="Enter Password"
                                         placeholder='*******'
                                         id="password"
-                                        type={values.showPassword ? 'text' : 'password'}
+                                        type={showPassword ? 'text' : 'password'}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
@@ -348,7 +346,7 @@ const Login = props => {
                                         }
                                         )}
                                         error={!!errors?.password}
-                                        onChange={handleChange}
+                                        onChange={handleChange('password')}
                                     />
                                     <Typography sx={{ color: 'white', fontSize: 12 }}>{errors?.password ? "The password must contain at least 1 lowercase, 1 uppercase alphabetical character, 1 numeric character & length should be 8 character or longer " : null}</Typography>
                                 </Grid>
