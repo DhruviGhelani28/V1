@@ -30,7 +30,7 @@ export const getWorkers = () => async (dispatch) => {
     }
 }
 
-export const getWorker = (id) => async (dispatch, getState) => {
+export const getWorker = (id) => async (dispatch) => {
     console.log("edit worker dispatch call:: --", id['id'])
 
     try {
@@ -54,4 +54,27 @@ export const getWorker = (id) => async (dispatch, getState) => {
         // console.log("You are not authorised person to list the suppliers.");
     }
 
+}
+export const editWorker = (values, id) => async (dispatch) => {
+    console.log("Worker dispatch edit param:--", typeof (values['values']), values, id)
+    let data = values['values']
+    try {
+        const token = JSON.parse(localStorage.getItem('userInfo')).token
+        const config = {
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        }
+        const response = await axios.put(`${BaseUrl}/api/Users/Workers/Edit/${id}`, data, config)
+        console.log("edit Worker call response data:--", response.data)
+        dispatch({ type: UserActionType.EDIT_SUPPLIER_SUCCESS, supplier: response.data });
+
+    }
+    catch (error) {
+        const supplier_error = "You are not authorised person to edit the Worker.";
+        dispatch({
+            type: UserActionType.EDIT_SUPPLIER_FAIL, supplier: supplier_error,
+        });
+    }
 }

@@ -1,11 +1,6 @@
-// import React from "react";
 
-// // import Typography from '@mui/material/Typography';
-// // import { styled } from '@mui/material/styles';
-// import { useEffect } from "react";
-// import { getAgencies } from "../../Store/Agency/AgencyAction";
-// import { useDispatch, useSelector } from "react-redux";
-// import PropTypes from 'prop-types';
+
+// import * as React from 'react';
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 // import AddIcon from '@mui/icons-material/Add';
@@ -13,25 +8,295 @@
 // import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 // import SaveIcon from '@mui/icons-material/Save';
 // import CancelIcon from '@mui/icons-material/Close';
-
+// import { useEffect } from "react";
 // import Paper from '@mui/material/Paper';
 
-// import Typography from '@mui/material/Typography';
-// import Popper from '@mui/material/Popper';
-// import Snackbar from '@mui/material/Snackbar';
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { DataGrid } from '@mui/x-data-grid';
+
 // import Dialog from '@mui/material/Dialog';
 // import DialogTitle from '@mui/material/DialogTitle';
 // import DialogContent from '@mui/material/DialogContent';
-// import DialogActions from '@mui/material/DialogActions';
 
+// import { styled } from '@mui/material/styles';
+// import Table from '@mui/material/Table';
+// import TableBody from '@mui/material/TableBody';
+// import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+// import TableContainer from '@mui/material/TableContainer';
+// import TableHead from '@mui/material/TableHead';
+// import TableRow from '@mui/material/TableRow';
+// import { GridActionsCell, GridActionsCellItem } from '@mui/x-data-grid';
+// import { GridRowModes } from '@mui/x-data-grid';
 // import Alert from '@mui/material/Alert';
 
-// import {
-//     useGridApiRef,
-//     DataGridPro,
-//     GridToolbarContainer,
-//     GridActionsCellItem,
-// } from '@mui/x-data-grid-pro';
+
+// const StyledTableCell = styled(TableCell)(({ theme }) => ({
+//     [`&.${tableCellClasses.head}`]: {
+//         backgroundColor: theme.palette.common.black,
+//         color: theme.palette.common.white,
+//     },
+//     [`&.${tableCellClasses.body}`]: {
+//         fontSize: 14,
+//     },
+// }));
+
+// const StyledTableRow = styled(TableRow)(({ theme }) => ({
+//     '&:nth-of-type(odd)': {
+//         backgroundColor: theme.palette.action.hover,
+//     },
+//     // hide last border
+//     '&:last-child td, &:last-child th': {
+//         border: 0,
+//     },
+// }));
+
+
+// const columns = [
+
+//     { field: 'id', headerName: 'ID', width: 90, key: 0, type: 'number' },
+//     {
+//         key: 1,
+//         field: 'name',
+//         headerName: 'Full name',
+//         sortable: true,
+//         type: 'string',
+//         width: 140,
+//         editable: true,
+
+//     },
+//     {
+//         key: 2,
+//         field: 'username',
+//         headerName: 'UserName',
+//         type: 'string',
+//         width: 120,
+//         editable: true,
+//     },
+//     {
+//         key: 3,
+//         field: 'email',
+//         headerName: 'Email',
+//         type: 'string',
+//         width: 110,
+//         editable: true,
+//     },
+//     {
+//         key: 4,
+//         field: 'mobileNo',
+//         headerName: 'Mobile No.',
+//         type: 'number',
+//         sortable: false,
+//         width: 100,
+//         editable: true,
+//     },
+//     {
+//         key: 5,
+//         field: 'agencyName',
+//         headerName: 'AgencyName',
+//         type: 'string',
+//         width: 150,
+//         editable: true,
+//     },
+//     {
+//         key: 6,
+//         field: 'agencyAddress',
+//         headerName: 'AgencyAddress',
+//         type: 'string',
+//         width: 150,
+//         editable: true,
+//     },
+//     {
+//         key: 7,
+//         field: 'profile_image',
+//         headerName: 'Profile Image',
+//         type: 'image',
+//         width: 130,
+//         editable: true,
+//     },
+//     {
+//         key: 8,
+//         field: 'location',
+//         headerName: 'Location',
+//         type: 'string',
+//         width: 120,
+//         editable: true,
+//     },
+//     {
+//         key: 9,
+//         field: 'social_website',
+//         headerName: 'Social_website',
+//         type: 'string',
+//         width: 120,
+//         editable: true,
+//     },
+//     {
+//         key: 10,
+//         field: 'agency',
+//         headerName: 'AgencyId',
+//         type: 'number',
+//         sortable: true,
+//         width: 100,
+//         editable: true,
+//     }
+
+// ];
+
+// function Agencies() {
+//     const [open, setOpen] = React.useState(false);
+//     const handleClose = () => {
+//         setOpen(false);
+//     };
+//     const handleOpen = () => {
+//         console.log("form open");
+//         setOpen(true);
+//     };
+//     const dispatch = useDispatch()
+//     const agencies = useSelector((state) => state.agencies);
+//     const [rows, setRows] = React.useState([]);
+//     const [reload, setReload] = React.useState(false)
+//     useEffect(() => {
+//         dispatch(getSuppliers())
+//     }, [dispatch])
+
+//     console.log(suppliers.getSuppliers)
+
+//     useEffect(() => {
+//         setRows(suppliers.getSuppliers)
+
+//     }, [suppliers.getSuppliers, reload])
+
+//     // const rows = suppliers.getSuppliers
+//     console.log(rows)// const [rowModesModel, setRowModesModel] = React.useState({});
+
+//     const editHandler = (id) => {
+//         // handleOpen();
+//         // console.log("id:--", id);
+//         // dispatch(getSupplier({ id: id }));
+//         // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+//     };
+
+//     const handleSaveClick = (id) => () => {
+//         // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+//     };
+
+//     const deleteHandler = (row) => () => {
+//         // setRows(rows.filter((row) => row.id !== id));
+//     };
+
+
+//     return (
+//         <Box
+//             sx={{
+//                 height: "100%",
+//                 width: '100%',
+//                 paddingRight: 0.5,
+//             }}
+//         >
+//             <h2>Suppliers:</h2>
+//             <Paper sx={{ overflow: 'hidden', width: '100%', paddingLeft: 0.1, paddingRight: 0.1, elevation: 24 }}>
+//                 <TableContainer component={Paper}>
+//                     <Table sx={{ minWidth: "100%" }} aria-label="customized table">
+//                         <TableHead>
+//                             <TableRow sx={{ width: '100%' }} key='header'>
+//                                 {columns && columns.map((column, index) => (
+//                                     <StyledTableCell
+//                                         key={index}
+//                                         style={{ Width: column.width }}
+//                                     >
+//                                         {column.headerName}
+//                                     </StyledTableCell>
+//                                 ))}
+//                                 <StyledTableCell
+//                                     key='action'
+//                                     sx={{ width: 300 }}>
+//                                     Actions
+//                                 </StyledTableCell>
+//                             </TableRow>
+//                         </TableHead>
+//                         <TableBody>
+//                             {rows && rows.map(
+//                                 (row, index) => (
+//                                     <StyledTableRow hover key={index}>
+//                                         {columns && columns.map((column, index) => {
+//                                             if (column.type === "string" || column.type === "number") {
+//                                                 return (
+//                                                     <StyledTableCell key={index} style={{ width: column.width }}>
+//                                                         {row[column.field]}
+//                                                     </StyledTableCell>
+//                                                 )
+//                                             }
+//                                             else {
+//                                                 return (
+//                                                     <StyledTableCell key={index} style={{ padding: 0.1 }}>
+//                                                         <img src={`http://127.0.0.1:8000${row[column.field]}`} style={{ height: 100, width: 100 }} />
+//                                                     </StyledTableCell>
+//                                                 )
+//                                             }
+//                                         })}
+//                                         <StyledTableCell key={index} sx={{ width: 200 }}>
+
+//                                             <EditIcon onClick={handleOpen} />
+//                                             {open &&
+//                                                 <Dialog open={open} onClose={handleClose} sx={{ padding: 0.5, width: 900 }}>
+//                                                     <DialogTitle>Edit Supplier : {row.id}</DialogTitle>
+//                                                     <DialogContent dividers sx={{ padding: 0.1 }}>
+//                                                         <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} setReload={setReload} />
+//                                                     </DialogContent>
+//                                                     {/* <DialogActions>
+//                                                     <Button onClick={handleClose} sx={{ border: '1px solid black' }}>Cancel</Button>
+//                                                     <Button onClick={handleClose}>Save</Button>
+//                                                 </DialogActions> */}
+//                                                 </Dialog>
+//                                             }
+//                                             <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
+//                                             <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5, }}>
+//                                                 View Details
+//                                             </Button>
+//                                         </StyledTableCell>
+//                                     </StyledTableRow>
+//                                 ))}
+//                         </TableBody>
+//                     </Table>
+//                 </TableContainer>
+//             </Paper>
+//         </Box>
+//     )
+// }
+
+// export default Agencies;
+
+// {/* <React.Fragment>
+// //             <h2>Suppliers will be here</h2>
+// //             <Grid container spacing={2}>
+// //                 <Grid item xs={4}> */}
+// //                     {
+// //                         <Paper elevation={6}>
+// //                             <Typography>
+
+// //                             </Typography>
+
+// //                         </Paper>
+
+// //                     }
+// //                 </Grid>
+// //             </Grid>
+
+// //             <div style={{ height: 400, width: '100%' }}>
+// //                 <DataGrid
+// //                     rows={rows}
+// //                     columns={columns}
+// //                     pageSize={5}
+// //                     rowsPerPageOptions={[5]}
+// //                     checkboxSelection
+// //                     disableSelectionOnClick
+// //                 />
+// //             </div>
+// //         </React.Fragment>
+
+
+
+// {/*
 
 // function isOverflown(element) {
 //     return (
@@ -145,438 +410,9 @@
 //     /**
 //      * The column of the row that the current cell belongs to.
 //      */
-//     colDef: PropTypes.object.isRequired,
+//     // colDef: PropTypes.object.isRequired,
 //     /**
 //      * The cell value, but if the column has valueGetter, use getValue.
 //      */
-//     value: PropTypes.string,
+//     // value: PropTypes.string,
 // };
-
-// const useFakeMutation = () => {
-//     return React.useCallback(
-//         (user) =>
-//             new Promise((resolve, reject) =>
-//                 setTimeout(() => {
-//                     if (user.name?.trim() === '') {
-//                         reject();
-//                     } else {
-//                         resolve(user);
-//                     }
-//                 }, 200),
-//             ),
-//         [],
-//     );
-// };
-
-// function computeMutation(newRow, oldRow) {
-//     if (newRow.name !== oldRow.name) {
-//         return `Name from '${oldRow.name}' to '${newRow.name}'`;
-//     }
-//     if (newRow.username !== oldRow.username) {
-//         return `userName from '${oldRow.username}' to '${newRow.username}'`;
-//     }
-//     if (newRow.email !== oldRow.email) {
-//         return `Email from '${oldRow.email || ''}' to '${newRow.email || ''}'`;
-//     }
-//     if (newRow.mobileNo !== oldRow.mobileNo) {
-//         return `MobileNo from '${oldRow.mobileNo || ''}' to '${newRow.mobileNo || ''}'`;
-//     }
-//     return null;
-// }
-
-
-
-
-
-// const Agencies = props => {
-//     const dispatch = useDispatch()
-//     const agencies = useSelector((state) => state.agencies);
-//     const { loading, details, error } = agencies;
-
-//     useEffect(() => {
-//         dispatch(getAgencies())
-//     }, [dispatch])
-//     console.log(agencies.getAgencies)
-
-//     const length = agencies.getAgencies.length
-//     console.log(length)
-//     const rows =  [agencies.getAgencies]
-
-//     const apiRef = useGridApiRef();
-
-//     const handleRowEditStart = (params, event) => {
-//         event.defaultMuiPrevented = true;
-//     };
-
-//     const handleRowEditStop = (params, event) => {
-//         event.defaultMuiPrevented = true;
-//     };
-
-//     const handleEditClick = (id) => (event) => {
-//         event.stopPropagation();
-//         apiRef.current.startRowEditMode({ id });
-//     };
-
-//     const handleSaveClick = (id) => async (event) => {
-//         event.stopPropagation();
-//         await apiRef.current.stopRowEditMode({ id });
-//     };
-
-//     const handleDeleteClick = (id) => (event) => {
-//         event.stopPropagation();
-//         apiRef.current.updateRows([{ id, _action: 'delete' }]);
-//     };
-
-//     const handleCancelClick = (id) => async (event) => {
-//         event.stopPropagation();
-//         await apiRef.current.stopRowEditMode({ id, ignoreModifications: true });
-
-//         const row = apiRef.current.getRow(id);
-//         if (row.isNew) {
-//             apiRef.current.updateRows([{ id, _action: 'delete' }]);
-//         }
-//     };
-
-//     // const processRowUpdate = async (newRow) => {
-//     //     return { ...newRow, isNew: false };
-//     // };
-
-//     const columns = [
-
-//         { field: 'id', headerName: 'ID', width: 90 },
-//         // {
-//         //     field: 'name',
-//         //     headerName: 'First Name',
-//         //     width: 150,
-//         //     editable: true,
-//         // },
-//         {
-//             field: 'name',
-//             headerName: 'Full name',
-//             description: 'This column has a value getter and is not sortable.',
-//             sortable: false,
-//             width: 160,
-//             editable: true,
-//             valueGetter: (params) =>
-//                 `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-//         },
-//         {
-//             field: 'username',
-//             headerName: 'UserName',
-//             width: 150,
-//             editable: true,
-//         },
-//         {
-//             field: 'email',
-//             headerName: 'Email',
-//             type: 'string',
-//             width: 110,
-//             editable: true,
-//         },
-//         {
-//             field: 'mobileNo',
-//             headerName: 'Mobile',
-//             type: 'number',
-//             sortable: false,
-//             width: 100,
-//             editable: true,
-//             resizable: true
-//         },
-//         {
-//             field: 'agencyName',
-//             headerName: 'AgencyName',
-//             type: 'string',
-//             width: 150,
-//             editable: true,
-//         },
-//         {
-//             field: 'agencyAddress',
-//             headerName: 'AgencyAddress',
-//             type: 'string',
-//             width: 150,
-//             renderCell: renderCellExpand,
-//             editable: true,
-//         },
-//         {
-//             field: 'profileImage',
-//             headerName: 'Profile Image',
-//             type: 'image',
-//             width: 150,
-//             editable: true,
-//         },
-//         {
-//             field: 'location',
-//             headerName: 'Location',
-//             type: 'string',
-//             width: 150,
-//             renderCell: renderCellExpand,
-//             editable: true,
-//         },
-//         {
-//             field: 'social_website',
-//             headerName: 'Social_website',
-//             type: 'string',
-//             width: 150,
-//             renderCell: renderCellExpand,
-//             editable: true,
-//         },
-//         {
-//             field: 'actions',
-//             type: 'actions',
-//             headerName: 'Actions',
-//             width: 100,
-//             cellClassName: 'actions',
-//             getActions: ({ id }) => {
-//                 const isInEditMode = apiRef.current.getRowMode(id) === 'edit';
-
-//                 if (isInEditMode) {
-//                     return [
-//                         <GridActionsCellItem
-//                             icon={<SaveIcon />}
-//                             label="Save"
-//                             onClick={handleSaveClick(id)}
-//                             color="primary"
-//                         />,
-//                         <GridActionsCellItem
-//                             icon={<CancelIcon />}
-//                             label="Cancel"
-//                             className="textPrimary"
-//                             onClick={handleCancelClick(id)}
-//                             color="inherit"
-//                         />,
-//                     ];
-//                 }
-
-//                 return [
-//                     <GridActionsCellItem
-//                         icon={<EditIcon />}
-//                         label="Edit"
-//                         className="textPrimary"
-//                         onClick={handleEditClick(id)}
-//                         color="inherit"
-//                     />,
-//                     <GridActionsCellItem
-//                         icon={<DeleteIcon />}
-//                         label="Delete"
-//                         onClick={handleDeleteClick(id)}
-//                         color="inherit"
-//                     />,
-//                 ];
-//             },
-//         },
-//     ];
-
-//     const mutateRow = useFakeMutation();
-//     const noButtonRef = React.useRef(null);
-//     const [promiseArguments, setPromiseArguments] = React.useState(null);
-
-//     const [snackbar, setSnackbar] = React.useState(null);
-
-//     const handleCloseSnackbar = () => setSnackbar(null);
-
-//     const processRowUpdate = React.useCallback(
-//         (newRow, oldRow) =>
-//             new Promise((resolve, reject) => {
-//                 const mutation = computeMutation(newRow, oldRow);
-//                 if (mutation) {
-//                     // Save the arguments to resolve or reject the promise later
-//                     setPromiseArguments({ resolve, reject, newRow, oldRow });
-//                 } else {
-//                     resolve(oldRow); // Nothing was changed
-//                 }
-//             }),
-//         [],
-//     );
-
-//     const handleNo = () => {
-//         const { oldRow, resolve } = promiseArguments;
-//         resolve(oldRow); // Resolve with the old row to not update the internal state
-//         setPromiseArguments(null);
-//     };
-
-//     const handleYes = async () => {
-//         const { newRow, oldRow, reject, resolve } = promiseArguments;
-
-//         try {
-//             // Make the HTTP request to save in the backend
-//             const response = await mutateRow(newRow);
-//             setSnackbar({ children: 'User successfully saved', severity: 'success' });
-//             resolve(response);
-//             setPromiseArguments(null);
-//         } catch (error) {
-//             setSnackbar({ children: "Name can't be empty", severity: 'error' });
-//             reject(oldRow);
-//             setPromiseArguments(null);
-//         }
-//     };
-
-//     const handleEntered = () => {
-//         // The `autoFocus` is not used because, if used, the same Enter that saves
-//         // the cell triggers "No". Instead, we manually focus the "No" button once
-//         // the dialog is fully open.
-//         // noButtonRef.current?.focus();
-//     };
-
-//     const renderConfirmDialog = () => {
-//         if (!promiseArguments) {
-//             return null;
-//         }
-
-//         const { newRow, oldRow } = promiseArguments;
-//         const mutation = computeMutation(newRow, oldRow);
-
-//         return (
-//             <Dialog
-//                 maxWidth="xs"
-//                 TransitionProps={{ onEntered: handleEntered }}
-//                 open={!!promiseArguments}
-//             >
-//                 <DialogTitle>Are you sure?</DialogTitle>
-//                 <DialogContent dividers>
-//                     {`Pressing 'Yes' will change ${mutation}.`}
-//                 </DialogContent>
-//                 <DialogActions>
-//                     <Button ref={noButtonRef} onClick={handleNo}>
-//                         No
-//                     </Button>
-//                     <Button onClick={handleYes}>Yes</Button>
-//                 </DialogActions>
-//             </Dialog>
-//         );
-//     };
-
-
-//     return (
-//         // <Typography>
-
-//         <Box
-//             sx={{
-//                 height: 500,
-//                 width: '100%',
-//                 // '& .actions': {
-//                 //     color: 'text.secondary',
-//                 // },
-//                 // '& .textPrimary': {
-//                 //     color: 'text.primary',
-//                 // },
-//             }}
-//         >
-//             <h2>Agencies:</h2>
-//             {renderConfirmDialog()}
-
-//             <DataGridPro
-//                 rows={rows}
-//                 columns={columns}
-//                 apiRef={apiRef}
-//                 editMode="row"
-//                 onRowEditStart={handleRowEditStart}
-//                 onRowEditStop={handleRowEditStop}
-//                 processRowUpdate={processRowUpdate}
-//                 // components={{
-//                 //     Toolbar: EditToolbar,
-//                 // }}
-//                 // componentsProps={{
-//                 //     toolbar: { apiRef },
-//                 // }}
-//                 experimentalFeatures={{ newEditingApi: true }}
-//             />
-//             {!!snackbar && (
-//                 <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
-//                     <Alert {...snackbar} onClose={handleCloseSnackbar} />
-//                 </Snackbar>
-//             )}
-//         </Box>
-//         // </Typography>
-//     );
-// };
-// export default Agencies;
-
-import { Box } from "@mui/material";
-import React, { useEffect } from "react";
-import classes from "../Login.module.css";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Card, Grid, Fab, Typography, Paper } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getAgencies } from "../../Store/Agency/AgencyAction";
-
-const Agencies = (props) => {
-    const dispatch = useDispatch()
-    const agencies = useSelector((state) => state.agencies)
-    useEffect(() => {
-        dispatch(getAgencies())
-    }, [dispatch])
-
-    console.log(agencies.getAgencies)
-
-    const length = agencies.getAgencies.length
-    // console.log(length)
-    // const rows = [agencies.getAgencies]
-
-    return (
-        <Box>
-            <h2> Hello Agencies</h2>
-            <Grid sx={{ flexGrow: 1 }} container >
-                <Grid item xs={12} >
-                    {
-                        agencies.getAgencies && agencies.getAgencies.map((agency, index) => {
-                            // <Grid item sx={3} key={index}>
-                            //     <Card key={index} sx={{ border: '3px solid black', height: 100, width: 100 }}>
-
-                            //     </Card>
-                            // </Grid>
-                            <Grid key={agency.id} item xs={3}>
-                                <Paper
-                                    sx={{
-                                        maxHeight: 400,
-                                        maxWidth: 300,
-                                        padding: 0.5,
-                                        borderColor: 'black',
-                                        borderRadius: 5
-
-                                    }}
-                                    key={index}
-                                >
-                                    <Grid container direction={'row'} spacing={0}>
-                                        <Grid item xs={8}>
-                                            <Typography sx={{ fontSize: 15 }} color="text.primary" align="left">
-                                                Task Name: {agency.name}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={4} align="right">
-                                            <Fab color="secondary" aria-label="edit" size="small" sx={{ marginLeft: 0.3 }}>
-                                                <EditIcon />
-                                            </Fab>
-                                            <Fab color="secondary" aria-label="delete" size="small" sx={{ marginLeft: 0.3 }}>
-                                                <DeleteIcon />
-                                            </Fab>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container direction={'row'}  >
-                                        <Grid item xs={12} >
-                                            <div className={classes.root1}>
-                                                <Typography sx={{ fontSize: 14, mb: 0.5 }} color="text.primary" align="left">
-                                                    Description: {agency.description ?? (agency.description ? agency.description : " ")}
-                                                </Typography>
-                                                <Typography sx={{ fontSize: 14, mb: 0.5 }} color="text.primary">
-                                                    Date: {agency.date ?? (agency.date ? agency.date : "")}
-                                                </Typography>
-                                                <Typography sx={{ fontSize: 14, mb: 0.5 }} color="text.primary">
-                                                    Time: {agency.time ?? (agency.time ? agency.time : "")}
-                                                </Typography>
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-                        })
-                    }
-                </Grid>
-            </Grid>
-        </Box>
-
-
-    )
-
-}
-export default Agencies;

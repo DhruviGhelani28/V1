@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLoginData, getUsers } from "../../Store/Register/RegisterAction";
 import { useForm } from "react-hook-form";
 import { useSelect } from "@mui/base";
+import { loadingButtonClasses } from "@mui/lab";
 
 
 
@@ -110,30 +111,26 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const Login = props => {
-    // const users = useSelector((state) => state.users)
-    const login = useSelector((state) => state.userLogin)
-    const errorData = login.loginData
+
+    let login = useSelector((state) => state.userLogin)
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch(getUsers())
-    // }, [dispatch])
-    // console.log(users.users)
+    const { register, formState: { errors } } = useForm();
 
-
+    const errorLogin = login?.loginData?.detail
+    console.log("\n-==resp\t", login, errorLogin)
 
     const [alert, setAlert] = React.useState(false);
     const alertClick = () => {
         setAlert(true);
     };
-
     const alertClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setAlert(false);
     };
 
+    useEffect(() => { }, [])
     const navigate = useNavigate();
     const classes1 = useStyles();
     const [showPassword, setShowPassword] = useState(false)
@@ -150,32 +147,27 @@ const Login = props => {
 
         if (prop === 'password') {
             setCount((count) => count + 1)
-            console.log(values)
-            if (count > 9) {
+
+            if (count > 7) {
                 dispatch(getLoginData(values));
             }
-
         }
+
     };
 
 
-    const onSubmit = (data) => {
-        // dispatch(getLoginData(data));
-        console.log(JSON.stringify(data, null, 2));
-        const errorData = login.loginData
-        console.log(login.loginData)
-        // if (errorData[0] === 406) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ) {
-        //     alertClick(true);
+    const onSubmit = (e) => {
+        e.preventDefault()
+        console.log(JSON.stringify(values, null, 2));
+        // dispatch(getLoginData(values));
 
-        // }
-        // else {
-
-        dispatch(getLoginData(data));
-
-        navigate("/Account/MyTasks");
-        // }
-
-        // 
+        if (errorLogin === "No active account found with the given credentials") {
+            alertClick(true);
+        }
+        else {
+            // dispatch(getLoginData(values));
+            navigate("/Account/MyTasks");
+        }
 
     };
 
@@ -186,13 +178,10 @@ const Login = props => {
         if (logindata !== null) {
             navigate("/ChangePassword")
         }
-
     }
 
     const handleClickShowPassword = () => {
         setShowPassword(true)
-
-
     };
 
     const handleMouseDownPassword = (event) => {
@@ -200,7 +189,7 @@ const Login = props => {
     };
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+
 
     return (
         <>
@@ -209,7 +198,7 @@ const Login = props => {
                 <video loop autoPlay muted preload="auto" className={classes.loginback}>
                     <source src={video} type="video/mp4" />
                 </video>
-                <Snackbar open={alert} autoHideDuration={6000} onClose={alertClose}>
+                <Snackbar open={alert} autoHideDuration={7000} onClose={alertClose}>
                     <Alert onClose={alertClose} severity="error" sx={{ width: '100%' }}>
                         Enter Valid Credentials
                     </Alert>
@@ -242,7 +231,7 @@ const Login = props => {
                             }}
                             noValidate
                             autoComplete="off"
-                            onSubmit={handleSubmit(onSubmit)}
+                            onSubmit={onSubmit}
                         >
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>

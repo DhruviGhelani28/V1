@@ -7,13 +7,16 @@ const initialState = {
 }
 
 export const userLoginReducer = (state = initialState.loginData, action) => {
+    console.log(initialState.loginData, "\t", action)
     switch (action.type) {
+
         case UserActionType.USER_LOGIN_REQUEST:
             return { loading: true };
         case UserActionType.USER_LOGIN_SUCCESS:
             return { loading: false, loginData: action.payload };
+
         case UserActionType.USER_LOGIN_FAIL:
-            return { loading: true, error: action.payload };
+            return { loading: true, loginData: action.payload };
 
         case UserActionType.USER_LOGOUT:
             return { loading: false };

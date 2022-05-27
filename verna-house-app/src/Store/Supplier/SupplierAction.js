@@ -2,8 +2,8 @@ import axios from "axios";
 import { UserActionType } from "../Constants/UserActionType";
 
 const BaseUrl = "http://localhost:8000";
-export const SUPPLIER_CREATE_SUCCESS = "SUPPLIER_CREATE_SUCCESS ";
-export const SUPPLIER_CREATE_FAIL = "SUPPLIER_CREATE_FAIL ";
+// export const SUPPLIER_CREATE_SUCCESS = "SUPPLIER_CREATE_SUCCESS ";
+// export const SUPPLIER_CREATE_FAIL = "SUPPLIER_CREATE_FAIL ";
 
 export const getSuppliers = () => async (dispatch) => {
     console.log("Suppliers dispatch");

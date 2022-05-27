@@ -70,26 +70,24 @@ def getRoutes(request):
     return Response(routes)
 
 
-class TokenObtainPairView(TokenViewBase):
-    """
-    Takes a set of user credentials and returns an access and refresh JSON web
-    token pair to prove the authentication of those credentials.
-    """
-    serializer_class = TokenObtainPairSerializer
-    @api_view(['POST'])
-    def post(request):
-        serializer =  TokenObtainPairSerializer(data=request.data)
-        if serializer.is_valid():
-            return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        if(serializer.errors):
-            # raise InvalidUser(e.args[0])
-            return Response(serializer.data)
-        # except TokenError as e:
-        #     raise InvalidToken(e.args[0])
-    
-    # res = self.post()
-    
-    # return res
+# class TokenObtainPairView(TokenObtainPairView):
+#     """
+#     Takes a set of user credentials and returns an access and refresh JSON web
+#     token pair to prove the authentication of those credentials.
+#     """
+#     serializer_class = TokenObtainPairSerializer
+#     @api_view(['POST'])
+#     def post(request):
+#         serializer =  TokenObtainPairSerializer(data=request.data)
+#         print("sdfgsdfgsdfgs")
+#         try:
+#             if serializer.is_valid():
+#                 print("-=-=\n1321313",serializer.validated_data, serializer.data )
+#                 return Response(serializer.data, status=status.HTTP_200_OK)
+#             print("-=-=\npoeriwpejri", serializer.data )
+#             return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+#         except Exception as e:
+#             return Response({'error':"Authentication"})
 
 
         

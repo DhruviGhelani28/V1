@@ -246,7 +246,7 @@ function Suppliers() {
                                                 <Dialog open={open} onClose={handleClose} sx={{ padding: 0.5, width: 900 }}>
                                                     <DialogTitle>Edit Supplier : {row.id}</DialogTitle>
                                                     <DialogContent dividers sx={{ padding: 0.1 }}>
-                                                        <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} setReload={setReload}/>
+                                                        <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} setReload={setReload} />
                                                     </DialogContent>
                                                     {/* <DialogActions>
                                                     <Button onClick={handleClose} sx={{ border: '1px solid black' }}>Cancel</Button>

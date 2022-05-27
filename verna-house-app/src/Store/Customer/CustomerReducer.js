@@ -1,12 +1,14 @@
-import { UserActionType } from "../Constants/UserActionType"; 
+import { UserActionType } from "../Constants/UserActionType";
 
 const initialState = {
     getCustomers: [],
+    getCustomer: {},
+    editCustomer: {},
 }
 
-const CustomerReducer = (state = initialState, action) => {
+export const getCustomersReducer = (state = initialState.getCustomers, action) => {
     switch (action.type) {
-        case UserActionType.GET_CUSTOMERS_DATA:
+        case UserActionType.GET_CUSTOMERS_SUCCESS:
             return { getCustomers: action.customers }
         case UserActionType.GET_CUSTOMERS_FAIL:
             return { getCustomers: action.customers }
@@ -14,4 +16,25 @@ const CustomerReducer = (state = initialState, action) => {
     }
 
 };
-export default CustomerReducer;
+
+export const getCustomerReducer = (state = initialState.getCustomer, action) => {
+    switch (action.type) {
+        case UserActionType.GET_CUSTOMER_SUCCESS:
+            return { getCustomer: action.customer };
+        case UserActionType.GET_CUSTOMER_FAIL:
+            return { getCustomer: action.customer };
+        default: return state;
+    }
+
+};
+
+export const editCustomerReducer = (state = initialState.editCustomer, action) => {
+    switch (action.type) {
+        case UserActionType.EDIT_CUSTOMER_SUCCESS:
+            return { editCustomer: action.customer };
+        case UserActionType.EDIT_CUSTOMER_FAIL:
+            return { editCustomer: action.customer };
+        default: return state;
+    }
+
+};

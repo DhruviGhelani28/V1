@@ -1,31 +1,44 @@
-import { getSuppliersReducer, SupplierCreateReducer, editSupplierReducer, getSupplierReducer } from "./Supplier/SupplierReducer";
-import { getWorkerReducer, editWorkerReducer } from "./Worker/WorkerReducer";
-import AgencyReducer from "./Agency/AgencyReducer";
-import CustomerReducer from "./Customer/CustomerReducer";
+import { userLoginReducer, userRegisterReducer, usersReducer } from "./Register/RegisterReducer";
+
+import { getSuppliersReducer, editSupplierReducer, getSupplierReducer } from "./Supplier/SupplierReducer";
+import { getWorkersReducer, getWorkerReducer, editWorkerReducer } from "./Worker/WorkerReducer";
+import { getAgenciesReducer, getAgencyReducer, editAgencyReducer } from "./Agency/AgencyReducer";
+import { getCustomersReducer, getCustomerReducer, editCustomerReducer } from "./Customer/CustomerReducer";
+import { getModelsReducer, getModelReducer, editModelReducer } from "./Model/ModelReducer";
+
 import { TaskReducer, AddTaskReducer } from "./Task/TaskReducer";
 import { GadgetReducer, AddGadgetReducer } from "./Gadget/GadgetReducer";
 import { GarmentReducer, AddGarmentReducer } from "./Garment/GarmentReducer";
 import { PhotoPosterReducer } from "./PhotoPoster/PhotoPosterReducer";
-import { ModelReducer } from "./Model/ModelReducer";
+
 import { combineReducers } from "redux";
-import { userLoginReducer, userRegisterReducer, usersReducer } from "./Register/RegisterReducer";
+
 const RootReducers = combineReducers(
     {
         userRegister: userRegisterReducer,
         userLogin: userLoginReducer,
         users: usersReducer,
 
-        suppliers: getSuppliersReducer,
         // supplierData: SupplierCreateReducer,
+        suppliers: getSuppliersReducer,
         supplier: getSupplierReducer,
-        esupplier : editSupplierReducer,
+        esupplier: editSupplierReducer,
 
-        workers: getWorkerReducer,
-        worker: editWorkerReducer,
+        // workers: getWorkersReducer,
+        worker: getWorkerReducer,
+        eworker: editWorkerReducer,
 
-        agencies: AgencyReducer,
+        agencies: getAgenciesReducer,
+        agency: getAgencyReducer,
+        eagency: editAgencyReducer,
 
-        customers: CustomerReducer,
+        customers: getCustomersReducer,
+        customer: getCustomerReducer,
+        ecustomer: editCustomerReducer,
+
+        models: getModelsReducer,
+        model: getModelReducer,
+        emodel: editModelReducer,
 
         tasks: TaskReducer,
         addTask: AddTaskReducer,
@@ -38,7 +51,7 @@ const RootReducers = combineReducers(
 
         photoposters: PhotoPosterReducer,
 
-        models: ModelReducer,
+
     }
 )
 

@@ -35,40 +35,44 @@ export const getRegisterData = (values) => async (dispatch) => {
 
 export const getLoginData = (values) => async (dispatch) => {
     console.log("Login dispatch", values, typeof (values))
+    let response = {}
     // localStorage.removeItem("userInfo");
     try {
 
+        try {
+            response = await axios.post(`${BaseUrl}/api/users/token/`, values);
+        }
+        catch (error) {
+            console.log("------------", error.response.data)
+            dispatch({
+                type: UserActionType.USER_LOGIN_FAIL, payload: error.response.data,
+            });
+            return;
 
-        const response = await axios.post(`${BaseUrl}/api/users/token/`, values);
+        }
+
         console.log("fdhdyhtyh", response)
-        if (response.data.status === 406) {
+        const username = values.username
+        const token = response.data['access']
+        const config = {
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        };
 
-            dispatch({
-                type: UserActionType.USER_LOGIN_SUCCESS, payload: response.data,
-            });
-        }
-        else {
-            const username = values.username
-            const token = response.data['access']
-            const config = {
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-            };
+        // const { data } = await axios.get(`${BaseUrl}/api/users/`, values);
+        const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
+        dispatch({
+            type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
+        });
+        const role = login['data']
+        console.log("login call", login)
 
-            // const { data } = await axios.get(`${BaseUrl}/api/users/`, values);
-            const login = await axios.post(`${BaseUrl}/api/login/`, values, config)
-            dispatch({
-                type: UserActionType.USER_LOGIN_SUCCESS, payload: login,
-            });
-            const role = login['data']
-            console.log("login call", login)
+        localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
 
-            localStorage.setItem("userInfo", JSON.stringify({ username, token, role }));
-        }
     } catch (error) {
-        const login_error = error.response.data.non_field_errors;
+        const login_error = error.response;
         dispatch({
             type: UserActionType.USER_LOGIN_FAIL, payload: { login_error },
         });

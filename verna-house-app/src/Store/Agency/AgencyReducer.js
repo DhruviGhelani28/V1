@@ -1,13 +1,15 @@
 
-import { UserActionType } from "../Constants/UserActionType";  
+import { UserActionType } from "../Constants/UserActionType";
 
 const initialState = {
     getAgencies: [],
+    getAgency: {},
+    editAgency: {},
 }
 
-const AgencyReducer = (state = initialState, action) => {
+export const getAgenciesReducer = (state = initialState.getAgencies, action) => {
     switch (action.type) {
-        case UserActionType.GET_AGENCIES_DATA:
+        case UserActionType.GET_AGENCIES_SUCCESS:
             return { getAgencies: action.agencies }
         case UserActionType.GET_AGENCIES_FAIL:
             return { getAgencies: action.agencies }
@@ -15,4 +17,25 @@ const AgencyReducer = (state = initialState, action) => {
     }
 
 };
-export default AgencyReducer;
+
+export const getAgencyReducer = (state = initialState.getAgency, action) => {
+    switch (action.type) {
+        case UserActionType.GET_AGENCY_SUCCESS:
+            return { getAgency: action.agency };
+        case UserActionType.GET_AGENCY_FAIL:
+            return { getAgency: action.agency };
+        default: return state;
+    }
+
+};
+
+export const editAgencyReducer = (state = initialState.editAgency, action) => {
+    switch (action.type) {
+        case UserActionType.EDIT_AGENCY_SUCCESS:
+            return { editAgency: action.agency };
+        case UserActionType.EDIT_AGENCY_FAIL:
+            return { editAgency: action.agency };
+        default: return state;
+    }
+
+};
