@@ -14,98 +14,98 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password']
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
-    """User registration serializer class"""
-    username = serializers.CharField(required=True,help_text="Enter your Username.")
-    email = serializers.CharField(required=True, help_text="Enter Your Email.")
-    name = serializers.CharField(required=True, help_text="Enter Your Name")
+# class UserRegistrationSerializer(serializers.ModelSerializer):
+#     """User registration serializer class"""
+#     username = serializers.CharField(required=True,help_text="Enter your Username.")
+#     email = serializers.CharField(required=True, help_text="Enter Your Email.")
+#     name = serializers.CharField(required=True, help_text="Enter Your Name")
 
-    # first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
-    # last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
-    role = serializers.CharField(required=True, help_text="Enter Your Roll.")
-    password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Password.")
-    confPassword = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Confirm Password.")
+#     # first_name = serializers.CharField(required=True,help_text="Enter First your Name.")
+#     # last_name = serializers.CharField(required=True,help_text="Enter Last your Name.")
+#     role = serializers.CharField(required=True, help_text="Enter Your Roll.")
+#     password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Password.")
+#     confPassword = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'},help_text="Enter your Confirm Password.")
 
-    class Meta:
-        model = User
-        fields = '__all__'
-        extra_kwargs ={
-            'is_active' :{
-                'read_only':True
-            },
-            'is_superuser':{
-                'read_only':True
-            },
-        }
+#     class Meta:
+#         model = User
+#         fields = '__all__'
+#         extra_kwargs ={
+#             'is_active' :{
+#                 'read_only':True
+#             },
+#             'is_superuser':{
+#                 'read_only':True
+#             },
+#         }
 
-    def validate_password(self, password, confPassword):
-        if password == confPassword:
-            if password.length >= 6:
-                if password.contains('@') :
-                    return password
-                else:
-                    raise serializers.ValidationError('There must be numbers & "@" in password')
-            else:
-                return serializers.ValidationError('Password must be of atleast 6 characters')
-        else:
-            raise serializers.ValidationError('Both Password Doesn\'t match')
+#     def validate_password(self, password, confPassword):
+#         if password == confPassword:
+#             if password.length >= 6:
+#                 if password.contains('@') :
+#                     return password
+#                 else:
+#                     raise serializers.ValidationError('There must be numbers & "@" in password')
+#             else:
+#                 return serializers.ValidationError('Password must be of atleast 6 characters')
+#         else:
+#             raise serializers.ValidationError('Both Password Doesn\'t match')
 
-    def validate_email(self, email):
-        existing = User.object.filter(email=email).first()
-        if existing:
-            raise serializers.ValidationError('Someone with this username has already exist')
-        else:
-            if email.contains('@') and email.contains('.com'):
-                return email
-            else:
-                raise serializers.ValidationError('Please enter correct email id')
+#     def validate_email(self, email):
+#         existing = User.object.filter(email=email).first()
+#         if existing:
+#             raise serializers.ValidationError('Someone with this username has already exist')
+#         else:
+#             if email.contains('@') and email.contains('.com'):
+#                 return email
+#             else:
+#                 raise serializers.ValidationError('Please enter correct email id')
 
-    def validate_username(self, username):
-        existing = User.objects.filter(username = username).first()
-        if existing:
-            raise serializers.ValidationError('Someone with this username has already exists')
-        else:
-            if username.contains('_'):
-                return username
-            else:
-                raise serializers.ValidationError('Username must contain "_" ')
+#     def validate_username(self, username):
+#         existing = User.objects.filter(username = username).first()
+#         if existing:
+#             raise serializers.ValidationError('Someone with this username has already exists')
+#         else:
+#             if username.contains('_'):
+#                 return username
+#             else:
+#                 raise serializers.ValidationError('Username must contain "_" ')
 
-    def get_user_email(self,email):
-        return email
+#     def get_user_email(self,email):
+#         return email
 
-    def create(self, validated_data):
-        user = User.objects.create(
-            username =validated_data['username'],
-            email = validated_data['email'],
-            first_name = validated_data['first_name'],
-            last_name =validated_data['last_name'],
-            role = validated_data['role'],
-            password = make_password(validated_data.get('password')),
-            confPassword = make_password(validated_data.get('confPassword')),
-        )
-        return user
+#     def create(self, validated_data):
+#         user = User.objects.create(
+#             username =validated_data['username'],
+#             email = validated_data['email'],
+#             first_name = validated_data['first_name'],
+#             last_name =validated_data['last_name'],
+#             role = validated_data['role'],
+#             password = make_password(validated_data.get('password')),
+#             confPassword = make_password(validated_data.get('confPassword')),
+#         )
+#         return user
 
 
 class AgencyProfileSerializer(serializers.ModelSerializer):
-    agency = UserSerializer(read_only =True)
+    # agency = UserSerializer(read_only =True)
     class Meta:
         model = Agency
         fields = ['id','agency','name','email','username','mobileNo','agencyName','agencyAddress','profile_image','location','social_website']
 
-    def create(self, validated_data):
-        agencyProfile = Agency.objects.create(
-            name = validated_data['name'],
-            email = validated_data['email'],
-            username = validated_data['username'],
-            # role = validated_data['role'],
-            mobileNo = validated_data['mobileNo'],
-            agencyName = validated_data['agencyName'],
-            agencyAddress = validated_data['agencyAddress'],
-            profile_image = validated_data['profile_image'],
-            location = validated_data['location'],
-            social_website = validated_data['social_website'],
-        )
-        return agencyProfile
+    # def create(self, validated_data):
+    #     agencyProfile = Agency.objects.create(
+    #         name = validated_data['name'],
+    #         email = validated_data['email'],
+    #         username = validated_data['username'],
+    #         # role = validated_data['role'],
+    #         mobileNo = validated_data['mobileNo'],
+    #         agencyName = validated_data['agencyName'],
+    #         agencyAddress = validated_data['agencyAddress'],
+    #         profile_image = validated_data['profile_image'],
+    #         location = validated_data['location'],
+    #         social_website = validated_data['social_website'],
+    #     )
+    #     return agencyProfile
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
@@ -114,27 +114,27 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ['id','customer','name','email','username','mobileNo','companyName','companyAddress','profile_image','location','social_website']
 
-    def create(self, validated_data):
-        customerProfile = Customer.objects.create(
-            name = validated_data['name'],
-            email = validated_data['email'],
-            username = validated_data['username'],
-            # role = validated_data['role'],
-            mobileNo = validated_data['mobileNo'],
-            customerName = validated_data['customerName'],
-            customerAddress = validated_data['customerAddress'],
-            profile_image = validated_data['profile_image'],
-            location = validated_data['location'],
-            social_website = validated_data['social_website'],
-        )
-        return customerProfile
+    # def create(self, validated_data):
+    #     customerProfile = Customer.objects.create(
+    #         name = validated_data['name'],
+    #         email = validated_data['email'],
+    #         username = validated_data['username'],
+    #         # role = validated_data['role'],
+    #         mobileNo = validated_data['mobileNo'],
+    #         customerName = validated_data['customerName'],
+    #         customerAddress = validated_data['customerAddress'],
+    #         profile_image = validated_data['profile_image'],
+    #         location = validated_data['location'],
+    #         social_website = validated_data['social_website'],
+    #     )
+    #     return customerProfile
 
 
 class SupplierProfileSerializer(serializers.ModelSerializer):
     # supplier = UserRegistrationSerializer(read_only =True)
     class Meta:
         model = Supplier
-        fields = '__all__'
+        fields = ['id', 'supplier', 'name', 'email','username','mobileNo', 'organisationName', 'organisationAddress','profile_image','location','social_website']
 
     # def create(self, validated_data):
     #     supplierProfile = Supplier.objects.create(

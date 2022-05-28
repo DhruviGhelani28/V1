@@ -18,14 +18,14 @@ import { useForm, Controller } from 'react-hook-form';
 import { Grid } from "@mui/material";
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         color: 'action.home',
     }
 });
@@ -99,8 +99,8 @@ const ModelForm = () => {
             <Card
                 variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -115,13 +115,13 @@ const ModelForm = () => {
             >
                 <CardActions>
                     <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon className={classes1.root1} />
                     </IconButton>
                 </CardActions>
                 <CardContent>
                     <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Model Profile</Typography>
 
-                    {/* <div className={classes1.root5}> */}
+
                     <Grid container component="div" spacing={0}>
                         <Grid item xs={12}>
                             <TextField
@@ -139,16 +139,15 @@ const ModelForm = () => {
                             <TextField
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
-                                // ref={register}
                                 inputprops={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                required
-                                size='medium'
+
                                 id="mobileNo"
                                 label="Mobile No."
                                 placeholder="1234567892"
+
                                 {...register('mobileNo', { required: true, maxLength: 10 })}
                                 error={!!errors?.mobileNo}
-                                helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
+                                value={values?.mobileNo}
                                 onChange={handleChange('mobileNo')}
                             />
                         </Grid>
@@ -156,15 +155,13 @@ const ModelForm = () => {
                             <TextField
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
-                                // ref={register}
-                                required
-                                size='medium'
+
                                 id="address"
                                 label="Address"
 
                                 {...register('address', { required: true, maxLength: 200 })}
                                 error={!!errors?.address}
-                                helpertext={errors?.address ? errors.address.message : null}
+                                value={values?.address}
                                 onChange={handleChange('address')}
                             />
                         </Grid>
@@ -173,14 +170,13 @@ const ModelForm = () => {
                                 // ref={register}
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
-                                required
-                                size='medium'
+
                                 id="background"
                                 label="Background History"
 
                                 {...register('background', { required: true, maxLength: 2000 })}
                                 error={!!errors?.background}
-                                helpertext={errors?.background ? errors.background.message : null}
+                                value={values?.background}
                                 onChange={handleChange('background')}
                             />
                         </Grid>
@@ -189,8 +185,7 @@ const ModelForm = () => {
                             <TextField
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
-                                required
-                                size='medium'
+
                                 id="profileImage"
                                 label="Profile Image"
                                 type="file"
@@ -204,7 +199,7 @@ const ModelForm = () => {
                                 // ref={register}
                                 {...register('profileImage', { required: true })}
                                 error={!!errors?.profileImage}
-                                helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                                value={values?.profileImage}
                                 onChange={handleChange('profileImage')}
                             >
                             </TextField>
@@ -214,14 +209,14 @@ const ModelForm = () => {
                             <TextField
                                 className={classes1.allfield}
                                 sx={{ marginTop: 1 }}
-                                required
+
                                 id="nativePlace"
                                 label="Native Place"
-                                // ref={register}
+
 
                                 {...register('nativePlace', { required: true, maxLength: 50 })}
                                 error={!!errors?.nativePlace}
-                                helpertext={errors?.nativePlace ? errors.nativePlace.message : null}
+                                value={values?.nativePlace}
                                 onChange={handleChange('nativePlace')}
                             />
                         </Grid>
@@ -233,14 +228,14 @@ const ModelForm = () => {
                                 id="salary"
                                 label="Salary"
 
-                                // {...register('salary')}
+
                                 error={!!errors?.salary}
                                 helpertext={errors?.salary ? "Only Admin can add salary of model." : null}
                                 onChange={handleChange('salary')}
                             />
                         </Grid>
                         <Grid item xs={12} className={classes.button}>
-                            {/* <div > */}
+
                             <Button
                                 variant="contained"
                                 className={classes1.root4}

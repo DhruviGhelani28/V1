@@ -39,7 +39,7 @@ import GadgetForm from "./Gadgets/GadgetForm";
 import Tasks from "./Tasks/Tasks";
 import Footer from "./Footer/Footer";
 import { Directions } from "@mui/icons-material";
-
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
@@ -75,11 +75,12 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 // let role = '';
 const Home = props => {
     const classes = useStyles();
-
+    const navigate = useNavigate()
     const drawerWidth = 200;
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [logout, setLogout] = React.useState(false)
+    const [reload, setReload] = React.useState(false)
     const data = JSON.parse(localStorage.getItem("userInfo"))
 
     // console.log("data::", data['role'])
@@ -106,7 +107,10 @@ const Home = props => {
     }, [data])
     useEffect(() => {
 
+        setRole(' ')
+
     }, [logout])
+    // useEffect(() => { }, [reload])
 
     // console.log('role::', role !== 'Admin')
     return (
@@ -122,7 +126,7 @@ const Home = props => {
                         <Routes>
                             <Route path="/" element={<Main1 />} exact></Route>
                             <Route path="/About" element={<About />} exact />
-                            <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
+                            <Route path="/Login" element={<LoginRegistration theme={theme} setReload={(val) => setReload(val)} />} exact />
                             <Route path="/Registration" element={<Registration />} exact />
                             <Route path="/SupplierForm" element={<SupplierForm />} exact />
                             <Route path="/CustomerForm" element={<CustomerForm />} exact />
@@ -135,14 +139,19 @@ const Home = props => {
                 }
                 {role !== ' ' &&
                     <>
-                        <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} />
-                        <Main className={classes1.homeback} sx={{ marginTop: 8.1, marginRight: 0 }} drawerwidth={drawerWidth} open={open} theme={theme}>
+                        <Drawer drawerwidth={drawerWidth} open={open} theme={theme} onClose={handleDrawerClose} className={classes.root} reload={reload} />
+                        <Main className={classes1.homeback} sx={{ marginTop: 8.1, marginRight: 0 }} drawerwidth={drawerWidth} open={open} theme={theme} >
 
                             <Routes>
                                 <Route path="/" element={<Main1 />} exact></Route>
                                 <Route path="/About" element={<About />} exact />
                                 <Route path="/Login" element={<LoginRegistration theme={theme} />} exact />
                                 <Route path="/Registration" element={<Registration />} exact />
+                                <Route path="/SupplierForm" element={<SupplierForm />} exact />
+                                <Route path="/CustomerForm" element={<CustomerForm />} exact />
+                                <Route path="/AgencyForm" element={<AgencyForm />} exact />
+                                <Route path="/WorkerForm" element={<WorkerForm />} exact />
+                                <Route path="/ModelForm" element={<ModelForm />} exact />
                                 {isLoggedIn &&
                                     <Route path="/Account/Tasks" element={<Account />} exact />}
                                 {role !== "Supplier" &&

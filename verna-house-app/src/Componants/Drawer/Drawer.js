@@ -1,6 +1,6 @@
 // import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 
 import DrawerHeader from './DrawerHeader';
@@ -11,7 +11,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import Divider from '@mui/material/Divider';
 import List from '../List/List';
-import { makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 
 const openedMixin = (theme, drawerwidth) => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
         background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: '#fff',
-        
+
     },
     root1: {
         color: '#fff',
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
 const Drawer1 = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open, drawerwidth }) => ({
         width: drawerwidth,
-        
+
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
@@ -70,13 +70,18 @@ const Drawer1 = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open'
 );
 
 const Drawer = props => {
+    // const [reload, setReload] = useState(false)
+    useEffect(() => {
+
+    }, [props?.reload])
+
     const classes = useStyles();
     return (
         <React.Fragment>
             <Drawer1 variant="permanent" open={props.open} drawerwidth={props.drawerwidth} className={classes.root}>
                 <DrawerHeader>
                     <IconButton onClick={props.onClose} className={classes.root}>
-                        {props.theme.direction === 'rtl' ? <ChevronRightIcon className={classes.root1} /> : <ChevronLeftIcon className={classes.root1}/>}
+                        {props.theme.direction === 'rtl' ? <ChevronRightIcon className={classes.root1} /> : <ChevronLeftIcon className={classes.root1} />}
                     </IconButton>
                 </DrawerHeader>
                 <Divider />

@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const userLoginReducer = (state = initialState.loginData, action) => {
-    console.log(initialState.loginData, "\t", action)
+    // console.log(initialState.loginData, "\t", action)
     switch (action.type) {
 
         case UserActionType.USER_LOGIN_REQUEST:

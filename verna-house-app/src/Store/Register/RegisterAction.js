@@ -3,7 +3,7 @@ import { UserActionType } from "../Constants/UserActionType";
 
 
 const BaseUrl = "http://localhost:8000";
-
+const FormData = require('form-data');
 
 export const getRegisterData = (values) => async (dispatch) => {
     console.log("Register dispatch")
@@ -34,6 +34,11 @@ export const getRegisterData = (values) => async (dispatch) => {
 };
 
 export const getLoginData = (values) => async (dispatch) => {
+
+    console.log("\naction request data\t", values)
+    const formData = new FormData();
+    formData.append("username", "dhruvi_ghelani")
+    formData.append("password", "Dhruvi@68")
     console.log("Login dispatch", values, typeof (values))
     let response = {}
     // localStorage.removeItem("userInfo");
@@ -43,11 +48,9 @@ export const getLoginData = (values) => async (dispatch) => {
             response = await axios.post(`${BaseUrl}/api/users/token/`, values);
         }
         catch (error) {
-            console.log("------------", error.response.data)
-            dispatch({
-                type: UserActionType.USER_LOGIN_FAIL, payload: error.response.data,
-            });
-            return;
+
+            // console.log("586989786")
+            return error.response.data;
 
         }
 

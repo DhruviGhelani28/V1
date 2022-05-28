@@ -26,14 +26,14 @@ import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         color: 'action.home',
     }
 });
@@ -102,8 +102,8 @@ const SupplierForm = props => {
             <Card
                 variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -114,10 +114,10 @@ const SupplierForm = props => {
                     "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
                 }}
                 component="form"
-                onSubmit={handleSubmit(onSubmit)}
+                // onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
+                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </CardActions>
@@ -131,9 +131,9 @@ const SupplierForm = props => {
                             
                             id="role"
                             label="Role"
-                            defaultValue={state.role}
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+                            defaultValue={state.role}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -146,37 +146,33 @@ const SupplierForm = props => {
                         
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
-                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
+                            value={values.location.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+                           
                             id="organisationName"
                             label="Organisation Name"
                             placeholder="xyz abc"
                            
                             {...register('organizationName', { required: true, maxLength: 20 })}
                             error={!!errors?.organizationName}
-                            helpertext={errors?.organizationName ? errors.organizationName.message : null}
+                            value={values?.organizationName}
                             onChange={handleChange('organizationName')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+                           
                             id="organisationAddress"
                             label="Organisation Address"
                             placeholder="xyz abc"
                            
                             {...register('organizationAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.organizationAddress}
-                            helpertext={errors?.organizationAddress ? errors.organizationAddress.message : null}
+                            value={values?.organizationAddress}
                             onChange={handleChange('organizationAddress')}
                         />
                     
@@ -192,38 +188,34 @@ const SupplierForm = props => {
                            
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+                            // value={values?.profileImage}
                             onChange={handleChange('profileImage')}
                         >
                         </TextField>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
-                            multiline
-                            size='medium'
+                           
                             id="location"
                             label="Location"
                             placeholder="xyz"
                            
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
-                            helpertext={errors?.location ? errors.location.message : null}
+                            value={values?.location}
                             onChange={handleChange('location')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            multiline
-                            required
-                            size='medium'
+                            
                             id="social-website"
                             label="Social Website"
                             placeholder="http://xyz.com"
                            
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
-                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+                            value={values?.socialWebsite}
                             onChange={handleChange('socialWebsite')}
                         />
                         <div className={classes.button}>

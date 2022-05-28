@@ -25,14 +25,14 @@ import UploadButton from '../UploadButton';
 
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         color: 'action.home',
     }
 });
@@ -79,14 +79,9 @@ const AgencyForm = props => {
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-
-        // const data1 = a.push(data)
+    const onSubmit = () => {
         console.log(values)
         const data1 = { ...state, ...values }
-        // console.log(JSON.stringify(data, null, 2));
-        // console.log(values, typeof(values))
-        // console.log(data1)
         dispatch(getRegisterData({ data: data1 }));
         console.log("user registered agency created")
         navigate("/Login")
@@ -97,8 +92,8 @@ const AgencyForm = props => {
                 variant="outlined"
                 margin="10px"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -112,8 +107,8 @@ const AgencyForm = props => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
-                        <ChevronLeftIcon />
+                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} >
+                        <ChevronLeftIcon className={classes1.root1} />
                     </IconButton>
                 </CardActions>
                 <CardContent>
@@ -136,13 +131,14 @@ const AgencyForm = props => {
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
 
-                            size='medium'
                             id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
+
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
-                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
+
+                            value={values?.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
                         <TextField
@@ -155,7 +151,8 @@ const AgencyForm = props => {
 
                             {...register('agencyName', { required: true, maxLength: 20 })}
                             error={!!errors?.agencyName}
-                            helpertext={errors?.agencyName ? errors.agencyName.message : null}
+
+                            value={values?.agencyName}
                             onChange={handleChange('agencyName')}
                         />
                         <TextField
@@ -168,34 +165,40 @@ const AgencyForm = props => {
 
                             {...register('agencyAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.agencyAddress}
-                            helpertext={errors?.agencyAddress ? errors.agencyAddress.message : null}
+
+                            value={values?.agencyAddress}
                             onChange={handleChange('agencyAddress')}
                         />
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+
                             id="profileImage"
                             label="Profile Image"
                             placeholder='Upload File'
+
                             type="file"
-                            accept = "image/*"
-                            
+                            accept="image/*"
+
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
+
+                            value={values?.profileImage}
                             onChange={handleChange('profileImage')}
                         >
                         </TextField>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+
                             id="location"
                             label="Location"
                             placeholder="xyz"
 
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
-                            helpertext={errors?.location ? errors.location.message : null}
+
+                            value={values?.location}
                             onChange={handleChange('location')}
                         />
                         <TextField
@@ -208,14 +211,15 @@ const AgencyForm = props => {
 
                             {...register('socialWebsite', { required: false })}
                             error={!!errors?.socialWebsite}
-                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+
+                            value={values?.socialWebsite}
                             onChange={handleChange('socialWebsite')}
                         />
                         <div className={classes.button}>
                             <Button
                                 variant="contained"
                                 className={classes1.root4}
-                                onClick={handleSubmit(onSubmit)}
+                                // onClick={handleSubmit(onSubmit)}
                                 sx={{
                                     marginTop: 0.5,
                                     marginRight: -34,

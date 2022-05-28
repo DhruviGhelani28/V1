@@ -38,18 +38,18 @@ const useStyles = makeStyles({
             color: '#EC255A',
         }
     },
-    root2: {
-        '&:onClick': {
-            color: '#fff',
-        },
-        color: '#EC255A',
-        '&:hover': {
-            color: '#fff',
-        },
-        '&:active': {
-            color: '#EC255A',
-        }
-    },
+    // root2: {
+    //     '&:onClick': {
+    //         color: '#fff',
+    //     },
+    //     color: '#EC255A',
+    //     '&:hover': {
+    //         color: '#fff',
+    //     },
+    //     '&:active': {
+    //         color: '#EC255A',
+    //     }
+    // },
     root3: {
         color: '#EC255A',
         '&:hover': {
@@ -112,12 +112,29 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Login = props => {
 
-    let login = useSelector((state) => state.userLogin)
+
+
     const dispatch = useDispatch();
     const { register, formState: { errors } } = useForm();
 
-    const errorLogin = login?.loginData?.detail
-    console.log("\n-==resp\t", login, errorLogin)
+
+    const navigate = useNavigate();
+    const classes1 = useStyles();
+    const [showPassword, setShowPassword] = useState(false)
+    const logindata = JSON.parse(localStorage.getItem("userInfo"))
+    const [count, setCount] = useState(0)
+    const [values, setValues] = useState({
+        username: "",
+        password: "",
+    });
+
+
+
+
+    const handleChange = (prop) => (event) => {
+        console.log(prop)
+        setValues({ ...values, [prop]: event.target.value });
+    };
 
     const [alert, setAlert] = React.useState(false);
     const alertClick = () => {
@@ -130,45 +147,19 @@ const Login = props => {
         setAlert(false);
     };
 
-    useEffect(() => { }, [])
-    const navigate = useNavigate();
-    const classes1 = useStyles();
-    const [showPassword, setShowPassword] = useState(false)
-    const logindata = JSON.parse(localStorage.getItem("userInfo"))
-    const [count, setCount] = useState(0)
-    const [values, setValues] = useState({
-        username: "",
-        password: "",
-    });
-
-    const handleChange = (prop) => (event) => {
-        console.log(prop)
-        setValues({ ...values, [prop]: event.target.value });
-
-        if (prop === 'password') {
-            setCount((count) => count + 1)
-
-            if (count > 7) {
-                dispatch(getLoginData(values));
-            }
-        }
-
-    };
-
-
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(JSON.stringify(values, null, 2));
-        // dispatch(getLoginData(values));
 
-        if (errorLogin === "No active account found with the given credentials") {
-            alertClick(true);
-        }
-        else {
-            // dispatch(getLoginData(values));
-            navigate("/Account/MyTasks");
-        }
-
+        let a = dispatch(getLoginData(values));
+        a.then(res => {
+            if (res != undefined) {
+                alertClick();
+            }
+            else {
+                navigate("/Account/MyTasks");
+                props.setReload(true)
+            }
+        })
     };
 
     const goBackHandler = () => {
@@ -231,7 +222,7 @@ const Login = props => {
                             }}
                             noValidate
                             autoComplete="off"
-                            onSubmit={onSubmit}
+                        // onSubmit={onSubmit}
                         >
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
@@ -345,7 +336,7 @@ const Login = props => {
                                         className={classes1.root4}
                                         variant="contained"
                                         type="submit"
-                                        // onClick={onSubmit}
+                                        onClick={onSubmit}
                                         sx={{
                                             marginTop: 0.5,
                                             marginRight: -38.5,

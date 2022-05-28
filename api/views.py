@@ -1,4 +1,5 @@
 
+import json
 from django.core.files import File
 from urllib import request, response
 import pathlib
@@ -84,19 +85,20 @@ def getRoutes(request):
 #             if serializer.is_valid():
 #                 print("-=-=\n1321313",serializer.validated_data, serializer.data )
 #                 return Response(serializer.data, status=status.HTTP_200_OK)
-#             print("-=-=\npoeriwpejri", serializer.data )
-#             return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+#             else:
+#                 print("-=-=\npoeriwpejri", serializer.data )
+#                 return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 #         except Exception as e:
-#             return Response({'error':"Authentication"})
+#             raise e
 
 
         
 
-class InvalidUser(AuthenticationFailed):
-    status_code = status.HTTP_406_NOT_ACCEPTABLE
-    default_detail = ("Credentials is invalid or didn't match")
-    default_code = 'user_credentials_not_valid'
-    # return Response({default_detail : "Credentials is invalid or didn't match", default_code : 'user_credentials_not_valid'})
+# class InvalidUser(AuthenticationFailed):
+#     status_code = status.HTTP_406_NOT_ACCEPTABLE
+#     default_detail = ("Credentials is invalid or didn't match")
+#     default_code = 'user_credentials_not_valid'
+#     # return Response({default_detail : "Credentials is invalid or didn't match", default_code : 'user_credentials_not_valid'})
 
 
 @api_view(['GET'])
@@ -151,6 +153,7 @@ def UserRegistrationViewSet(request):
             social_website =  data['socialWebsite'],
 
         )
+        print("-=-=-=-=-\n", supplier.profile_image)
         supplier.save()
 
     if data['role'] == 'Agency':
@@ -227,7 +230,7 @@ def UserLoginViewSet(request):
     # print("\n\nLogin")
     data = request.data
     
-    print("\n\n\n", data)
+    # print("\n\n\n", data)
     username = data['username']
     password = data['password']
     
@@ -240,7 +243,7 @@ def UserLoginViewSet(request):
         "role" : role,
         "password" : data
     }
-    print(data['role'])
+    # print(data['role'])
     if user.check_password(password):
         return Response(data['role'])
     else:
@@ -400,6 +403,8 @@ class SupplierView(APIView):
         if user.role != 'Supplier':
             suppliers = Supplier.objects.all()
             serializer = SupplierProfileSerializer(suppliers, many=True)
+            value = json.dumps(serializer.data)
+            print("\n-====------------\t",value,"\n------", dict(serializer.data[0]))
             return Response(serializer.data)
         else:
             return Response({'message' : 'Sorry, You can\'t view Suppliers List because you are not owner nor permitted user'})

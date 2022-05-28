@@ -68,13 +68,13 @@ export const editWorker = (values, id) => async (dispatch) => {
         }
         const response = await axios.put(`${BaseUrl}/api/Users/Workers/Edit/${id}`, data, config)
         console.log("edit Worker call response data:--", response.data)
-        dispatch({ type: UserActionType.EDIT_SUPPLIER_SUCCESS, supplier: response.data });
+        dispatch({ type: UserActionType.EDIT_WORKER_SUCCESS, worker: response.data });
 
     }
     catch (error) {
-        const supplier_error = "You are not authorised person to edit the Worker.";
+        const worker_error = "You are not authorised person to edit the Worker.";
         dispatch({
-            type: UserActionType.EDIT_SUPPLIER_FAIL, supplier: supplier_error,
+            type: UserActionType.EDIT_WORKER_FAIL, worker: worker_error,
         });
     }
 }

@@ -54,18 +54,18 @@ const useStyles = makeStyles({
             color: '#EC255A',
         }
     },
-    root2: {
-        '&:onClick': {
-            color: '#121212',
-        },
-        color: '#EC255A',
-        '&:hover': {
-            color: '#121212',
-        },
-        '&:active': {
-            color: '#EC255A',
-        }
-    },
+    // root2: {
+    //     '&:onClick': {
+    //         color: '#121212',
+    //     },
+    //     color: '#EC255A',
+    //     '&:hover': {
+    //         color: '#121212',
+    //     },
+    //     '&:active': {
+    //         color: '#EC255A',
+    //     }
+    // },
     root3: {
         color: '#EC255A',
         '&:hover': {

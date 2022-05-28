@@ -20,20 +20,20 @@ import { useDispatch } from 'react-redux';
 import InputAdornment from '@mui/material/InputAdornment';
 import { makeStyles } from "@material-ui/core/styles";
 import { getRegisterData } from '../../Store/Register/RegisterAction';
-// import { getSuppliers } from '../../Store/Supplier/SupplierAction';
+
 import UploadButton from '../UploadButton';
 // import PhotoCamera from '@mui/icons-material/PhotoCamera';
-// import userEvent from '@testing-library/user-event';
+
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+        color: '#fff',
         '&:hover': {
             color: '#EC255A',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758 25%, #2F3031  80%)',
         color: 'action.home',
     }
 });
@@ -66,7 +66,7 @@ const WorkerForm = props => {
         address: '',
         profileImage: '',
         location: '',
-        // scocialWebsite: "",
+
     });
 
     const handleChange = (prop) => (event) => {
@@ -79,9 +79,9 @@ const WorkerForm = props => {
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const onSubmit = () => {
 
-        // const data1 = a.push(data)
+
         console.log(values)
         const data1 = { ...state, ...values }
         // console.log(JSON.stringify(data, null, 2));
@@ -97,8 +97,8 @@ const WorkerForm = props => {
             <Card
                 variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #2F3031 30%, #575758 50%, #2F3031 30%,#575758 50%)',
+                    borderColor: '#fff',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -112,7 +112,7 @@ const WorkerForm = props => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler}>
+                    <IconButton sx={{ marginLeft: 1, }} onClick={goBackHandler} className={classes1.root1}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </CardActions>
@@ -125,9 +125,9 @@ const WorkerForm = props => {
 
                             id="rol"
                             label="Role"
-                            defaultValue={state.role}
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+                            defaultValue={state.role}
                         />
                         <TextField
                             className={classes1.allfield}
@@ -139,8 +139,8 @@ const WorkerForm = props => {
                             placeholder="1234567892"
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
-                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            value={values.mobileNo}
+
+                            value={values?.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
                         <TextField
@@ -153,8 +153,8 @@ const WorkerForm = props => {
 
                             {...register('shortIntro', { required: true, maxLength: 50 })}
                             error={!!errors?.shortIntro}
-                            helpertext={errors?.shortIntro ? errors.shortIntro.message : null}
-                            value={values.shortIntro}
+
+                            value={values?.shortIntro}
                             onChange={handleChange('shortIntro')}
                         />
                         <TextField
@@ -167,8 +167,8 @@ const WorkerForm = props => {
 
                             {...register('Address', { required: true, maxLength: 100 })}
                             error={!!errors?.Address}
-                            helpertext={errors?.Address ? errors.Address.message : null}
-                            value={values.address}
+
+                            value={values?.address}
                             onChange={handleChange('address')}
                         />
 
@@ -183,8 +183,8 @@ const WorkerForm = props => {
 
                             {...register('profileImage', { required: true })}
                             error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            value={values.profileImage}
+
+                            value={values?.profileImage}
                             onChange={handleChange('profileImage')}>
                         </TextField>
                         <TextField
@@ -199,24 +199,11 @@ const WorkerForm = props => {
 
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
-                            helpertext={errors?.location ? errors.location.message : null}
-                            value={values.location}
+
+                            value={values?.location}
                             onChange={handleChange('location')}
                         />
-                        {/* <TextField
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                            multiline
-                            required
-                            size='medium'
-                            id="socialWebsite"
-                            label="Social Website"
-                            placeholder="http://xyz.com"
-                            onChange={handleChange}
-                            {...register('socialWebsite', { required: false })}
-                            error={!!errors?.socialWebsite}
-                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
-                        /> */}
+
                         <div className={classes.button}>
                             <Button
                                 variant="contained"

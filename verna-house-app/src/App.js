@@ -13,8 +13,8 @@ const theme = createTheme({
       main: "#fff",
     },
     common: {
-      // black: '#fff',
-      // white: '#000',
+      //   black: '#000',
+      //   white: '#fff',
     }
   },
   components: {

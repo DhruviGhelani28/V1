@@ -1,9 +1,9 @@
 from django.urls import path,include
 
 from api.views import *
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView
-# )
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView
+)
 from api import views
 from rest_framework.routers import DefaultRouter
 # import urlpatterns

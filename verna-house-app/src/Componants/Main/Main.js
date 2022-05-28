@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import video from "../../static/vedio/vedio1.mp4"
 // import Image from "@mui/material/Image";
 import { styled, useTheme } from '@mui/material/styles';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Paper } from "@mui/material";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -76,8 +76,8 @@ const items = [
     }
 ];
 
-const Main1 = () => {
-
+const Main1 = (props) => {
+    // useEffect(() => { }, [props?.reload, props?.logout])
     return (
         <Fragment >
             <Container className={classes.mainback} sx={{ marginTop: 0, padding: 0 }}>

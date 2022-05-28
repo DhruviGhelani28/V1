@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-// import getAgency
+import { editAgency, getAgency } from "../../Store/Agency/AgencyAction";
 import { Card, Grid, TextField, Button } from "@mui/material";
 import { useForm } from 'react-hook-form';
 import classes from "../Login.module.css";
@@ -38,10 +38,10 @@ const EditProfileAgency = (props) => {
     const agency = useSelector((state) => state.agency)
 
     useEffect(() => {
-        dispatch(getSupplier({ id: agencyId }))
+        dispatch(getAgency({ id: agencyId }))
     }, [dispatch])
 
-    // console.log(supplier.getSupplier)
+    console.log(agency.getAgency)
 
     const [values, setValues] = React.useState({
         fullname: '',
@@ -50,22 +50,22 @@ const EditProfileAgency = (props) => {
         mobileNo: '',
         organizationName: '',
         organizationAddress: '',
-        profileImage: ``,
+        profileImage: '',
         location: '',
         socialWebsite: '',
     });
 
     useEffect(() => {
         setValues({
-            fullname: supplier.getSupplier?.name,
-            email: supplier.getSupplier?.email,
-            username: supplier.getSupplier?.username,
-            mobileNo: supplier.getSupplier?.mobileNo,
-            organizationName: supplier.getSupplier?.organisationName,
-            organizationAddress: supplier.getSupplier?.organisationAddress,
-            profileImage: `${supplier.getSupplier?.profile_image}`,
-            location: supplier.getSupplier?.location,
-            socialWebsite: supplier.getSupplier?.social_website,
+            fullname: agency.getAgency?.name,
+            email: agency.getAgency?.email,
+            username: agency.getAgency?.username,
+            mobileNo: agency.getAgency?.mobileNo,
+            agencyName: agency.getAgency?.agencyName,
+            agencyAddress: agency.getAgency?.agencyAddress,
+            profileImage: `${agency.getAgency?.profile_image}`,
+            location: agency.getAgency?.location,
+            socialWebsite: agency.getAgency?.social_website,
         });
     }, [agency])
 
@@ -77,10 +77,10 @@ const EditProfileAgency = (props) => {
             setValues({ ...values, profileImage: event.target.files[0].name });
         }
     };
-    const { register, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = () => {
         console.log(values)
-        // dispatch(editSupplier({ values: values }, supplierId))
+        dispatch(editAgency({ values: values }, agencyId))
         props.setReload(true)
     }
 
@@ -167,15 +167,15 @@ const EditProfileAgency = (props) => {
                             sx={{ marginTop: 1 }}
                             required
 
-                            id="organisationName"
-                            label="Organisation Name"
+                            id="agencyName"
+                            label="Agency Name"
                             placeholder="xyz abc"
 
-                            {...register('organizationName', { required: true, maxLength: 20 })}
-                            error={!!errors?.organizationName}
+                            {...register('agencyName', { required: true, maxLength: 20 })}
+                            error={!!errors?.agencyName}
 
-                            value={values?.organizationName}
-                            onChange={handleChange('organizationName')}
+                            value={values?.agencyName}
+                            onChange={handleChange('agencyName')}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -184,15 +184,15 @@ const EditProfileAgency = (props) => {
                             sx={{ marginTop: 1 }}
                             required
 
-                            id="organisationAddress"
-                            label="Organisation Address"
+                            id="agencyAddress"
+                            label="Agency Address"
                             placeholder="xyz abc"
 
-                            {...register('organizationAddress', { required: true, maxLength: 100 })}
-                            error={!!errors?.organizationAddress}
+                            {...register('agencyAddress', { required: true, maxLength: 100 })}
+                            error={!!errors?.agencyAddress}
 
-                            value={values?.organizationAddress}
-                            onChange={handleChange('organizationAddress')}
+                            value={values?.agencyAddress}
+                            onChange={handleChange('agencyAddress')}
                         />
                     </Grid>
                     <Grid item xs={6}>
