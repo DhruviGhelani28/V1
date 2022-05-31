@@ -3,6 +3,7 @@ from django.db import models
 import uuid
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 class Profile(models.Model):
     ROLE_TYPE=(
@@ -111,7 +112,8 @@ class Agency(models.Model):
     # roll = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=False)
     # phone_regex = RegexValidator(regex="^(\+\d{1,3})?,?\s?\d{8,13}")validators=[phone_regex]
     # contact_no = models.CharField(verbose_name=("Mobile Number"),max_length=10, blank=True,null=True)
-    mobileNo = models.IntegerField(null=True, blank=False, unique=True)
+    phone_regex = RegexValidator(regex=r'^(05)\d{9}$',message="Enter Valid Mobile No")
+    mobileNo = models.CharField(validators=[phone_regex], max_length=13,null=True, blank=True)
     agencyName = models.CharField(max_length=200, null=True, blank=False)
     agencyAddress = models.TextField(null=True, blank=False)
     profile_image = models.ImageField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
@@ -143,7 +145,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=50, null=True, blank=False)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
-    mobileNo = models.IntegerField(null=True, blank=False, unique=True)
+    phone_regex = RegexValidator(regex=r'^(05)\d{9}$',message="Enter Valid Mobile No")
+    mobileNo = models.CharField(validators=[phone_regex], max_length=13,null=True, blank=True)
     companyName = models.CharField(max_length=200, null=True, blank=False)
     companyAddress = models.TextField(null=True, blank=False)
     profile_image = models.ImageField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
@@ -160,7 +163,8 @@ class Supplier(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
-    mobileNo = models.CharField(null=True, blank=False, unique=True, max_length=10, )
+    phone_regex = RegexValidator(regex=r'^(05)\d{9}$',message="Enter Valid Mobile No")
+    mobileNo = models.CharField(validators=[phone_regex], max_length=13,null=True, blank=True)
     organisationName = models.CharField(max_length=200, null=True, blank=False)
     organisationAddress = models.TextField(null=True, blank=False)
     profile_image = models.FileField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
@@ -192,7 +196,8 @@ class Worker(models.Model):
     name = models.CharField(null=True, blank=False, max_length=50)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
-    mobileNo = models.BigIntegerField(null=True, blank=False)
+    phone_regex = RegexValidator(regex=r'^(05)\d{9}$',message="Enter Valid Mobile No")
+    mobileNo = models.CharField(validators=[phone_regex], max_length=13,null=True, blank=True)
     address = models.CharField(max_length=400, null=True, blank=False)
     short_intro = models.CharField(max_length=500, null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True,upload_to="profiles/", default="profiles/user-default.png" )
@@ -237,7 +242,8 @@ class Actor(models.Model):
     name = models.CharField(null=True, blank=False, max_length=50)
     username = models.CharField(max_length=50, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
-    mobileNo = models.BigIntegerField(null=True, blank=False)
+    phone_regex = RegexValidator(regex=r'^(05)\d{9}$',message="Enter Valid Mobile No")
+    mobileNo = models.CharField(validators=[phone_regex], max_length=13,null=True, blank=True)
     address = models.CharField(max_length=400, null=True, blank=False)
     background = models.TextField(null=True, blank=False)
     profile_image = models.ImageField(null=True, blank=True,upload_to="profiles/", default="profiles/user-default.png" )

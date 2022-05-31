@@ -18,7 +18,7 @@ export const getWorkers = () => async (dispatch) => {
         };
         const response = await axios.get(`${BaseUrl}/api/Workers/`, config);
         console.log("workers call")
-        dispatch({ type: UserActionType.GET_WORKERS_DATA, workers: response.data });
+        dispatch({ type: UserActionType.GET_WORKERS_SUCCESS, workers: response.data });
 
 
     } catch (error) {

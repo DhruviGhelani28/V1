@@ -33,12 +33,12 @@ const useStyles = makeStyles({
 const EditProfileSupplier = (props) => {
     const classes1 = useStyles()
     const dispatch = useDispatch()
-    const supplierId = props.supplierId
-    console.log(supplierId)
+    // const supplierId = props.supplierId
+    console.log(props.supplierId)
     const supplier = useSelector((state) => state.supplier)
 
     useEffect(() => {
-        dispatch(getSupplier({ id: supplierId }))
+        dispatch(getSupplier({ id: props.supplierId }))
     }, [dispatch])
 
     console.log(supplier.getSupplier)
@@ -77,16 +77,16 @@ const EditProfileSupplier = (props) => {
         setValues({ ...values, [prop]: event.target.value });
         if (prop == "profileImage") {
             console.log(event.target.files)
-            // let path = { window.location.origin + `./${event.target.files[0].name}` }   
-            // console.log(path)
-            setValues({ ...values, profileImage: event.target.files[0].name });
+
+            setValues({ ...values, profileImage: event.target.files[0] });
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = () => {
         console.log(values)
-        dispatch(editSupplier({ values: values }, supplierId))
+        dispatch(editSupplier({ values: values }, props.supplierId))
         props.setReload(true)
+        props.onClose()
     }
 
 
@@ -107,7 +107,7 @@ const EditProfileSupplier = (props) => {
                             placeholder="xyz abc"
                             {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.fullname}
-                            helpertext={errors?.fullname ? errors.fullname.message : null}
+
                             value={values?.fullname}
                             onChange={handleChange('fullname')}
                         />
@@ -129,7 +129,7 @@ const EditProfileSupplier = (props) => {
                                 },
                             })}
                             error={!!errors?.email}
-                            helpertext={errors?.email ? errors.email.message : null}
+
                             value={values?.email}
                             onChange={handleChange('email')}
                         />
@@ -146,7 +146,7 @@ const EditProfileSupplier = (props) => {
 
                             {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.username}
-                            helpertext={errors?.username ? errors.username.message : null}
+
                             value={values?.username}
                             onChange={handleChange('username')}
                         />
@@ -163,7 +163,7 @@ const EditProfileSupplier = (props) => {
 
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
-                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
+
                             value={values?.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
@@ -180,7 +180,7 @@ const EditProfileSupplier = (props) => {
 
                             {...register('organizationName', { required: true, maxLength: 20 })}
                             error={!!errors?.organizationName}
-                            helpertext={errors?.organizationName ? errors.organizationName.message : null}
+
                             value={values?.organizationName}
                             onChange={handleChange('organizationName')}
                         />
@@ -197,44 +197,12 @@ const EditProfileSupplier = (props) => {
 
                             {...register('organizationAddress', { required: true, maxLength: 100 })}
                             error={!!errors?.organizationAddress}
-                            helpertext={errors?.organizationAddress ? errors.organizationAddress.message : null}
+
                             value={values?.organizationAddress}
                             onChange={handleChange('organizationAddress')}
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        {/* <img src={`http://localhost:8000/images/profiles/04b5d219-c12f-40e4-a4cc-2881a03b2525.jpeg`}></img> */}
-                        {/* <TextField
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                            id="profileImage"
-                            label="Profile Image"
-                            placeholder='Upload File'
-                            type="file"
-                            accept="image/*"
-                            {...register('profileImage', { required: true })}
-                            error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            // value={values?.profile_image ? `http://127.0.0.1:8000${values?.profile_image}` : ''}
-                            // ref={register}
-                            // gfgdgdg={`http://localhost:8000/images/profiles/04b5d219-c12f-40e4-a4cc-2881a03b2525.jpeg`}
-                            onChange={handleChange('profileImage')}
-                        >
-                        </TextField> */}
-                        {/* <TextField
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                            id="profileImage"
-                            placeholder='Upload File'
-                            type="file"
-                            accept="image/*"
-                            label={values?.profile_image || ''}
-                            {...register('profileImage', { required: true })}
-                            error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            onChange={handleChange('profileImage')}
-                        > */}
-                        {/* </TextField><label>{values?.profile_image || ''}</label> */}
                         <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
                             <input type={'file'} onChange={handleChange('profileImage')} />
                             <label>{values?.profileImage}</label>
@@ -252,7 +220,6 @@ const EditProfileSupplier = (props) => {
 
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
-                            helpertext={errors?.location ? errors.location.message : null}
                             value={values?.location}
                             onChange={handleChange('location')}
                         />
@@ -267,15 +234,15 @@ const EditProfileSupplier = (props) => {
                             label="Social Website"
                             placeholder="http://xyz.com"
 
-                            {...register('socialWebsite', { required: false })}
+                            {...register('socialWebsite', { required: true })}
                             error={!!errors?.socialWebsite}
-                            helpertext={errors?.socialWebsite ? errors.socialWebsite.message : null}
+
                             value={values?.socialWebsite}
                             onChange={handleChange('socialWebsite')}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        {/* <div className={classes.button}> */}
+
                         <Grid container rowSpacing={2} alignItems='center' justifyContent='flex-end'>
                             <Grid item xs={3}>
                                 <Button
@@ -293,7 +260,7 @@ const EditProfileSupplier = (props) => {
                                 <Button
                                     variant="contained"
                                     className={classes1.root4}
-                                    // onClick={handleSubmit(onSubmit)}
+                                    onClick={props.onClose}
                                     sx={{
                                         marginTop: 0.5,
                                         // marginLeft: 3,

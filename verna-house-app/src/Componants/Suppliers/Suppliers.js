@@ -3,25 +3,20 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+
 import { useEffect } from "react";
 import Paper from '@mui/material/Paper';
-import { getSuppliers, getSupplier } from "../../Store/Supplier/SupplierAction"
-import { Backdrop } from '@mui/material';
+import { getSuppliers } from "../../Store/Supplier/SupplierAction"
+
 import { useDispatch, useSelector } from "react-redux";
-import { DataGrid } from '@mui/x-data-grid';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Popper from '@mui/material/Popper';
-import Snackbar from '@mui/material/Snackbar';
+
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -29,9 +24,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { GridActionsCell, GridActionsCellItem } from '@mui/x-data-grid';
-import { GridRowModes } from '@mui/x-data-grid';
-import Alert from '@mui/material/Alert';
+
 import EditProfileSupplier from '../Profile/EditProfileSupplier';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -62,13 +55,11 @@ const columns = [
         key: 1,
         field: 'name',
         headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
+        sortable: true,
         type: 'string',
         width: 140,
         editable: true,
-        // valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+
     },
     {
         key: 2,
@@ -89,7 +80,7 @@ const columns = [
     {
         key: 4,
         field: 'mobileNo',
-        headerName: 'Mobile',
+        headerName: 'Mobile No',
         type: 'number',
         sortable: false,
         width: 100,
@@ -149,6 +140,7 @@ const columns = [
 
 function Suppliers() {
     const [open, setOpen] = React.useState(false);
+    const [id, setId] = React.useState('')
     const handleClose = () => {
         setOpen(false);
     };
@@ -171,19 +163,16 @@ function Suppliers() {
 
     }, [suppliers.getSuppliers, reload])
 
-    // const rows = suppliers.getSuppliers
-    console.log(rows)// const [rowModesModel, setRowModesModel] = React.useState({});
 
-    const editHandler = (id) => {
-        // handleOpen();
-        // console.log("id:--", id);
-        // dispatch(getSupplier({ id: id }));
-        // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    console.log(rows)
+
+    const editHandler = (row) => {
+        handleOpen();
+        setId(row.id)
+
     };
 
-    const handleSaveClick = (id) => () => {
-        // setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    };
+
 
     const deleteHandler = (row) => () => {
         // setRows(rows.filter((row) => row.id !== id));
@@ -240,20 +229,8 @@ function Suppliers() {
                                             }
                                         })}
                                         <StyledTableCell key={index} sx={{ width: 200 }}>
+                                            <EditIcon onClick={() => editHandler(row)} />
 
-                                            <EditIcon onClick={handleOpen} />
-                                            {open &&
-                                                <Dialog open={open} onClose={handleClose} sx={{ padding: 0.5, width: 900 }}>
-                                                    <DialogTitle>Edit Supplier : {row.id}</DialogTitle>
-                                                    <DialogContent dividers sx={{ padding: 0.1 }}>
-                                                        <EditProfileSupplier onClick={handleClose} open={open} supplierId={row.id} setReload={setReload} />
-                                                    </DialogContent>
-                                                    {/* <DialogActions>
-                                                    <Button onClick={handleClose} sx={{ border: '1px solid black' }}>Cancel</Button>
-                                                    <Button onClick={handleClose}>Save</Button>
-                                                </DialogActions> */}
-                                                </Dialog>
-                                            }
                                             <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
                                             <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5, }}>
                                                 View Details
@@ -261,163 +238,24 @@ function Suppliers() {
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 ))}
+
+                            <Dialog open={open} sx={{ padding: 0.5, width: 900 }}>
+                                <DialogTitle>Edit Supplier : {id} </DialogTitle>
+                                <DialogContent dividers sx={{ padding: 0.1 }}>
+                                    <EditProfileSupplier onClick={handleClose} open={open} supplierId={id} setReload={setReload} onClose={handleClose} />
+                                </DialogContent>
+
+                            </Dialog>
+
+
                         </TableBody>
+
                     </Table>
                 </TableContainer>
+
             </Paper>
         </Box>
     )
 }
 
 export default Suppliers;
-
-{/* <React.Fragment>
-//             <h2>Suppliers will be here</h2>
-//             <Grid container spacing={2}>
-//                 <Grid item xs={4}> */}
-//                     {
-//                         <Paper elevation={6}>
-//                             <Typography>
-
-//                             </Typography>
-
-//                         </Paper>
-
-//                     }
-//                 </Grid>
-//             </Grid>
-
-//             <div style={{ height: 400, width: '100%' }}>
-//                 <DataGrid
-//                     rows={rows}
-//                     columns={columns}
-//                     pageSize={5}
-//                     rowsPerPageOptions={[5]}
-//                     checkboxSelection
-//                     disableSelectionOnClick
-//                 />
-//             </div>
-//         </React.Fragment>
-
-
-
-{/*
-
-function isOverflown(element) {
-    return (
-        element.scrollHeight > element.clientHeight ||
-        element.scrollWidth > element.clientWidth
-    );
-}
-
-const GridCellExpand = React.memo(function GridCellExpand(props) {
-    const { width, value } = props;
-    const wrapper = React.useRef(null);
-    const cellDiv = React.useRef(null);
-    const cellValue = React.useRef(null);
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showFullCell, setShowFullCell] = React.useState(false);
-    const [showPopper, setShowPopper] = React.useState(false);
-
-    const handleMouseEnter = () => {
-        const isCurrentlyOverflown = isOverflown(cellValue.current);
-        setShowPopper(isCurrentlyOverflown);
-        setAnchorEl(cellDiv.current);
-        setShowFullCell(true);
-    };
-
-    const handleMouseLeave = () => {
-        setShowFullCell(false);
-    };
-
-    React.useEffect(() => {
-        if (!showFullCell) {
-            return undefined;
-        }
-
-        function handleKeyDown(nativeEvent) {
-            // IE11, Edge (prior to using Bink?) use 'Esc'
-            if (nativeEvent.key === 'Escape' || nativeEvent.key === 'Esc') {
-                setShowFullCell(false);
-            }
-        }
-
-        document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [setShowFullCell, showFullCell]);
-
-
-    return (
-        <Box
-            ref={wrapper}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            sx={{
-                alignItems: 'center',
-                lineHeight: '24px',
-                width: 1,
-                height: 1,
-                position: 'relative',
-                display: 'flex',
-            }}
-        >
-            <Box
-                ref={cellDiv}
-                sx={{
-                    height: 1,
-                    width,
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                }}
-            />
-            <Box
-                ref={cellValue}
-                sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-                {value}
-            </Box>
-            {showPopper && (
-                <Popper
-                    open={showFullCell && anchorEl !== null}
-                    anchorEl={anchorEl}
-                    style={{ width, marginLeft: -17 }}
-                >
-                    <Paper
-                        elevation={1}
-                        style={{ minHeight: wrapper.current.offsetHeight - 3 }}
-                    >
-                        <Typography variant="body2" style={{ padding: 8 }}>
-                            {value}
-                        </Typography>
-                    </Paper>
-                </Popper>
-            )}
-        </Box>
-    );
-});
-
-GridCellExpand.propTypes = {
-    value: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-};
-
-function renderCellExpand(params) {
-    return (
-        <GridCellExpand value={params.value || ''} width={params.colDef.computedWidth} />
-    );
-}
-
-renderCellExpand.propTypes = {
-    /**
-     * The column of the row that the current cell belongs to.
-     */
-    // colDef: PropTypes.object.isRequired,
-    /**
-     * The cell value, but if the column has valueGetter, use getValue.
-     */
-    // value: PropTypes.string,
-};

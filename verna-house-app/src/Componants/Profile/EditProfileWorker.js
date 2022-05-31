@@ -1,29 +1,11 @@
-
-import React from 'react';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import classes from '../Login.module.css';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import InputAdornment from '@mui/material/InputAdornment';
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { getRegisterData } from '../../Store/Register/RegisterAction';
-import { getWorker } from '../../Store/Worker/WorkerAction';
-import UploadButton from '../UploadButton';
-// import PhotoCamera from '@mui/icons-material/PhotoCamera';
-// import userEvent from '@testing-library/user-event';
+import { useDispatch, useSelector } from "react-redux";
+import { getWorker, editWorker } from "../../Store/Worker/WorkerAction";
+import { Card, Grid, TextField, Button } from "@mui/material";
+import { useForm } from 'react-hook-form';
+import classes from "../Login.module.css";
+
 const useStyles = makeStyles({
     root1: {
         color: '#121212',
@@ -33,8 +15,8 @@ const useStyles = makeStyles({
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
-        color: 'action.home',
+        // background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
+        color: '#fff',
     },
     root5:
     {
@@ -42,104 +24,103 @@ const useStyles = makeStyles({
     },
     allfield:
     {
-        width: '40ch',
+        width: '30ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
-        color: 'action.home',
+        // background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
+        color: '#fff',
     }
 });
-
-const EditProfileWorker = props => {
-    const navigate = useNavigate()
+const EditProfileWorker = (props) => {
+    const classes1 = useStyles()
     const dispatch = useDispatch()
-    
-    console.log("workerId : ---", (props.workerId))
+
+    // console.log(props.supplierId)
     const worker = useSelector((state) => state.worker)
+
+    useEffect(() => {
+        dispatch(getWorker({ id: props.workerId }))
+    }, [dispatch])
+
     console.log(worker.getWorker)
-    const data = worker.getWorker
 
-    const classes1 = useStyles();
-    const [values, setValues] = React.useState(data);
+    const [values, setValues] = React.useState({
+        fullname: '',
+        email: '',
+        username: '',
+        mobileNo: '',
+        short_intro: '',
+        address: '',
+        profileImage: ``,
+        location: ''
+    });
+
+    useEffect(() => {
+        setValues({
+            fullname: worker.getWorker?.name,
+            email: worker.getWorker?.email,
+            username: worker.getWorker?.username,
+            mobileNo: worker.getWorker?.mobileNo,
+            short_intro: worker.getWorker?.short_intro,
+            address: worker.getWorker?.address,
+            profileImage: `${worker.getWorker?.profile_image}`,
+            location: worker.getWorker?.location,
+
+        });
+    }, [worker])
+
+
+
     console.log(values)
-
     const handleChange = (prop) => (event) => {
-
         console.log(prop)
         setValues({ ...values, [prop]: event.target.value });
-        if (prop == "profile_image") {
-            console.log(event.target.files[0])
-            setValues({ ...values, profile_image: event.target.files[0].name });
+        if (prop == "profileImage") {
+            console.log(event.target.files)
+
+            setValues({ ...values, profileImage: event.target.files[0] });
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-
+    const onSubmit = () => {
         console.log(values)
-        const data1 = { ...values }
-        // console.log(JSON.stringify(data, null, 2));
-        // console.log(values, typeof(values))
-        // console.log(data1)
-        dispatch(getRegisterData({ data: data1 }));
-        console.log("worker edited successfully")
-        navigate("/Workers")
+        dispatch(editWorker({ values: values }, props.workerId))
+        props.setReload(true)
+        props.onClose()
     }
-    useEffect(() => {
-        const body = document.querySelector("body");
-        body.style.overflow = props.open ? "hidden" : "auto";
-    }, [props.open])
-    return (
-        <Container align="center">
-            <Card
-                variant="outlined"
-                sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    color: 'action.home',
-                    paddingTop: 1,
-                    m: 1,
-                    marginTop: 10,
-                    transition: "all 0.5s ease",
-                    "&:hover": { transform: "scale(1.05)", borderRadius: "40px" },
-                }}
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </CardActions>
-                <CardContent>
-                    <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Worker Profile</Typography>
 
-                    <div className={classes1.root5}>
+
+    return (
+        <>
+            <Card component="form" sx={{ height: 450, width: 590, padding: 1, background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)' }}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={6}>
                         <TextField
+                            // inputProps={{ borderColor: '#fff' }}
                             sx={{ marginTop: 2 }}
                             className={classes1.allfield}
                             required
+                            color="primary"
 
                             id="fullname"
                             label="Enter Your Name"
                             placeholder="xyz abc"
-                            inputprops={{ tabIndex: "1" }}
                             {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.fullname}
-                            helpertext={errors?.fullname ? errors.fullname.message : null}
-                            value={values['name'] ? values['name'] : ''}
-                            onChange={handleChange('name')}
-                        />
 
+                            value={values?.fullname}
+                            onChange={handleChange('fullname')}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
-                            sx={{ marginTop: 1 }}
+                            sx={{ marginTop: 2 }}
                             className={classes1.allfield}
                             required
 
                             id="email"
                             label="Enter Your Email Address"
                             placeholder="xyz@abc.com"
-                            inputprops={{ tabIndex: "2" }}
+
                             {...register('email', {
                                 required: true, pattern: {
                                     value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i,
@@ -147,10 +128,12 @@ const EditProfileWorker = props => {
                                 },
                             })}
                             error={!!errors?.email}
-                            helpertext={errors?.email ? errors.email.message : null}
-                            value={values.email}
+
+                            value={values?.email}
                             onChange={handleChange('email')}
                         />
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
@@ -159,22 +142,15 @@ const EditProfileWorker = props => {
                             id="username"
                             label="Enter Your UserName"
                             placeholder="xyz_abc123"
-                            inputprops={{ tabIndex: "3" }}
+
                             {...register('username', { required: true, maxLength: 20, minLength: 4 })}
                             error={!!errors?.username}
-                            helpertext={errors?.username ? errors.username.message : null}
-                            value={values.username}
+
+                            value={values?.username}
                             onChange={handleChange('username')}
                         />
-                        {/* <TextField
-                            disabled
-
-                            id="rol"
-                            label="Role"
-                            value={worker.getWorker.role}
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                        /> */}
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
@@ -183,29 +159,36 @@ const EditProfileWorker = props => {
                             id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
+
                             {...register('mobileNo', { required: true, maxLength: 10 })}
                             error={!!errors?.mobileNo}
-                            helpertext={errors?.mobileNo ? errors.mobileNo.message : null}
-                            value={values.mobileNo}
+
+                            value={values?.mobileNo}
                             onChange={handleChange('mobileNo')}
                         />
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+                            required
 
-                            id="shortIntro"
-                            label="Short Intro"
+                            id="short_intro"
+                            label="Introduction"
                             placeholder="xyz abc"
 
-                            {...register('shortIntro', { required: true, maxLength: 50 })}
-                            error={!!errors?.shortIntro}
-                            helpertext={errors?.shortIntro ? errors.shortIntro.message : null}
-                            value={values.short_intro}
+                            {...register('short_intro', { required: true, maxLength: 20 })}
+                            error={!!errors?.short_intro}
+
+                            value={values?.short_intro}
                             onChange={handleChange('short_intro')}
                         />
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
+                            required
 
                             id="address"
                             label="Address"
@@ -213,105 +196,70 @@ const EditProfileWorker = props => {
 
                             {...register('Address', { required: true, maxLength: 100 })}
                             error={!!errors?.Address}
-                            helpertext={errors?.Address ? errors.Address.message : null}
-                            value={values.address}
+
+                            value={values?.address}
                             onChange={handleChange('address')}
                         />
-
-                        <TextField
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                            id="profileImage"
-                            label="Profile Image"
-                            placeholder='Upload File'
-                            type="file"
-                            accept="image/*"
-
-                            {...register('profileImage', { required: true })}
-                            error={!!errors?.profileImage}
-                            helpertext={errors?.profileImage ? errors.profileImage.message : null}
-                            value={values.profile_image}
-                            onChange={handleChange('profile_image')}>
-                        </TextField>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
+                            <input type={'file'} onChange={handleChange('profileImage')} />
+                            <label>{values?.profileImage}</label>
+                        </label>
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             required
-                            multiline
-                            size='medium'
+
                             id="location"
                             label="Location"
                             placeholder="xyz"
 
                             {...register('location', { required: true, maxLength: 100 })}
                             error={!!errors?.location}
-                            helpertext={errors?.location ? errors.location.message : null}
-                            value={values.location}
+                            value={values?.location}
                             onChange={handleChange('location')}
                         />
-                        <TextField
-                            className={classes1.allfield}
-                            sx={{ marginTop: 1 }}
-                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                    </Grid>
 
-                            id="workerid"
-                            label="workerid"
+                    <Grid item xs={12}>
 
-                            {...register('workerid', { required: true, maxLength: 10 })}
-                            error={!!errors?.workerid}
-                            helpertext={errors?.workerid ? errors.workerid.message : null}
-                            value={values.worker}
-                            onChange={handleChange('worker')}
-                        />
-                        <div className={classes.button}>
-                            <Button
-                                variant="contained"
-                                className={classes1.root4}
-                                onClick={handleSubmit(onSubmit)}
-                                sx={{
-                                    marginTop: 0.5,
-                                    marginRight: -34,
-                                    color: 'black',
-                                }}>
-                                Submit</Button>
-                        </div>
-                    </div>
+                        <Grid container rowSpacing={2} alignItems='center' justifyContent='flex-end'>
+                            <Grid item xs={3}>
+                                <Button
+                                    variant="contained"
+                                    className={classes1.root4}
+                                    onClick={handleSubmit(onSubmit)}
+                                    sx={{
+                                        marginTop: 0.5,
+                                        color: 'black',
+                                        marginRight: 0,
+                                    }}>
+                                    Save</Button>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Button
+                                    variant="contained"
+                                    className={classes1.root4}
+                                    onClick={props.onClose}
+                                    sx={{
+                                        marginTop: 0.5,
+                                        // marginLeft: 3,
+                                        // marginRight: 2,
+                                        color: 'black',
+                                    }}>
+                                    Cancle</Button>
+                            </Grid>
+                        </Grid>
 
-                </CardContent>
+                    </Grid>
+
+                </Grid>
             </Card>
-        </Container>
-    );
 
+        </>
+    );
 };
 export default EditProfileWorker;
-
-{/* <TextField
-                                disabled
-                                id="supplier-one-to-one"
-                                label="Supplier"
-                            // defaultValue={username}
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="first-name"
-                                label="Name"
-                                placeholder="xyz abc"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="email-id"
-                                label="Email Address"
-                                placeholder="xyz@abc.com"
-                            />
-                            <TextField
-                                required
-                                multiline
-                                size='medium'
-                                id="username"
-                                label="UserName"
-                                placeholder="xyz_abc123"
-                            /> */}

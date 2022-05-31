@@ -33,12 +33,11 @@ const useStyles = makeStyles({
 const EditProfileAgency = (props) => {
     const classes1 = useStyles()
     const dispatch = useDispatch()
-    const agencyId = props.agencyId
-    console.log(agencyId)
+    console.log(props.agencyId)
     const agency = useSelector((state) => state.agency)
 
     useEffect(() => {
-        dispatch(getAgency({ id: agencyId }))
+        dispatch(getAgency({ id: props.agencyId }))
     }, [dispatch])
 
     console.log(agency.getAgency)
@@ -48,8 +47,8 @@ const EditProfileAgency = (props) => {
         email: '',
         username: '',
         mobileNo: '',
-        organizationName: '',
-        organizationAddress: '',
+        agencyName: '',
+        agencyAddress: '',
         profileImage: '',
         location: '',
         socialWebsite: '',
@@ -80,8 +79,9 @@ const EditProfileAgency = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = () => {
         console.log(values)
-        dispatch(editAgency({ values: values }, agencyId))
+        dispatch(editAgency({ values: values }, props.agencyId))
         props.setReload(true)
+        props.onClose()
     }
 
     return (
@@ -92,7 +92,7 @@ const EditProfileAgency = (props) => {
                         <TextField
                             sx={{ marginTop: 2 }}
                             className={classes1.allfield}
-                            required
+
                             color="primary"
 
                             id="fullname"
@@ -109,7 +109,7 @@ const EditProfileAgency = (props) => {
                         <TextField
                             sx={{ marginTop: 2 }}
                             className={classes1.allfield}
-                            required
+
 
                             id="email"
                             label="Enter Your Email Address"
@@ -131,7 +131,7 @@ const EditProfileAgency = (props) => {
                         <TextField
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
-                            required
+
 
                             id="username"
                             label="Enter Your UserName"
@@ -149,7 +149,7 @@ const EditProfileAgency = (props) => {
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            required
+
                             id="mobileNo"
                             label="Mobile No."
                             placeholder="1234567892"
@@ -222,13 +222,13 @@ const EditProfileAgency = (props) => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
+
 
                             id="social-website"
                             label="Social Website"
                             placeholder="http://xyz.com"
 
-                            {...register('socialWebsite', { required: false })}
+                            {...register('socialWebsite', { required: true })}
                             error={!!errors?.socialWebsite}
 
                             value={values?.socialWebsite}
@@ -254,7 +254,7 @@ const EditProfileAgency = (props) => {
                                 <Button
                                     variant="contained"
                                     className={classes1.root4}
-                                    // onClick={handleSubmit(onSubmit)}
+                                    onClick={props.onClose}
                                     sx={{
                                         marginTop: 0.5,
                                         // marginLeft: 3,

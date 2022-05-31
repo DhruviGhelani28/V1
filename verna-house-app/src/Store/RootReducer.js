@@ -24,7 +24,7 @@ const RootReducers = combineReducers(
         supplier: getSupplierReducer,
         esupplier: editSupplierReducer,
 
-        // workers: getWorkersReducer,
+        workers: getWorkersReducer,
         worker: getWorkerReducer,
         eworker: editWorkerReducer,
 

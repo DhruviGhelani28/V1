@@ -2,6 +2,7 @@ from logging import exception
 from operator import contains
 from typing_extensions import Required
 from django.forms import ValidationError
+from numpy import source
 from setuptools import Require
 from . models import *
 from django.contrib.auth.hashers import make_password
@@ -109,7 +110,8 @@ class AgencyProfileSerializer(serializers.ModelSerializer):
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
-    # customer = UserRegistrationSerializer(read_only =True) 
+    
+
     class Meta:
         model = Customer
         fields = ['id','customer','name','email','username','mobileNo','companyName','companyAddress','profile_image','location','social_website']
@@ -132,24 +134,14 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 class SupplierProfileSerializer(serializers.ModelSerializer):
     # supplier = UserRegistrationSerializer(read_only =True)
+    # name = serializers.CharField()
+    # username = serializers.CharField()
+
     class Meta:
         model = Supplier
-        fields = ['id', 'supplier', 'name', 'email','username','mobileNo', 'organisationName', 'organisationAddress','profile_image','location','social_website']
+        fields = ['id', 'supplier', 'name', 'email', 'username', 'mobileNo', 'organisationName', 'organisationAddress', 'profile_image', 'location', 'social_website']
 
-    # def create(self, validated_data):
-    #     supplierProfile = Supplier.objects.create(
-    #         name = validated_data['name'],
-    #         email = validated_data['email'],
-    #         username = validated_data['username'],
-    #         # role = validated_data['role'],
-    #         mobileNo = validated_data['mobileNo'],
-    #         organizationName = validated_data['organizationName'],
-    #         organizationAddress = validated_data['organizationAddress'],
-    #         profile_image = validated_data['profile_image'],
-    #         location = validated_data['location'],
-    #         social_website = validated_data['social_website'],
-    #     )
-    #     return supplierProfile
+    
 
 
 class WorkerProfileSerializer(serializers.ModelSerializer):

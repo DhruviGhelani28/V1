@@ -1,5 +1,6 @@
 
 import json
+
 from django.core.files import File
 from urllib import request, response
 import pathlib
@@ -398,7 +399,7 @@ class SupplierView(APIView):
     @permission_classes([IsAuthenticated])
     def getSuppliers(request):
         user = request.user.profile
-        # user = Profile.objects.get( username = user.username)
+        
         print("user:: ", user)
         if user.role != 'Supplier':
             suppliers = Supplier.objects.all()
@@ -423,24 +424,25 @@ class SupplierView(APIView):
     @permission_classes([IsAuthenticated])
     def editSupplier(request, pk):
         # print("=-=-here-=-=")
-        # print(request.data)
+        print(request.data,"\n")
         data = request.data
+        image = request.File
         # data = list(request.data.items())
         print(type(data['profileImage']),data['profileImage'])
         print("data",type(data['mobileNo']))
         supplier = Supplier.objects.get(id=pk)
-        print("=-=-supp",supplier)
+        print("=-=-supp\t\t",supplier)
         filename= os.path.basename(data['profileImage'])
         
-        supplier.username = data['username'],
-        supplier.email = data['email'],
-        supplier.name = data['fullname'],
-        supplier.mobileNo = data['mobileNo'],
-        supplier.organisationName = data['organizationName'],
-        supplier.organisationAddress =  data['organizationAddress'],
-        # supplier.profile_image = `./{data['profileImage']}`,
-        supplier.location = data['location'],
-        supplier.social_website =  data['socialWebsite'],
+        supplier.username = data['username']
+        supplier.email = data['email']
+        supplier.name = data['fullname']
+        supplier.mobileNo = data['mobileNo']
+        supplier.organisationName = data['organizationName']
+        supplier.organisationAddress =  data['organizationAddress']
+        supplier.profile_image = data['profileImage']
+        supplier.location = data['location']
+        supplier.social_website =  data['socialWebsite']
         # print(os.path.abspath(f"{filename}"))
         # print(os.path.relpath("./src/static"))
         # p = pathlib.Path(filename)
@@ -514,6 +516,29 @@ class AgencyView(APIView):
             serializer = AgencyProfileSerializer(agency, many=False)
             return Response(serializer.data)
 
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def editAgency(request,pk):
+        user=request.user.profile
+        data = request.data 
+        print("\n--------edit agency data\t",data)
+        if user.role == "Agecny" or user.role == "Admin":
+            agency = Agency.objects.get(id=pk) 
+            agency.username = data['username']
+            agency.name = data['name']
+            agency.email = data['email']
+            agency.mobileNo = data['mobileNo']
+            agency.agencyName = data['agencyName']
+            agency.agencyAddress = data['agencyAddress']
+            agency.profile_image = data['profileImage']
+            agency.location = data['location']
+            agency.social_website = data['socialWebsite']
+
+            agency.save()
+            print("\n----------save", agency.profile_image)
+
+            
+
     @api_view(['GET'])
     @permission_classes([IsAuthenticated, IsAdminUser])
     def getAgencyTasks(request, pk):
@@ -572,6 +597,27 @@ class CustomerView(APIView):
             customer = Customer.objects.get(id=pk)
             serializer = CustomerProfileSerializer(customer, many=False)
             return Response(serializer.data)
+
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def editCustomer(request,pk):
+        user=request.user.profile
+        data = request.data 
+        print("\n--------edit customer data\t",data)
+        if user.role == "Customer" or user.role == "Admin":
+            customer = Customer.objects.get(id=pk) 
+            customer.username = data['username']
+            customer.name = data['name']
+            customer.email = data['email']
+            customer.mobileNo = data['mobileNo']
+            customer.companyName = data['companyName']
+            customer.companyAddress = data['companyAddress']
+            customer.profile_image = data['profileImage']
+            customer.location = data['location']
+            customer.social_website = data['socialWebsite']
+
+            customer.save()
+            print("\n----------save", customer.profile_image)
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated, IsAdminUser])
@@ -633,6 +679,27 @@ class WorkerView(APIView):
             print("\n\n\n get worker call:---", worker, "\n\nid:---", pk)
             return Response(serializer.data)
         
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def editWorker(request,pk):
+        user=request.user.profile
+        data = request.data 
+        print("\n--------edit worker data\t",data)
+        if user.role == "Worker" or user.role == "Admin":
+            worker = Worker.objects.get(id=pk) 
+            worker.username = data['username']
+            worker.name = data['name']
+            worker.email = data['email']
+            worker.mobileNo = data['mobileNo']
+            worker.short_intro = data['short_intro']
+            worker.address = data['address']
+            worker.profile_image = data['profileImage']
+            worker.location = data['location']
+           
+
+            worker.save()
+            print("\n----------save", worker.profile_image)
+
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated])
@@ -693,6 +760,28 @@ class ModelView(APIView):
             models = Actor.objects.all()
             serializer = ActorProfileSerializer(models, many=True)
             return Response(serializer.data)
+
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def editModel(request,pk):
+        user=request.user.profile
+        data = request.data 
+        print("\n--------edit model data\t",data)
+        if user.role == "Model" or user.role == "Admin":
+            model = Actor.objects.get(id=pk) 
+            model.username = data['username']
+            model.name = data['name'] 
+            model.email = data['email']
+            model.mobileNo = data['mobileNo']
+            model.background = data['background']
+            model.address = data['address']
+            model.nativePlace = data['nativePlace']
+            model.profile_image = data['profileImage']
+            model.location = data['location']
+            model.social_website = data['socialWebsite']
+
+            model.save()
+            print("\n----------save", model.profile_image)
 
     # @api_view(['POST'])
     # @permission_classes([IsAuthenticated])

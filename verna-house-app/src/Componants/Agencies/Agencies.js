@@ -3,17 +3,16 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+
 import { useEffect } from "react";
 import Paper from '@mui/material/Paper';
 
 
 import { useDispatch, useSelector } from "react-redux";
-import { DataGrid } from '@mui/x-data-grid';
+
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -151,6 +150,7 @@ function Agencies() {
     };
     const dispatch = useDispatch()
     const agencies = useSelector((state) => state.agencies);
+    const [id, setId] = React.useState('')
     const [rows, setRows] = React.useState([]);
     const [reload, setReload] = React.useState(false)
     useEffect(() => {
@@ -164,8 +164,13 @@ function Agencies() {
 
     }, [agencies.getAgencies, reload])
 
-    // const rows = suppliers.getSuppliers
-    console.log(rows)// const [rowModesModel, setRowModesModel] = React.useState({});
+    console.log(rows)
+
+    const editHandler = (row) => {
+        handleOpen();
+        setId(row.id)
+
+    };
 
     const deleteHandler = (row) => () => {
         // setRows(rows.filter((row) => row.id !== id));
@@ -224,20 +229,7 @@ function Agencies() {
                                         }
                                         )}
                                         <StyledTableCell key={index} sx={{ width: 200 }}>
-
-                                            <EditIcon onClick={handleOpen} />
-                                            {open &&
-                                                <Dialog open={open} onClose={handleClose} sx={{ padding: 0.5, width: 900 }}>
-                                                    <DialogTitle>Edit Agency : {row.id}</DialogTitle>
-                                                    <DialogContent dividers sx={{ padding: 0.1 }}>
-                                                        <EditProfileAgency onClick={handleClose} open={open} agencyId={row.id} setReload={setReload} />
-                                                    </DialogContent>
-                                                    {/* <DialogActions>
-                                                        <Button onClick={handleClose} sx={{ border: '1px solid black' }}>Cancel</Button>
-                                                        <Button onClick={handleClose}>Save</Button>
-                                                    </DialogActions> */}
-                                                </Dialog>
-                                            }
+                                            <EditIcon onClick={() => editHandler(row)} />
                                             <DeleteIcon onClick={deleteHandler(row)}>  </DeleteIcon>
                                             <Button variant="outlined" style={{ backgroundColor: 'black', color: 'white', padding: 1.5, }}>
                                                 View Details
@@ -246,6 +238,13 @@ function Agencies() {
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 ))}
+                            <Dialog open={open} sx={{ padding: 0.5, width: 900 }}>
+                                <DialogTitle>Edit Agency : {id} </DialogTitle>
+                                <DialogContent dividers sx={{ padding: 0.1 }}>
+                                    <EditProfileAgency onClick={handleClose} open={open} agencyId={id} setReload={setReload} onClose={handleClose} />
+                                </DialogContent>
+
+                            </Dialog>
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -256,153 +255,4 @@ function Agencies() {
 
 export default Agencies;
 
-{/* <React.Fragment>
-//             <h2>Suppliers will be here</h2>
-//             <Grid container spacing={2}>
-//                 <Grid item xs={4}> */}
-//                     {
-//                         <Paper elevation={6}>
-//                             <Typography>
 
-//                             </Typography>
-
-//                         </Paper>
-
-//                     }
-//                 </Grid>
-//             </Grid>
-
-//             <div style={{ height: 400, width: '100%' }}>
-//                 <DataGrid
-//                     rows={rows}
-//                     columns={columns}
-//                     pageSize={5}
-//                     rowsPerPageOptions={[5]}
-//                     checkboxSelection
-//                     disableSelectionOnClick
-//                 />
-//             </div>
-//         </React.Fragment>
-
-
-
-{/*
-
-function isOverflown(element) {
-    return (
-        element.scrollHeight > element.clientHeight ||
-        element.scrollWidth > element.clientWidth
-    );
-}
-
-const GridCellExpand = React.memo(function GridCellExpand(props) {
-    const { width, value } = props;
-    const wrapper = React.useRef(null);
-    const cellDiv = React.useRef(null);
-    const cellValue = React.useRef(null);
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showFullCell, setShowFullCell] = React.useState(false);
-    const [showPopper, setShowPopper] = React.useState(false);
-
-    const handleMouseEnter = () => {
-        const isCurrentlyOverflown = isOverflown(cellValue.current);
-        setShowPopper(isCurrentlyOverflown);
-        setAnchorEl(cellDiv.current);
-        setShowFullCell(true);
-    };
-
-    const handleMouseLeave = () => {
-        setShowFullCell(false);
-    };
-
-    React.useEffect(() => {
-        if (!showFullCell) {
-            return undefined;
-        }
-
-        function handleKeyDown(nativeEvent) {
-            // IE11, Edge (prior to using Bink?) use 'Esc'
-            if (nativeEvent.key === 'Escape' || nativeEvent.key === 'Esc') {
-                setShowFullCell(false);
-            }
-        }
-
-        document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [setShowFullCell, showFullCell]);
-
-
-    return (
-        <Box
-            ref={wrapper}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            sx={{
-                alignItems: 'center',
-                lineHeight: '24px',
-                width: 1,
-                height: 1,
-                position: 'relative',
-                display: 'flex',
-            }}
-        >
-            <Box
-                ref={cellDiv}
-                sx={{
-                    height: 1,
-                    width,
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                }}
-            />
-            <Box
-                ref={cellValue}
-                sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-                {value}
-            </Box>
-            {showPopper && (
-                <Popper
-                    open={showFullCell && anchorEl !== null}
-                    anchorEl={anchorEl}
-                    style={{ width, marginLeft: -17 }}
-                >
-                    <Paper
-                        elevation={1}
-                        style={{ minHeight: wrapper.current.offsetHeight - 3 }}
-                    >
-                        <Typography variant="body2" style={{ padding: 8 }}>
-                            {value}
-                        </Typography>
-                    </Paper>
-                </Popper>
-            )}
-        </Box>
-    );
-});
-
-GridCellExpand.propTypes = {
-    value: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-};
-
-function renderCellExpand(params) {
-    return (
-        <GridCellExpand value={params.value || ''} width={params.colDef.computedWidth} />
-    );
-}
-
-renderCellExpand.propTypes = {
-    /**
-     * The column of the row that the current cell belongs to.
-     */
-    // colDef: PropTypes.object.isRequired,
-    /**
-     * The cell value, but if the column has valueGetter, use getValue.
-     */
-    // value: PropTypes.string,
-};

@@ -172,7 +172,9 @@ const Login = props => {
     }
 
     const handleClickShowPassword = () => {
-        setShowPassword(true)
+        if (values.password) {
+            setShowPassword(!showPassword)
+        }
     };
 
     const handleMouseDownPassword = (event) => {

@@ -27,7 +27,7 @@ export const getCustomers = () => async (dispatch) => {
     }
 }
 export const getCustomer = (id) => async (dispatch) => {
-    console.log("Customer dispatch get param:--", id['id'])
+    console.log("Customer dispatch get param:--", id)
     try {
         const token = JSON.parse(localStorage.getItem('userInfo')).token
         const config = {
@@ -36,7 +36,7 @@ export const getCustomer = (id) => async (dispatch) => {
                 'Authorization': `Bearer ${token}`,
             }
         }
-        const response = await axios.get(`${BaseUrl}/api/Users/Customers/${id['id']}`, config)
+        const response = await axios.get(`${BaseUrl}/api/Users/Customers/${id}`, config)
         console.log("get Customer call response data:--", response.data)
         dispatch({ type: UserActionType.GET_CUSTOMER_SUCCESS, customer: response.data });
 

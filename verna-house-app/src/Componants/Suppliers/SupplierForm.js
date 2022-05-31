@@ -85,8 +85,8 @@ const SupplierForm = props => {
 
         // setValues({ ...values, [prop]: event.target.value });
     };
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const { register, formState: { errors } } = useForm();
+    const onSubmit = () => {
         const val = values
         const data1 = {...state, ...val}
         // console.log(values, typeof(values))
@@ -222,7 +222,7 @@ const SupplierForm = props => {
                             <Button
                                 variant="contained"
                                 className={classes1.root4}
-                                onClick={handleSubmit(onSubmit)}
+                                onClick={onSubmit}
                                 sx={{
                                     marginTop: 0.5,
                                     marginRight: -34,
