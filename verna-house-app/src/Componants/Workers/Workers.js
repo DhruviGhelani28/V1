@@ -147,7 +147,7 @@ function Workers() {
     const [reload, setReload] = React.useState(false)
     useEffect(() => {
         dispatch(getWorkers())
-    }, [dispatch])
+    }, [dispatch, reload])
 
     console.log(workers.getWorkers)
 
@@ -164,8 +164,6 @@ function Workers() {
         setId(row.id)
 
     };
-
-
 
     const deleteHandler = (row) => () => {
         // setRows(rows.filter((row) => row.id !== id));
@@ -235,7 +233,7 @@ function Workers() {
                             <Dialog open={open} sx={{ padding: 0.5, width: 900 }}>
                                 <DialogTitle>Edit Worker : {id} </DialogTitle>
                                 <DialogContent dividers sx={{ padding: 0.1 }}>
-                                    <EditProfileWorker onClick={handleClose} open={open} workerId={id} setReload={setReload} onClose={handleClose} />
+                                    <EditProfileWorker open={open} workerId={id} setReload={setReload} onClose={handleClose} />
                                 </DialogContent>
 
                             </Dialog>

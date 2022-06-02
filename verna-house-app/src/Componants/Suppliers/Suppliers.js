@@ -154,7 +154,7 @@ function Suppliers() {
     const [reload, setReload] = React.useState(false)
     useEffect(() => {
         dispatch(getSuppliers())
-    }, [dispatch])
+    }, [dispatch, reload])
 
     console.log(suppliers.getSuppliers)
 

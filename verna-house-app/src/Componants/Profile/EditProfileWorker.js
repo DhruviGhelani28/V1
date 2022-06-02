@@ -201,7 +201,13 @@ const EditProfileWorker = (props) => {
                             onChange={handleChange('address')}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
+                        <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
+                            <input type={'file'} onChange={handleChange('profileImage')} />
+                            <label>{values?.profileImage}</label>
+                        </label>
+                    </Grid> */}
+                    <Grid item xs={12}>
                         <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
                             <input type={'file'} onChange={handleChange('profileImage')} />
                             <label>{values?.profileImage}</label>

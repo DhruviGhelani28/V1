@@ -78,7 +78,7 @@ const EditProfileSupplier = (props) => {
         if (prop == "profileImage") {
             console.log(event.target.files)
 
-            setValues({ ...values, profileImage: event.target.files[0] });
+            setValues({ ...values, profileImage: event.target.files[0].name });
         }
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -202,7 +202,7 @@ const EditProfileSupplier = (props) => {
                             onChange={handleChange('organizationAddress')}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <label style={{ border: '1px solid white', borderRadius: 5, color: 'white', fontSize: 15 }}>
                             <input type={'file'} onChange={handleChange('profileImage')} />
                             <label>{values?.profileImage}</label>

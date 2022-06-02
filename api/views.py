@@ -404,8 +404,8 @@ class SupplierView(APIView):
         if user.role != 'Supplier':
             suppliers = Supplier.objects.all()
             serializer = SupplierProfileSerializer(suppliers, many=True)
-            value = json.dumps(serializer.data)
-            print("\n-====------------\t",value,"\n------", dict(serializer.data[0]))
+            # value = json.dumps(serializer.data)
+            # print("\n-====------------\t",value,"\n------", dict(serializer.data[0]))
             return Response(serializer.data)
         else:
             return Response({'message' : 'Sorry, You can\'t view Suppliers List because you are not owner nor permitted user'})
@@ -426,7 +426,7 @@ class SupplierView(APIView):
         # print("=-=-here-=-=")
         print(request.data,"\n")
         data = request.data
-        image = request.File
+        # image = request.Files
         # data = list(request.data.items())
         print(type(data['profileImage']),data['profileImage'])
         print("data",type(data['mobileNo']))
@@ -441,6 +441,7 @@ class SupplierView(APIView):
         supplier.organisationName = data['organizationName']
         supplier.organisationAddress =  data['organizationAddress']
         supplier.profile_image = data['profileImage']
+       
         supplier.location = data['location']
         supplier.social_website =  data['socialWebsite']
         # print(os.path.abspath(f"{filename}"))
@@ -452,7 +453,7 @@ class SupplierView(APIView):
         #     supplier.profile_image.save(filename,File(file),save=False)
 
         supplier.save()
-
+        print("\n---------------------", supplier.profile_image)
         serializer = SupplierProfileSerializer(supplier, many=False)
         print("supplier:---", supplier, "pk:--",pk )
         print("=-=-seri",serializer.data)
@@ -525,7 +526,7 @@ class AgencyView(APIView):
         if user.role == "Agecny" or user.role == "Admin":
             agency = Agency.objects.get(id=pk) 
             agency.username = data['username']
-            agency.name = data['name']
+            agency.name = data['fullname']
             agency.email = data['email']
             agency.mobileNo = data['mobileNo']
             agency.agencyName = data['agencyName']
@@ -607,7 +608,7 @@ class CustomerView(APIView):
         if user.role == "Customer" or user.role == "Admin":
             customer = Customer.objects.get(id=pk) 
             customer.username = data['username']
-            customer.name = data['name']
+            customer.name = data['fullname']
             customer.email = data['email']
             customer.mobileNo = data['mobileNo']
             customer.companyName = data['companyName']
@@ -688,7 +689,7 @@ class WorkerView(APIView):
         if user.role == "Worker" or user.role == "Admin":
             worker = Worker.objects.get(id=pk) 
             worker.username = data['username']
-            worker.name = data['name']
+            worker.name = data['fullname']
             worker.email = data['email']
             worker.mobileNo = data['mobileNo']
             worker.short_intro = data['short_intro']
@@ -699,6 +700,8 @@ class WorkerView(APIView):
 
             worker.save()
             print("\n----------save", worker.profile_image)
+            serializer = WorkerProfileSerializer(worker, many=False)
+            return Response(serializer.data)
 
 
     @api_view(['GET'])
