@@ -96,6 +96,7 @@ const Home = props => {
 
 
     let [role, setRole] = useState(" ")
+    // let [data, setData] = useState({})
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {

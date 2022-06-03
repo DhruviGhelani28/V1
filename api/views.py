@@ -149,12 +149,12 @@ def UserRegistrationViewSet(request):
             mobileNo = data['mobileNo'],
             organisationName = data['organizationName'],
             organisationAddress =  data['organizationAddress'],
-            profile_image = data['profileImage'],
+            # profile_image = data['profileImage'],
             location = data['location'],
             social_website =  data['socialWebsite'],
 
         )
-        print("-=-=-=-=-\n", supplier.profile_image)
+        # print("-=-=-=-=-\n", supplier.profile_image)
         supplier.save()
 
     if data['role'] == 'Agency':
@@ -166,7 +166,7 @@ def UserRegistrationViewSet(request):
             mobileNo = data['mobileNo'],
             agencyName = data['agencyName'],
             agencyAddress =  data['agencyAddress'],
-            profile_image = data['profileImage'],
+            # profile_image = data['profileImage'],
             location = data['location'],
             social_website =  data['socialWebsite'],
         )
@@ -181,7 +181,7 @@ def UserRegistrationViewSet(request):
             mobileNo = data['mobileNo'],
             companyName = data['companyName'],
             companyAddress =  data['companyAddress'],
-            profile_image = data['profileImage'],
+            # profile_image = data['profileImage'],
             location = data['location'],
             social_website =  data['socialWebsite'],
         )
@@ -197,7 +197,7 @@ def UserRegistrationViewSet(request):
             mobileNo = data['mobileNo'],
             short_intro = data['shortIntro'],
             address =  data['address'],
-            profile_image = data['profileImage'],
+            # profile_image = data['profileImage'],
             location = data['location'],
            
         )
@@ -214,7 +214,7 @@ def UserRegistrationViewSet(request):
             mobileNo = data['mobileNo'],
             address =  data['address'],
             background = data['background'],
-            profile_image = data['profileImage'],
+            # profile_image = data['profileImage'],
             nativePlace = data['nativePlace'],
             salary = 0
         )
@@ -440,7 +440,7 @@ class SupplierView(APIView):
         supplier.mobileNo = data['mobileNo']
         supplier.organisationName = data['organizationName']
         supplier.organisationAddress =  data['organizationAddress']
-        supplier.profile_image = data['profileImage']
+        # supplier.profile_image = data['profileImage']
        
         supplier.location = data['location']
         supplier.social_website =  data['socialWebsite']
@@ -453,7 +453,7 @@ class SupplierView(APIView):
         #     supplier.profile_image.save(filename,File(file),save=False)
 
         supplier.save()
-        print("\n---------------------", supplier.profile_image)
+        # print("\n---------------------", supplier.profile_image)
         serializer = SupplierProfileSerializer(supplier, many=False)
         print("supplier:---", supplier, "pk:--",pk )
         print("=-=-seri",serializer.data)
@@ -531,12 +531,12 @@ class AgencyView(APIView):
             agency.mobileNo = data['mobileNo']
             agency.agencyName = data['agencyName']
             agency.agencyAddress = data['agencyAddress']
-            agency.profile_image = data['profileImage']
+            # agency.profile_image = data['profileImage']
             agency.location = data['location']
             agency.social_website = data['socialWebsite']
 
             agency.save()
-            print("\n----------save", agency.profile_image)
+            # print("\n----------save", agency.profile_image)
 
             
 
@@ -613,12 +613,12 @@ class CustomerView(APIView):
             customer.mobileNo = data['mobileNo']
             customer.companyName = data['companyName']
             customer.companyAddress = data['companyAddress']
-            customer.profile_image = data['profileImage']
+            # customer.profile_image = data['profileImage']
             customer.location = data['location']
             customer.social_website = data['socialWebsite']
 
             customer.save()
-            print("\n----------save", customer.profile_image)
+            # print("\n----------save", customer.profile_image)
 
     @api_view(['GET'])
     @permission_classes([IsAuthenticated, IsAdminUser])
@@ -694,12 +694,12 @@ class WorkerView(APIView):
             worker.mobileNo = data['mobileNo']
             worker.short_intro = data['short_intro']
             worker.address = data['address']
-            worker.profile_image = data['profileImage']
+            # worker.profile_image = data['profileImage']
             worker.location = data['location']
            
 
             worker.save()
-            print("\n----------save", worker.profile_image)
+            # print("\n----------save", worker.profile_image)
             serializer = WorkerProfileSerializer(worker, many=False)
             return Response(serializer.data)
 
@@ -779,12 +779,12 @@ class ModelView(APIView):
             model.background = data['background']
             model.address = data['address']
             model.nativePlace = data['nativePlace']
-            model.profile_image = data['profileImage']
+            # model.profile_image = data['profileImage']
             model.location = data['location']
             model.social_website = data['socialWebsite']
 
             model.save()
-            print("\n----------save", model.profile_image)
+            # print("\n----------save", model.profile_image)
 
     # @api_view(['POST'])
     # @permission_classes([IsAuthenticated])

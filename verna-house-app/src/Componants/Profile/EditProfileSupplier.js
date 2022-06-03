@@ -99,14 +99,14 @@ const EditProfileSupplier = (props) => {
                             // inputProps={{ borderColor: '#fff' }}
                             sx={{ marginTop: 2 }}
                             className={classes1.allfield}
-                            required
+
                             color="primary"
 
                             id="fullname"
                             label="Enter Your Name"
                             placeholder="xyz abc"
                             {...register('fullname', { required: true, maxLength: 20, minLength: 4 })}
-                            error={!!errors?.fullname}
+                            error={values.fullname ? false : true}
 
                             value={values?.fullname}
                             onChange={handleChange('fullname')}
@@ -116,7 +116,7 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             sx={{ marginTop: 2 }}
                             className={classes1.allfield}
-                            required
+
 
                             id="email"
                             label="Enter Your Email Address"
@@ -128,7 +128,7 @@ const EditProfileSupplier = (props) => {
                                     message: "Invalid Email Address",
                                 },
                             })}
-                            error={!!errors?.email}
+                            error={values.email ? false : message}
 
                             value={values?.email}
                             onChange={handleChange('email')}
@@ -138,7 +138,7 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             sx={{ marginTop: 1 }}
                             className={classes1.allfield}
-                            required
+
 
                             id="username"
                             label="Enter Your UserName"
@@ -172,7 +172,6 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
 
                             id="organisationName"
                             label="Organisation Name"
@@ -189,7 +188,6 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
 
                             id="organisationAddress"
                             label="Organisation Address"
@@ -212,7 +210,7 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
+
 
                             id="location"
                             label="Location"
@@ -228,7 +226,7 @@ const EditProfileSupplier = (props) => {
                         <TextField
                             className={classes1.allfield}
                             sx={{ marginTop: 1 }}
-                            required
+
 
                             id="social-website"
                             label="Social Website"
